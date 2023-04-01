@@ -1,0 +1,6 @@
+
+@import "rsuite/dist/rsuite.css"; 
+#root{ padding: 10px; }
+.end{
+    background-color: aqua;
+}

@@ -1,0 +1,9 @@
+.maenedit{
+    padding: 60px;
+    background-color: #f9f9f9;
+}
+@media only screen and (max-width: 500px) {
+.maenedit{
+    padding: 30px;
+}
+}

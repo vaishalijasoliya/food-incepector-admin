@@ -1,0 +1,38 @@
+import { constants } from "buffer";
+import Constants from "./Constants";
+
+export default {
+    LOGIN_USER: Constants.BASE_API_URL + 'user/login',
+    LIST_SUPPORT_TICKET: Constants.BASE_API_URL + 'admin/tickit/list',
+    UPDATE_TICKET: Constants.BASE_API_URL + 'admin/tickit/update',
+    // MESSAGE_READ: Constants.BASE_API_URL + 'admin/message/read',
+    VIEW_SUPPORT_MSG: Constants.BASE_API_URL + 'user/support/message/view',
+    PROMOTION_LIST: Constants.BASE_API_URL + 'admin/advertisement/list',
+    SUPPORT_SEND: Constants.BASE_API_URL + 'user/support/send',
+    SEND_MESSAGE: Constants.BASE_API_URL + 'user/support/send',
+    USER_COUNT_LIST: Constants.BASE_API_URL + 'admin/user/count/list',
+    USER_LIST: Constants.BASE_API_URL + 'admin/user/list',
+    PROMOTION_LIST: Constants.BASE_API_URL + 'admin/advertisement/list',
+    GUILDLINE_LIST: Constants.BASE_API_URL + 'admin/guildline',
+    GUILDLINE_LIST_LOG: Constants.BASE_API_URL + 'admin/guidline/list',
+    GUILDLINE_FAQ_SAVE: Constants.BASE_API_URL + 'admin/guildline',
+    USER_REVIEW_LIST: Constants.BASE_API_URL + 'admin/review/user/list',
+    ADMIN_REVIEW_UPDATE: Constants.BASE_API_URL + 'admin/review/update',
+    ADMIN_ONLINEUSER_LIST: Constants.BASE_API_URL + 'admin/active/user/day',
+    USER_NOTIFICATION_LIST: Constants.BASE_API_URL + 'user/notification/list',
+    // USER_NOTIFICATION_READ: Constants.BASE_API_URL + 'user/notification/read',
+    USER_NOTIFICATION_COUNT: Constants.BASE_API_URL + 'user/notification/pending/count',
+    USER_ADVERTISEMENT_CREATE: Constants.BASE_API_URL + 'admin/advertisement/create',
+    VIEW_USER_LIST: Constants.BASE_API_URL + 'admin/advertisement/view',
+    USER_ADVERTISEMENT_EDIT: Constants.BASE_API_URL + "admin/advertisement/update",
+    VIEW_LIST: Constants.BASE_API_URL + 'admin/advertisement/view',
+    USER_UPLOAD_IMAGE: Constants.BASE_API_URL + "upload/image",
+    USER_NOTIFICATION_READ: Constants.BASE_API_URL + "user/notification/read",
+    USER_PAYMENT_LIST:Constants.BASE_API_URL+'admin/user/payment/list',
+    ADMIN_FORGOT_PASSWORD : Constants.BASE_API_URL + 'user/verify/emailphone',
+    ADMIN_VERIFY_CODE : Constants.BASE_API_URL + 'user/verify/code',
+    ADMIN_PAYMENT:Constants.BASE_API_URL+'admin/payment/list',
+    USER_CANCEL:Constants.BASE_API_URL+'user/cancel',
+    USER_REACTIVE:Constants.BASE_API_URL+'admin/user/reactive',
+    
+}

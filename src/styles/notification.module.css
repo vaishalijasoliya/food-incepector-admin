@@ -1,0 +1,232 @@
+@font-face {
+  font-family: Gilroy-bold;
+  src: url(../styles/font/Gilroy-Font/Gilroy-Bold.ttf);
+}
+
+@font-face {
+  font-family: Gilroy-regular;
+  src: url(../styles/font/Gilroy-Font/Gilroy-Regular.ttf);
+}
+
+@font-face {
+  font-family: Gilroy-700;
+  src: url(../styles/font/Gilroy-Font/Gilroy-ExtraBold.ttf);
+}
+
+@font-face {
+  font-family: Gilroy-medium;
+  src: url(../styles/font/Gilroy-Font/Gilroy-Medium.ttf);
+}
+
+.body {
+  background: #f9f9f9;
+  /* background-color: red; */
+}
+
+.thisleft {
+  /* padding: 34px 0px 0px 30px; */
+  border-right: 2px solid #eaeaea;
+  /* height: 100vh;
+    overflow-y: scroll; */
+  position: relative;
+}
+
+.borderdiv {
+  width: 320px;
+  height: 1px;
+  border: 2px solid black;
+}
+
+.chatDate {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.chatlistitem {
+  position: relative;
+}
+
+.MuiTab-labelIcon {
+  background-color: red;
+}
+
+.MuiTabroot {
+  /* margin: 0px 10px 0px 10px !important; */
+  font-family: Gilroy-700 !important;
+  background-color: #ffffff;
+  border-radius: 15px;
+}
+
+#datetime {
+  width: auto;
+  font-family: Gilroy-medium;
+  font-weight: bold;
+  text-align: end;
+}
+
+.datediv {
+}
+
+.this_right {
+  width: 100%;
+}
+
+.supportCont {
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  border-radius: 15px;
+  width: 100% !important;
+}
+
+.supportTop {
+  position: static;
+  padding-top: 20px;
+  width: 100%;
+  background: white;
+  z-index: 3;
+  border-radius: 22px;
+}
+
+.support_list {
+  overflow-y: scroll;
+}
+
+.leftdiv {
+  width: 269px;
+  background-color: white;
+  /* height: 200px; */
+  /* height: 100vh; */
+  border-radius: 0px 0px 16px 16px;
+}
+
+.namediv {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.name {
+  font-family: Gilroy-700 !important;
+  color: #18243c !important;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px !important;
+  display: flex;
+  gap: 8px;
+}
+
+.ticket {
+  font-family: Gilroy-Bold;
+  font-size: 18px;
+}
+
+.message {
+  font-family: Gilroy-regular;
+  font-size: 18px;
+}
+
+.mainlist {
+  display: flex;
+  gap: 6px;
+  /* border-top: 2px solid black; */
+  border-bottom: 1px solid #dedede;
+  /* padding-bottom: 37px; */
+  padding-top: 41px;
+  justify-content: space-between;
+}
+
+.namecmt {
+  width: 100%;
+}
+
+.timediv {
+  width: 100%;
+}
+
+.timetxt {
+  font-family: Gilroy-medium;
+}
+
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  padding: 5px 20px 40px 0px;
+}
+
+.statusbtn {
+  width: 18px;
+  height: 18px;
+  background-color: #ff6a6c;
+  border-radius: 50%;
+}
+
+.maindiv {
+  padding: 14px 33px 14px;
+  margin: 30px 0px;
+  background-color: white;
+  border-radius: 15px;
+  /* height: 100%; */
+}
+
+.lefttxtdiv {
+  display: flex;
+  gap: 8px;
+  padding-left: 23px;
+  padding-bottom: 40px;
+  /* margin: 0px 30px; */
+}
+
+.srchdiv {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 26px 37px 28px 33px;
+  border-radius: 15px;
+}
+
+.searchbtn {
+  width: 320px;
+  box-sizing: border-box;
+  height: 56px;
+  border: none !important;
+  border-radius: 16px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  background-image: url(../../public/image/Search.svg);
+  background-position: 18px 50%;
+  background-repeat: no-repeat;
+  padding: 18px 0px 18px 56px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  cursor: text;
+}
+
+.containerdiv {
+  /* padding: 30px ; */
+  height: 100%;
+}
+
+.avtar {
+  width: 73px !important;
+  height: 73px !important;
+}
+
+/* .myname{
+    margin-right: 10px !important;
+} */
+
+@media only screen and (max-width: 500px) {
+  .containerdiv {
+    width: 100%;
+    padding: 0px;
+    padding-bottom: 40px;
+  }
+  .srchdiv {
+    justify-content: center;
+  }
+}

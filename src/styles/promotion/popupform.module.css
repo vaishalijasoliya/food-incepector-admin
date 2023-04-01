@@ -1,0 +1,190 @@
+@font-face {
+    font-family: Gilroy-400;
+    src: url(../font/Gilroy-Font/Gilroy-Regular.ttf);
+}
+
+@font-face {
+    font-family: Gilroy-700;
+    src: url(../font/Gilroy-Font/Gilroy-Bold.ttf);
+}
+
+.userinput input {
+    border-radius: 112px !important;
+    font-size: 19px;
+    font-family: Gilroy-400 !important;
+}
+
+.userinput {
+    width: 90% !important;
+
+}
+
+.userinput1 {
+    width: 90% !important;
+
+}
+
+.userinput1 input {
+    font-family: Gilroy-400 !important;
+    /* color: white !important; */
+}
+
+.userinput1 input[type=file]::-webkit-file-upload-button {
+    visibility: hidden;
+
+}
+
+.submitbtn {
+    padding: 30px 0px 0px 0px !important;
+}
+
+.DatePicker2 {
+    width: 90% !important;
+
+}
+
+.DatePicker2 svg {
+    padding: 0px 40px 0px 0px !important;
+}
+
+.userinput1 svg {
+    width: 22px;
+    height: 21px;
+
+}
+
+.comswisa {
+    padding: 28px 0px 0px 0px !important;
+    display: flex;
+    justify-content: space-between;
+}
+
+.DatePicker1 {
+    width: 90% !important;
+    border-radius: 112px !important;
+    border: 1px solid #D8D8D8;
+
+}
+
+.DatePicker1 input {
+    font-family: Gilroy-400 !important;
+}
+
+.DatePicker1 fieldset {
+    border-radius: 112px !important;
+    border: 1px solid #D8D8D8;
+}
+
+.DatePicker2 fieldset {
+    border-radius: 112px !important;
+    border: 1px solid #D8D8D8;
+    font-family: Gilroy-400 !important;
+}
+
+.DatePicker2 input {
+    font-family: Gilroy-400 !important;
+}
+
+.userinput fieldset {
+    border-radius: 112px !important;
+    border: 1px solid #D8D8D8;
+}
+
+.selekatnabar fieldset {
+    border-radius: 112px !important;
+    font-family: Gilroy-400 !important;
+    border: 1px solid #D8D8D8;
+}
+
+.selekatnabar input {
+    font-family: Gilroy-400 !important;
+}
+
+.selekatnabar {
+    width: 90% !important;
+}
+
+.userinput1 fieldset {
+    border-radius: 112px;
+    border: 1px solid #D8D8D8;
+    font-family: Gilroy-400 !important;
+}
+
+.cantenarform {
+    padding: 20px 40px 0px 80px !important;
+}
+
+.AccessTimeIcon {
+    padding: 0px 0px 0px 70px !important;
+}
+
+.valuenambar fieldset {
+    border-radius: 112px !important;
+    border: 1px solid #D8D8D8;
+}
+
+.hedingpeg {
+    font-family: 'Gilroy-Medium' !important;
+    font-size: 14px !important;
+    line-height: 16px;
+    text-transform: capitalize;
+    color: #15152E !important;
+    font-family: Gilroy-400 !important;
+
+}
+
+.hadingteg {
+    font-size: 24px !important;
+    line-height: 28px;
+    font-weight: bold !important;
+    color: #000000;
+    padding: 0px 0px 10px 0px;
+}
+
+.gridinputbox {
+    padding: 0px 0px 20px 0px !important;
+}
+
+.fileinputs {
+    padding: 0px 0px 20px 0px !important;
+}
+
+.swiss {
+    padding: 0px 0px 0px 200px !important;
+}
+
+.paregaraft {
+    padding: 10px 0px 0px 0px;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    line-height: 16px !important;
+    color: #15152E !important;
+    font-family: Gilroy-400 !important;
+}
+
+.singbtn {
+    background: #EC4A2A !important;
+    border: 1px solid #B13A23 !important;
+    box-shadow: 0px 14px 34px rgba(236, 74, 42, 0.5) !important;
+    border-radius: 29px !important;
+    padding: 10px 60px 10px 60px !important;
+    font-weight: 500 !important;
+    font-size: 20px !important;
+    line-height: 27px !important;
+    text-align: center !important;
+    letter-spacing: -0.01em !important;
+    text-transform: none !important;
+    font-family: Gilroy-700 !important;
+    color: #FFFFFF !important;
+}
+
+
+@media only screen and (max-width: 500px) {
+    .cantenarform {
+        padding: 0px !important;
+    }
+
+    .swiss {
+        padding-left: 75px !important;
+    }
+}
