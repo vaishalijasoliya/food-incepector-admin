@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { Typography } from "@material-ui/core";
+import { Button_ } from "../../Layout/buttons";
 
 function myFunction() {
   var x = document.getElementById("myLinks");
@@ -148,25 +149,17 @@ const home = (props) => {
                       <Typography>Are you sure you want to logout</Typography>
                     </div>
                     <div className={styles.btn2yesno}>
-                      <Button
-                        className={styles.yesbtnlisggs2}
-                        onClick={handleCloseCom}
-                      >
-                        No
-                      </Button>
-                      <Button
-                        className={styles.yesbtnlisggs}
-                        onClick={() => {
+                      <Button_ text={"No"} handleClick={handleCloseCom} />
+                      <Button_
+                        text={"Yes"}
+                        handleClick={() => {
                           var profile = "";
                           props.save_user_data({ user: "" });
                           router.push("/");
                           toast.success("Logout Successfully!");
                         }}
-                      >
-                        Yes
-                      </Button>
+                      />
                     </div>
-                    {/* <Popupform props={props} advCreate={advCreate} closePop={handleCloseCom} userId={advId} /> */}
                   </DialogContent>
                 </div>
               </Dialog>
