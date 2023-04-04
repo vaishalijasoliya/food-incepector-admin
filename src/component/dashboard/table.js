@@ -130,15 +130,6 @@ export default function StickyHeadTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event = unknown, newPage = number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event = React.ChangeEvent) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   return (
     <div className={style.pendinguser}>
       <Grid container display={"flex"} flexWrap="wrap">

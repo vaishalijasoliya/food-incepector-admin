@@ -96,7 +96,7 @@ const Newpass = () => {
                 }
               />
               {/* <a href='./index'> */}
-              <button type="submit" className={style.passbtn}>
+              <button type="submit" className={style.submitbtn}>
                 {" "}
                 Set Password{" "}
               </button>

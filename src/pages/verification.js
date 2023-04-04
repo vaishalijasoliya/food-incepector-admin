@@ -6,14 +6,9 @@ import { Types } from "/src/constants/actionTypes";
 import Login_layout from "../Layout/Pages_layout/loginLayout";
 
 const Numverify = (props) => {
-
   return (
     <Login_layout Content={() => <Verify props={props} />} />
-    // <div className={style.main}>
-    //   <div className={style.layout}>
-    //
-    //   </div>
-    // </div>
+   
   );
 };
 

@@ -75,6 +75,17 @@ const home = (props) => {
     >
       <span>Catergory</span>
     </Button>,
+    <Button
+      onClick={() => {
+        router.push("./hotelList");
+      }}
+      className={currentPath == "/hotelList" ? styles.active : ""}
+      key="one"
+      variant="outlined"
+      id={styles.butgri}
+    >
+      <span>Hotel</span>
+    </Button>,
     // <Button
     //   onClick={() => {
     //     router.push("./promotion");

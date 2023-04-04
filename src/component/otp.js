@@ -76,7 +76,7 @@ const Otpbox = (props) => {
             verifyCode();
           }
         }}
-        className={style.verifybtn}
+        className={style.submitbtn}
       >
         {" "}
         Verify{" "}

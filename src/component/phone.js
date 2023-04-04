@@ -75,7 +75,7 @@ const Phone = (props) => {
       ) : (
         ""
       )}
-      <button type="button" className={style.numberbtn} onClick={sendOtpMobile}>
+      <button type="button" className={style.submitbtn} onClick={sendOtpMobile}>
         {" "}
         Continue with phone{" "}
       </button>

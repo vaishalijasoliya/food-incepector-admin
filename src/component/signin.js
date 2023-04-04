@@ -107,7 +107,7 @@ const Signin = (props) => {
             Forgot password?
           </button>
 
-          <button type="submit" className={style.singbtn}>
+          <button type="submit" className={style.submitbtn}>
             Sign in
           </button>
           <button

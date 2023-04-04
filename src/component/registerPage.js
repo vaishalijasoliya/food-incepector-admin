@@ -83,7 +83,7 @@ const Register_page = (props) => {
           type="password"
         />
 
-        <button type="submit" className={style.singbtn}>
+        <button type="submit" className={style.submitbtn}>
           Sign up
         </button>
       </form>

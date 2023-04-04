@@ -12,13 +12,6 @@ const Usercount = (props) => {
   const [signupCount, setSignupCount] = React.useState(0);
   const [activeCount, setActiveCount] = React.useState(0);
   const [inactiveCount, setInactiveCount] = React.useState(0);
-
-  // React.useEffect(() => {
-  //   if (!!props.props.profile && !!props.props.profile.token) {
-  //     usercountlist();
-  //   }
-  // }, []);
-
   const { activeSupportId, setActiveSupportId, setActiveSupportObject } =
     useContext(SupportContext);
 
@@ -126,14 +119,14 @@ const Usercount = (props) => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} display={"flex"} flexWrap={"wrap"}>
+        {/* <Grid item xs={12} display={"flex"} flexWrap={"wrap"}>
           <Grid container spacing={2} paddingTop={"30px"}>
             <Grid item xs={12} md={6}></Grid>
             <Grid item xs={12} md={6}>
               <MediaControlCard props={props} />
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <Box>

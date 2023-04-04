@@ -1,6 +1,6 @@
 @font-face {
-    font-family: Gilroy-400;
-    src: url(../font/Gilroy-Font/Gilroy-Medium.ttf);
+  font-family: Gilroy-400;
+  src: url(../font/Gilroy-Font/Gilroy-Medium.ttf);
 }
 .cantenar2 .lianpohot {
   width: 158px;
@@ -22,7 +22,7 @@
 
 /* .newbar {
   /* background-color: white !important; */
-/* } */ 
+/* } */
 
 .newbtn {
   margin: 0px 0px 0px 10px !important;
@@ -110,45 +110,44 @@ span.btndtl6 {
 }
 
 .cantenar2 #butgri:hover {
-  background: #57b0af !important;
+  background: #c58000 !important;
   border: none;
   border-radius: 16px !important;
   color: white;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
-.yesbtnlisggs{
-    font-family: Gilroy-400 !important;
-    background-color: #57B0AF !important;
-    color: white !important;
-    text-transform: capitalize !important;
-    padding: 7px 30px 7px 30px !important;
-    
+.yesbtnlisggs {
+  font-family: Gilroy-400 !important;
+  background-color: #57b0af !important;
+  color: white !important;
+  text-transform: capitalize !important;
+  padding: 7px 30px 7px 30px !important;
 }
-.btn2yesno{
-    text-align: end;
+.btn2yesno {
+  text-align: end;
 }
-.yesbtnlisggs2{
-    font-family: Gilroy-400 !important;
-    background-color: #FF6A6A !important;
-    color: white !important;
-    text-transform: capitalize !important;
-    padding: 7px 30px 7px 30px !important;
-    margin: 0px 15px 0px 0px !important;
+.yesbtnlisggs2 {
+  font-family: Gilroy-400 !important;
+  background-color: #ff6a6a !important;
+  color: white !important;
+  text-transform: capitalize !important;
+  padding: 7px 30px 7px 30px !important;
+  margin: 0px 15px 0px 0px !important;
 }
-.areypulisfg p{
-    font-family: Gilroy-400 !important;
-    font-size: 18px !important;
-    color: #090909 !important;
-    /* font-weight: bold; */
-    padding: 0px 0px 20px 0px;
+.areypulisfg p {
+  font-family: Gilroy-400 !important;
+  font-size: 18px !important;
+  color: #090909 !important;
+  /* font-weight: bold; */
+  padding: 0px 0px 20px 0px;
 }
-.lgtextout p{
-    font-family: Gilroy-400 !important;
-    font-size: 22px !important;
-    color: #090909 !important;
-    font-weight: bold;
-    padding: 10px 0px 10px 0px;
+.lgtextout p {
+  font-family: Gilroy-400 !important;
+  font-size: 22px !important;
+  color: #090909 !important;
+  font-weight: bold;
+  padding: 10px 0px 10px 0px;
 }
 .newbtnrow {
   width: 100%;
@@ -157,11 +156,12 @@ span.btndtl6 {
 }
 
 .active {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
-    background: #57B0AF !important;
-    border: none;
-    border-radius: 16px !important;
-    color: white !important;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
+  background: #c58000 !important;
+  border: none;
+  border-radius: 16px !important;
+  color: white !important;
 }
 
 .btnhoime {

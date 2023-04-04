@@ -1,12 +1,19 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  TableHead,
+  TableRow,
+  Grid,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import styles from "../../styles/user/paymenttable.module.css";
 import { useRouter } from "next/router";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
@@ -16,13 +23,9 @@ import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import moment from "moment";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import { TextField } from "@material-ui/core";
+import { Table_Pagination } from "../../Layout/Pagination/pagination";
 import { Button_ } from "../../Layout/buttons";
 import { InputLable } from "../../Layout/inputlable";
 
@@ -53,7 +56,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const EnhancedTable = (props) => {
+const Hotels_list = (props) => {
   const router = useRouter();
 
   // console.log(props, 'mirav');
@@ -135,11 +138,11 @@ const EnhancedTable = (props) => {
     }
   };
   // console.log(payment, "paymentlist");
-  React.useEffect(() => {
-    if (!!props.props.profile && !!props.props.profile.token) {
-      getInActiveUserList();
-    }
-  }, []);
+  //   React.useEffect(() => {
+  //     if (!!props.props.profile && !!props.props.profile.token) {
+  //       getInActiveUserList();
+  //     }
+  //   }, []);
 
   return (
     <Grid container>
@@ -178,7 +181,7 @@ const EnhancedTable = (props) => {
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9}>
           <Button className={styles.megobtn} onClick={handleClickOpen}>
-            Add Catergory
+            Add hotel
           </Button>
           <Dialog
             fullWidth={true}
@@ -186,18 +189,8 @@ const EnhancedTable = (props) => {
             open={open}
             onClose={handleClose}
           >
-            <DialogTitle className={styles.addtitalaja}>
-              Add Catergory
-            </DialogTitle>
+            <DialogTitle className={styles.addtitalaja}>Add hotel</DialogTitle>
             <DialogContent>
-              {/* <p className={styles.lebalpereea}>Enter Name</p>
-              <TextField
-                id="outlined-basic"
-                placeholder="Enter Name"
-                className={styles.addnumbarinput}
-                variant="outlined"
-              /> */}
-
               <Box className={"Input_box"}>
                 <InputLable text={"Name"} />
                 <TextField
@@ -212,10 +205,9 @@ const EnhancedTable = (props) => {
                   )}
                 </Box> */}
               </Box>
-
               <div className={styles.cesalbtncss}>
                 <Button_ handleClick={handleClose} text={"Cancle"} />
-                <Button_ handleClick={handleClose} text={"Add"} />{" "}
+                <Button_ handleClick={handleClose} text={"Add"} />
               </div>
             </DialogContent>
           </Dialog>
@@ -317,13 +309,21 @@ const EnhancedTable = (props) => {
                 <TablePagination
                   rowsPerPageOptions={[7, 10, 25, 100]}
                   component="div"
-                  className={styles.bakgvcal}
+                  className={"Pagination__style"}
                   count={payment.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+                {/* <Table_Pagination
+                  rowsPerPageOptions={[7, 10, 25, 100]}
+                  dataCount={payment.length}
+                  rowsPerPage={rowsPerPage}
+                  Page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                /> */}
               </Paper>
             </Box>
           </div>
@@ -344,4 +344,4 @@ const calenderIcon = () => {
   return <img src="./image/calender.png" className="calenderimg" />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EnhancedTable);
+export default connect(mapStateToProps, mapDispatchToProps)(Hotels_list);

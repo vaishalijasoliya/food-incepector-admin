@@ -45,25 +45,6 @@ const Verify = (props) => {
       </p>
       <form>
         <App props={props.props} id={idUser} />
-        {/* <p
-                  className={style.averify}
-                  onClick={() => {
-                    router.push("");
-                  }}
-                >
-                  {" "}
-                  Resend OTP{" "}
-                </p>
-                <button
-                  type="button"
-                  className={style.verifybtn}
-                  onClick={() => {
-                    router.push("./creatpass");
-                  }}
-                >
-                  {" "}
-                  Verify{" "}
-                </button> */}
       </form>
     </div>
   ) : (
