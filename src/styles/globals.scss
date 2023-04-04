@@ -1,11 +1,3 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
 @font-face {
   font-family: Gilroy-600;
   src: url(../styles/font/Gilroy-Font/Gilroy-Bold.ttf);
@@ -14,6 +6,14 @@ body {
 @font-face {
   font-family: Gilroy-500;
   src: url(../styles/font/Gilroy-Font/Gilroy-Medium.ttf);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -28,7 +28,13 @@ a {
 .support-list-bottom {
   height: 100px;
 }
-
+.Input_lable_ {
+  font-family: Gilroy-500;
+  font-size: 18px;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+}
 .support-messages-main {
   height: calc(100% - 100px);
 
@@ -358,7 +364,6 @@ a {
         padding: 1px 8px;
         margin-top: 27px;
 
-
         #ptxt {
           margin: 0px !important;
         }
@@ -617,13 +622,13 @@ a {
   background-color: #f9f9f9 !important;
   padding-left: 27px;
 }
-.rs-picker-toggle-active, .rs-picker.rs-picker-focused
-{
+.rs-picker-toggle-active,
+.rs-picker.rs-picker-focused {
   box-shadow: none !important;
 }
-.rs-picker-toggle-textbox{
-    background-color: inherit !important;
-    padding-left: 27px !important;
+.rs-picker-toggle-textbox {
+  background-color: inherit !important;
+  padding-left: 27px !important;
 }
 .rs-picker-toggle-value {
   color: #898a8d !important;
@@ -754,6 +759,7 @@ a {
 
 .mainDiv {
   background-color: #f9f9f9;
+  height: 100vh;
 }
 
 .apexcharts-data-labels {
@@ -773,16 +779,15 @@ a {
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation24.MuiDialog-paper.MuiDialog-paperScrollPaper.MuiDialog-paperWidthMd.css-12rl710-MuiPaper-root-MuiDialog-paper {
   border-radius: 10px !important;
 }
-.calenderimg{
+.calenderimg {
   vertical-align: middle;
-    text-align: left;
-    position: absolute;
-    left: 0;
-    top: 6px;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  top: 6px;
 }
 
-
-@media only screen and (max-width:1000px) {
+@media only screen and (max-width: 1000px) {
   .maenedit {
     padding: 15px !important;
   }
@@ -793,26 +798,26 @@ a {
   }
 }
 
-@media only screen and (max-width:600px) {
+@media only screen and (max-width: 600px) {
   .css-cyxlny-MuiPaper-root-MuiDialog-paper {
     margin: 0px !important;
   }
 }
 
-@media only screen and (max-width:600px) {
+@media only screen and (max-width: 600px) {
   .css-hz1bth-MuiDialog-container {
     margin: 0px !important;
   }
 }
 
-@media only screen and (max-width:400px) {
+@media only screen and (max-width: 400px) {
   .css-hz1bth-MuiDialog-container {
     width: 100%;
     margin: 0px !important;
   }
 }
 
-@media only screen and (max-width:400px) {
+@media only screen and (max-width: 400px) {
   .Guidelines_guideline_content_2__oOnxa {
     background-image: none !important;
   }

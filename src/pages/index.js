@@ -1,31 +1,14 @@
-import style from '../styles/login.module.css'
-import Signin from '../component/signin.js'
+import style from "../styles/login.module.css";
+import Signin from "../component/signin.js";
+import Login_layout from "../Layout/Pages_layout/loginLayout";
 
 const main = (props) => {
-  console.log(props)
+  console.log(props);
   return (
     <>
-
-      <div className={style.main}>
-        <div className={style.layout}>
-            <Signin props={props} />
-          </div>
-
-
-        {/* <div className={style.imgloglistkk}>
-          <img src='./image/Group 1000002674.png' className={style.uplineimg} />
-        </div>
-        <div className={style.layout}>
-          <Signin props={props} />
-        </div>
-        <div className={style.imgloglistkk2}>
-          <img src='./image/Group 1000002673.png' className={style.btmline} />
-        </div> */}
-      </div>
-
-
+      <Login_layout Content={() => <Signin props={props} />} />
     </>
-  )
-}
+  );
+};
 
-export default main
+export default main;

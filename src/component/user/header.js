@@ -1,65 +1,66 @@
 import styles from "../../styles/user/hedar.module.css";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
-import { connect } from "react-redux";
-import { Types } from "../../../src/constants/actionTypes";
-import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import ApiServices from "../../config/ApiServices";
-import ApiEndpoint from "../../config/ApiEndpoint";
-let stockInterval = null;
-
-
+import { ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { PersonAdd } from "@mui/icons-material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const Nevbar = (props) => {
   const [userCount, setUserCount] = React.useState(0);
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   console.log(userCount, "myuser");
   const router = useRouter();
-  console.log(props, "myprops");
+  // console.log(props, "myprops");
 
-  const getCountuser = async () => {
-    console.log(props, "myusercount");
-    var headers = {
-      "Content-Type": "application/json",
-      "x-access-token": props.props.profile.token,
-    };
-    var data = await ApiServices.GetApiCall(
-      ApiEndpoint.USER_NOTIFICATION_COUNT,
-      headers
-    );
-    if (!!data) {
-      if (data.status == true) {
-        setUserCount(data.data);
-      } else {
-      }
-    } else {
-    }
-    console.log(userCount, "pending");
-  };
+  // const getCountuser = async () => {
+  //   console.log(props, "myusercount");
+  //   var headers = {
+  //     "Content-Type": "application/json",
+  //     "x-access-token": props.props.profile.token,
+  //   };
+  //   var data = await ApiServices.GetApiCall(
+  //     ApiEndpoint.USER_NOTIFICATION_COUNT,
+  //     headers
+  //   );
+  //   if (!!data) {
+  //     if (data.status == true) {
+  //       setUserCount(data.data);
+  //     } else {
+  //     }
+  //   } else {
+  //   }
+  //   console.log(userCount, "pending");
+  // };
 
-  stockInterval = setInterval(() => {
-    getCountuser()
-  }, 3000);
+  // stockInterval = setInterval(() => {
+  //   getCountuser();
+  // }, 3000);
 
-  React.useLayoutEffect(() => {
-    return () => {
-      if (!!stockInterval) {
-        clearInterval(stockInterval)
-      }
-    }
-  }, [])
+  // React.useLayoutEffect(() => {
+  //   return () => {
+  //     if (!!stockInterval) {
+  //       clearInterval(stockInterval);
+  //     }
+  //   };
+  // }, []);
 
-  React.useEffect(() => {
-    getCountuser();
-  }, []);
+  // React.useEffect(() => {
+  //   getCountuser();
+  // }, []);
 
-  const onHandleclick = () => {
-    router.push("./notification");
-  };
+  // const onHandleclick = () => {
+  //   router.push("./notification");
+  // };
 
   return (
     <>
@@ -78,35 +79,86 @@ const Nevbar = (props) => {
           >
             {props.data.title}
           </Typography>
-          {props.data.desc && (
-            <Typography sx={{ p: 1 }} className={styles.text}>
-              {props.data.desc}{" "}
-            </Typography>
-          )}
         </Grid>
         <Grid item xs={12} className={styles.img2} md={6}>
-     
-          <Avatar variant="rounded" className={styles.pohotloho1}>
+          <button
+            variant="rounded"
+            className={styles.pohotloho1}
+            onClick={handleClick}
+          >
             <Avatar
               alt="Profile Picture"
-              src={
-                !!props.profile.profile_photo
-                  ? props.profile.profile_photo
-                  : "./image/image 3.png"
-              }
+              src={"./image/image 3.png"}
               className={styles.pohotloho}
             />
-          </Avatar>
+          </button>
+
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                mt: 1.5,
+                "& .MuiAvatar-root": {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                "&:before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: "background.paper",
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <MenuItem
+              className={styles.Menu_item}
+              onClick={() => {
+                router.push("/editprofile");
+                handleClose();
+              }}
+            >
+              <AccountCircleIcon />
+              {/* <Avatar /> */}
+              profile
+            </MenuItem>
+            <MenuItem
+              className={styles.Menu_item}
+              onClick={() => {
+                router.push("/");
+                handleClose();
+              }}
+            >
+              <LogoutIcon color="action" /> Logout
+            </MenuItem>
+          </Menu>
         </Grid>
       </Grid>
     </>
   );
 };
-const mapStateToProps = (state) => ({
-  profile: state.user.profile,
-});
+// const mapStateToProps = (state) => ({
+//   profile: state.user.profile,
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(Nevbar);
+// const mapDispatchToProps = (dispatch) => ({
+//   save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
+// });
+export default Nevbar;

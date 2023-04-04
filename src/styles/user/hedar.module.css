@@ -1,99 +1,113 @@
 @font-face {
-    font-family: Gilroy-bold;
-    src: url(../font/Gilroy-Font/Gilroy-Bold.ttf);
+  font-family: Gilroy-bold;
+  src: url(../font/Gilroy-Font/Gilroy-Bold.ttf);
 }
 
 .img2 {
-    display: flex;
-    align-items: center;
-    justify-content: end;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 
 .text {
-    font-style: normal !important;
-    font-weight: 400 !important;
-    font-size: 16px !important;
-    line-height: 21px !important;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
-    color: #8E8E8E;
-    padding: 0 !important;
-    width: 100%;
-    margin: 9px 0px 0px 0px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 21px !important;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
+  color: #8e8e8e;
+  padding: 0 !important;
+  width: 100%;
+  margin: 9px 0px 0px 0px !important;
 }
 
 .hedingh3 {
-    font-family: Gilroy-bold !important;
-    /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; */
-    font-style: normal !important;
-    font-weight: 600 !important;
-    font-size: 40px !important;
-    line-height: 60px !important;
-    color: #000000;
-    margin: 0 !important;
-    width: 100%;
+  font-family: Gilroy-bold !important;
+  /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; */
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 40px !important;
+  line-height: 60px !important;
+  color: #000000;
+  margin: 0 !important;
+  width: 100%;
 }
 
 .clrred2 span {
-    color: white !important;
-    background-color: #FF0000 !important;
-    font-size: 12px !important;
-    line-height: 16px !important;
+  color: white !important;
+  background-color: #ff0000 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
 }
 
 .pohotloho1 {
-    background-color: #FFE2E2 !important;
-    width: 46px !important;
-    height: 46px !important;
-    border-radius: 13px !important;
-    margin: 0px 0px 0px 30px;
+  background-color: #ffe2e2 !important;
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 13px !important;
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0px;
+  cursor: pointer;
 }
 
 .pohotloho {
-    width: 51% !important;
-    height: 61% !important;
-    box-sizing: border-box;
-    background: linear-gradient(270deg, rgba(196, 196, 196, 0.7) 0%, rgba(255, 244, 227, 0.7) 0.01%, rgba(242, 215, 255, 0.7) 113.33%);
-    border: 0.5px solid #F0CFDE;
-
+  width: 51% !important;
+  height: 61% !important;
+  box-sizing: border-box;
+  background: linear-gradient(
+    270deg,
+    rgba(196, 196, 196, 0.7) 0%,
+    rgba(255, 244, 227, 0.7) 0.01%,
+    rgba(242, 215, 255, 0.7) 113.33%
+  );
+  border: 0.5px solid #f0cfde;
 }
 
 .ikonbel {
-    width: 20px !important;
-    height: 19px !important;
+  width: 20px !important;
+  height: 19px !important;
 }
 
 .clrred {
-    box-sizing: border-box;
-    width: 48px !important;
-    height: 48px !important;
-    background: #FFFFFF !important;
-    border: 1px solid #E6F1F8;
-    border-radius: 16px !important;
-    /* padding-bottom: 10px !important; */
-    padding-bottom: 0px !important;
+  box-sizing: border-box;
+  width: 48px !important;
+  height: 48px !important;
+  background: #ffffff !important;
+  border: 1px solid #e6f1f8;
+  border-radius: 16px !important;
+  /* padding-bottom: 10px !important; */
+  padding-bottom: 0px !important;
+}
+
+.Menu_item {
+  justify-content: space-between !important;
+  column-gap: 20px;
 }
 
 .maencontainer {
-    margin-bottom: 30px;
-    width: 100%;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
-
 @media only screen and (max-width: 500px) {
-    .hedingh3 {
-        text-align: center;
-    }
+  .hedingh3 {
+    text-align: center;
+  }
 
-    .text {
-        text-align: center;
-    }
+  .text {
+    text-align: center;
+  }
 
-    .img2 {
-        padding: 23px 0px 0px 99px;
-        text-align: center;
-        justify-content: center;
-        margin-top: 10px !important;
-    }
+  .img2 {
+    padding: 23px 0px 0px 99px;
+    text-align: center;
+    justify-content: center;
+    margin-top: 10px !important;
+  }
 }
 
 /* @media only screen and (max-width: 800px) {
