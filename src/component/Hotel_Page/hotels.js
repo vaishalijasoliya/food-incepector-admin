@@ -28,6 +28,9 @@ import { TextField } from "@material-ui/core";
 import { Table_Pagination } from "../../Layout/Pagination/pagination";
 import { Button_ } from "../../Layout/buttons";
 import { InputLable } from "../../Layout/inputlable";
+import { InputField } from "../../Layout/input";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -58,7 +61,6 @@ function stableSort(array, comparator) {
 
 const Hotels_list = (props) => {
   const router = useRouter();
-
   // console.log(props, 'mirav');
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("");
@@ -144,6 +146,28 @@ const Hotels_list = (props) => {
   //     }
   //   }, []);
 
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      mobileNo: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Name is required."),
+      email: Yup.string()
+        .required("Email Adderess is required.")
+        .email("Enter Valid Email"),
+      mobileNo: Yup.string().required("Mobile number is required."),
+    }),
+    onSubmit: () => {
+      const userData = {
+        userId: user.id,
+        name: formik.values.userName,
+      };
+      dispatchStore(userActions.userProfileupdate_(userData, nextpage));
+    },
+  });
+
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
@@ -186,22 +210,30 @@ const Hotels_list = (props) => {
           <Dialog
             fullWidth={true}
             maxWidth={"sm"}
-            open={open}
+            open={true}
             onClose={handleClose}
           >
             <DialogTitle className={styles.addtitalaja}>Add hotel</DialogTitle>
             <DialogContent>
               <Box className={"Input_box"}>
                 <InputLable text={"Name"} />
-                <TextField
+                {/* <TextField
                   id="outlined-basic"
                   placeholder="Enter Name"
                   className={"Input_field"}
                   variant="outlined"
+                /> */}
+                <InputField
+                  name={"name"}
+                  placeholder={"Enter Name"}
+                  lable={"Name"}
+                  error={formik.errors}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
-                {/* <Box className={Styles.error_text_view}>
-                  {formik.errors.userName && formik.touched.userName && (
-                    <Input_error text={formik.errors.userName} />
+                {/* <Box className={styles.error_text_view}>
+                  {formik.errors.name && formik.touched.name && (
+                    <Input_error text={formik.errors.name} />
                   )}
                 </Box> */}
               </Box>

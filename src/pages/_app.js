@@ -41,7 +41,7 @@ const MyApp = (props) => {
       }
       setIsLoaded(true);
     } else {
-      props.router.push("/");
+      // props.router.push("/");
       setTimeout(() => {
         setIsLoaded(true);
       }, 300);
