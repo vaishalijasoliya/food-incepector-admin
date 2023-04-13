@@ -216,7 +216,7 @@ const Hotels_list = (props) => {
             <DialogTitle className={styles.addtitalaja}>Add hotel</DialogTitle>
             <DialogContent>
               <Box className={"Input_box"}>
-                <InputLable text={"Name"} />
+                {/* <InputLable text={"Name"} /> */}
                 {/* <TextField
                   id="outlined-basic"
                   placeholder="Enter Name"

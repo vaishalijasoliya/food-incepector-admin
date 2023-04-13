@@ -50,12 +50,7 @@
   height: 20px;
 }
 .profile_item {
-  background: radial-gradient(
-    63.51% 63.51% at 49.9% 45.53%,
-    #ffd6d8 0%,
-    #f1b3b6 61.41%,
-    #eb9b9f 100%
-  );
+  background: #ae802c;
   border-radius: 39px;
   /* flex-wrap: wrap; */
   padding: 25px 50px 35px 50px;
@@ -127,8 +122,8 @@
   height: 40px;
   border: none;
   border-radius: 16px;
-  background: #c58000 !important;
-  color: white !important;
+  background: white !important;
+  color: #ae802c !important;
   font-size: 18px !important;
   text-align: center;
   cursor: pointer;

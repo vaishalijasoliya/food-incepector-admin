@@ -107,7 +107,7 @@ const Home = (props) => {
           <div style={{ margin: "0 auto" }} className={styles.logopedii}>
             <img
               alt="Remy Sharp"
-              src="./image/admnlogo.png"
+              src="./image/favicon.png"
               className={styles.lianpohot}
             />
           </div>

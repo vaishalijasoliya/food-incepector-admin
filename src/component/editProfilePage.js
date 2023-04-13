@@ -16,7 +16,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 export const Edit_profilePage = () => {
   const [userProfileImage, setUserProfileImage] = React.useState("");
-console.log(userProfileImage , 'userProfileImage__________')
+  console.log(userProfileImage, "userProfileImage__________");
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -68,7 +68,7 @@ console.log(userProfileImage , 'userProfileImage__________')
               </Box>
             </div>
             <Box className={Styles.Input_box}>
-              <InputLable text={"Username"} clr={"black"} />
+              <InputLable text={"Username"} clr={"white"} />
               <TextField
                 className={Styles.Input_field}
                 name="userName"
@@ -83,7 +83,7 @@ console.log(userProfileImage , 'userProfileImage__________')
               </Box>
             </Box>
             <Box className={Styles.Input_box}>
-              <InputLable text={"Mobile number"} clr={"black"} />
+              <InputLable text={"Mobile number"} clr={"white"} />
               <TextField
                 className={Styles.Input_field}
                 name="mobileNumber"
@@ -97,7 +97,10 @@ console.log(userProfileImage , 'userProfileImage__________')
                 )}
               </Box>
             </Box>
-            <Box style={{ flexDirection: "row" }} className={Styles.Input_box}>
+            <Box
+              style={{ flexDirection: "row", justifyContent: "center" }}
+              className={Styles.Input_box}
+            >
               <Button className={Styles.Submit_btn} type="submit">
                 Submit
               </Button>

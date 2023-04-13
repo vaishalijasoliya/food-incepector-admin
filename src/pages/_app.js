@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import configureStore from "/src/store/configureStore";
 import "../styles/globals.scss";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   CssBaseline,
   CircularProgress,
@@ -54,7 +56,7 @@ const MyApp = (props) => {
         <Head>
           <title>Food Incepector</title>
           <meta name="description" content="Food Incepector" />
-          <link rel="icon" href="./image/impress logo.png" />
+          <link rel="icon" href="/favicon.png" />
         </Head>
 
         {isProgress && (

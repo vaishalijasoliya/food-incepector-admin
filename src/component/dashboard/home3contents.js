@@ -129,11 +129,11 @@ const Usercount = (props) => {
         </Grid> */}
       </Grid>
 
-      <Box>
+      {/* <Box>
         <Grid item xs={12} md={12} className={style.tablediv}>
           <StickyHeadTable props={props} />
         </Grid>
-      </Box>
+      </Box> */}
     </>
   );
 };

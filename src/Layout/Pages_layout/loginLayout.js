@@ -14,11 +14,11 @@ const Login_layout = ({ Content }) => {
       <div className={style.main}>
         <div className={style.layout}>
           <Grid container className={style.container}>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ background: "transparent", boxShadow: 0 }}>
+            <Grid item xs={12} md={6} >
+              <Item sx={{ background: "transparent", boxShadow: 0 }}className={style.Main_logo_div}>
                 <div className={style.logodiiv1}>
                   <img
-                    src="./image/loginlogo.png"
+                    src="./image/favicon.png"
                     className={style.logoimglatest}
                   />
                 </div>

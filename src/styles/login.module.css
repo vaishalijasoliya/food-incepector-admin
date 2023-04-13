@@ -29,6 +29,16 @@
   /* max-width: 1920px; */
   height: 100%;
 }
+.logodiiv1 {
+  max-width: 500px;
+}
+.Main_logo_div {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
 .btmline {
   border-radius: 0px 30px;
@@ -40,7 +50,7 @@
   width: 100%;
   border-radius: 30px;
   background-color: #fcfcfc;
-  background-image: url("../../public/image/background-image.png");
+  /* background-image: url("../../public/image/background-image.png"); */
   background-repeat: no-repeat;
   min-height: 100vh;
   background-size: 100vw 100vh;
@@ -64,12 +74,7 @@
 .singin {
   display: flex;
   justify-content: center;
-  background: radial-gradient(
-    63.51% 63.51% at 49.9% 45.53%,
-    #ffd6d8 0%,
-    #f1b3b6 61.41%,
-    #eb9b9f 100%
-  );
+  background: #ae802c;
   border-radius: 39px;
   flex-wrap: wrap;
   padding: 25px 50px 35px 50px;
@@ -138,8 +143,8 @@
   height: 60px;
   border: none;
   border-radius: 16px;
-  background: #c58000;
-  color: white;
+  background: white;
+  color: #ae802c;
   font-size: 18px;
   text-align: center;
   cursor: pointer;
@@ -356,7 +361,7 @@
   height: 60px;
   border: none;
   border-radius: 16px;
-  background: #c58000;
+  background: #ae802c;
   color: white;
   font-size: 18px;
   text-align: center;

@@ -110,7 +110,7 @@ const Signin = (props) => {
           <button type="submit" className={style.submitbtn}>
             Sign in
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={() => {
               router.push("./register");
@@ -118,7 +118,7 @@ const Signin = (props) => {
             className={style.frgttxt}
           >
             New user?
-          </button>
+          </button> */}
         </form>
       </Box>
     </div>
