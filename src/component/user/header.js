@@ -18,7 +18,6 @@ const Nevbar = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(userCount, "myuser");
   const router = useRouter();
   // console.log(props, "myprops");
 
@@ -72,7 +71,6 @@ const Nevbar = (props) => {
       >
         <Grid className={styles.textheging} item xs={12} md={6}>
           <Typography
-            variant="h3"
             gutterBottom
             component="div"
             className={styles.hedingh3}
@@ -82,7 +80,6 @@ const Nevbar = (props) => {
         </Grid>
         <Grid item xs={12} className={styles.img2} md={6}>
           <button
-            variant="rounded"
             className={styles.pohotloho1}
             onClick={handleClick}
           >

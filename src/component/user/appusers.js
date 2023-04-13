@@ -34,10 +34,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { TextField } from "@material-ui/core";
 import { Button_ } from "../../Layout/buttons";
 import MainStyles from "../../styles/mainstyles.module.css";
 import { InputLable } from "../../Layout/inputlable";
+import { TextField } from "@mui/material";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -341,6 +341,7 @@ const EnhancedTable = (props) => {
             maxWidth={maxWidth}
             open={open}
             onClose={handleClose}
+            key={1}
           >
             <DialogTitle className={styles.addtitalaja}>
               Add Incepector
@@ -456,7 +457,7 @@ const EnhancedTable = (props) => {
                           const labelId = `enhanced-table-checkbox-${index}`;
 
                           return (
-                            <TableRow>
+                            <TableRow key={index}>
                               <TableCell className={styles.addnmejdhd2}>
                                 {row.Phone}
                               </TableCell>

@@ -13,6 +13,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  TextField,
 } from "@mui/material";
 import styles from "../../styles/user/paymenttable.module.css";
 import { useRouter } from "next/router";
@@ -24,7 +25,6 @@ import { connect } from "react-redux";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
 import moment from "moment";
-import { TextField } from "@material-ui/core";
 import { Table_Pagination } from "../../Layout/Pagination/pagination";
 import { Button_ } from "../../Layout/buttons";
 import { InputLable } from "../../Layout/inputlable";
@@ -210,7 +210,7 @@ const Hotels_list = (props) => {
           <Dialog
             fullWidth={true}
             maxWidth={"sm"}
-            open={true}
+            open={open}
             onClose={handleClose}
           >
             <DialogTitle className={styles.addtitalaja}>Add hotel</DialogTitle>
@@ -307,7 +307,7 @@ const Hotels_list = (props) => {
                         )
                         .map((row, index) => {
                           return (
-                            <TableRow>
+                            <TableRow key={index}>
                               <TableCell className={styles.addnmejdhd2}>
                                 {row.Email}
                               </TableCell>

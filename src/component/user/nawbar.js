@@ -12,33 +12,20 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { Typography } from "@material-ui/core";
 import { Button_ } from "../../Layout/buttons";
+import { Typography } from "@mui/material";
 
-function myFunction() {
-  var x = document.getElementById("myLinks");
-  if (x.style.display === "block") {
-    x.style.display = "none";
-  } else {
-    x.style.display = "block";
-  }
-}
-
-const drawerWidth = 240;
-const home = (props) => {
+const Home = (props) => {
   const router = useRouter();
   const [com, setCom] = React.useState(false);
   const [active, setActive] = useState("");
-  const [advertiseMent, setAdvertisement] = React.useState("");
   var handleClickOpenCom = (myprops) => {
     setCom(true);
     // console.log(advertiseMent, startDate, endDate, image, 'hello data')
-    myprops = { advertiseMent };
   };
   var handleClickOpenCom = (myprops) => {
     setCom(true);
     // console.log(advertiseMent, startDate, endDate, image, 'hello data')
-    myprops = { advertiseMent };
   };
   const handleCloseCom = () => {
     setCom(false);
@@ -49,6 +36,7 @@ const home = (props) => {
     <Button
       className={currentPath == "/dashboard" ? styles.active : ""}
       id={styles.butgri}
+      key={1}
       onClick={() => {
         router.push("./dashboard"), setActive("dashboard");
       }}
@@ -61,6 +49,7 @@ const home = (props) => {
       }}
       id={styles.butgri}
       variant="outlined"
+      key={2}
       className={currentPath == "/inspectorList" ? styles.active : ""}
     >
       <span>inspector</span>
@@ -69,8 +58,9 @@ const home = (props) => {
       onClick={() => {
         router.push("./category");
       }}
+      key={3}
       className={currentPath == "/category" ? styles.active : ""}
-      key="one"
+      // key="one"
       variant="outlined"
       id={styles.butgri}
     >
@@ -80,8 +70,9 @@ const home = (props) => {
       onClick={() => {
         router.push("./hotelList");
       }}
+      key={4}
       className={currentPath == "/hotelList" ? styles.active : ""}
-      key="one"
+      // key="one"
       variant="outlined"
       id={styles.butgri}
     >
@@ -101,6 +92,7 @@ const home = (props) => {
     <Button
       variant="outlined"
       type="button"
+      key={5}
       id={styles.butgri}
       onClick={handleClickOpenCom}
     >
@@ -177,4 +169,4 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

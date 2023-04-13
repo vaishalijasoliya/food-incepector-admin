@@ -59,8 +59,7 @@ export default function MediaControlCard(props) {
   //   setRegion(data.data[0].number + " " + data.data[0].type);
   //   setRegionlist(data.data[0].payment);
   // };
- 
- 
+
   React.useEffect(() => {
     if (!!props.props.props.profile && !!props.props.props.profile.token) {
       // reviewViewuser();
@@ -97,9 +96,9 @@ export default function MediaControlCard(props) {
                   setValue(item.target.value);
                 }}
               >
-                {selectOptions.map((item1, item2) => (
-                  <option className={style.opt} value={item1.name}>
-                    {item1.name}
+                {selectOptions.map((item, index) => (
+                  <option className={style.opt} key={index} value={item.name}>
+                    {item.name}
                   </option>
                 ))}
               </select>
