@@ -169,10 +169,7 @@ const Hotels_list = (props) => {
   });
 
   return (
-
     <Grid container>
-
-      
       <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item xs={12} md={3}>
           <Box className={styles.boxreting} display={"flex"}>
