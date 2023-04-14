@@ -178,7 +178,7 @@ const EnhancedTable = (props) => {
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9}>
           <Button className={styles.megobtn} onClick={handleClickOpen}>
-            Add Catergory
+            Add Category
           </Button>
           <Dialog
             fullWidth={true}
@@ -187,7 +187,7 @@ const EnhancedTable = (props) => {
             onClose={handleClose}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Add Catergory
+              Add Category
             </DialogTitle>
             <DialogContent>
               {/* <p className={styles.lebalpereea}>Enter Name</p>
@@ -226,7 +226,7 @@ const EnhancedTable = (props) => {
             onClose={handleCloseTWO}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Edit Catergory
+              Edit Category
             </DialogTitle>
             <DialogContent>
               <p className={styles.lebalpereea}>Enter Name</p>

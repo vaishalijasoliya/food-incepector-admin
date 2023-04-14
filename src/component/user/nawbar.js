@@ -64,7 +64,7 @@ const Home = (props) => {
       variant="outlined"
       id={styles.butgri}
     >
-      <span>Catergory</span>
+      <span>Category</span>
     </Button>,
     <Button
       onClick={() => {

@@ -34,24 +34,29 @@ a {
   text-align: center;
   color: #747474;
   margin: 0;
+  margin-top: 14px;
+ 
 }
 .Input_field {
   background: #fff;
   border: 1px solid #484848 !important;
   border-radius: 5px;
   width: 100%;
+  margin: 0  0 10px;
+
 }
 .Input_field input {
   color: #000;
-  padding: 10px 18px;
+  padding: 13px 18px;
   font-size: 20px;
   font-family: Poppins-400;
 }
 .Input_field fieldset {
   border: 0px !important;
 }
+
 .Pagination__style {
-  background-color: #ffd700;
+  background-color: #AE802C ;
   border-radius: 0px 0px 20px 20px;
   font-size: 16px;
   line-height: 19px;
