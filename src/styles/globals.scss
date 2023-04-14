@@ -35,15 +35,13 @@ a {
   color: #747474;
   margin: 0;
   margin-top: 14px;
- 
 }
 .Input_field {
   background: #fff;
   border: 1px solid #484848 !important;
   border-radius: 5px;
   width: 100%;
-  margin: 0  0 10px;
-
+  margin: 0 0 10px;
 }
 .Input_field input {
   color: #000;
@@ -54,9 +52,15 @@ a {
 .Input_field fieldset {
   border: 0px !important;
 }
+.Error_text {
+  color: red;
+  font-size: 16px;
+  height: 20px;
+  // font-family: Manrope-500;
+}
 
 .Pagination__style {
-  background-color: #AE802C ;
+  background-color: #ae802c;
   border-radius: 0px 0px 20px 20px;
   font-size: 16px;
   line-height: 19px;
@@ -761,7 +765,7 @@ a {
 }
 
 .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar {
-  background-color: #AE802C !important;
+  background-color: #ae802c !important;
   color: white !important;
   border-radius: 0px 0px 20px 20px !important;
 }

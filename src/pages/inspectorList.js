@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 
 const index = (props) => {
   const data = {
-    title: "Incepector",
+    title: "Auditor ",
   };
   return (
     <>

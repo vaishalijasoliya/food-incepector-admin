@@ -7,7 +7,7 @@ export const InputField = ({
   lable,
   placeholder,
   name,
-  errors,
+  error,
   onBlur,
 }) => {
   return (
@@ -22,11 +22,7 @@ export const InputField = ({
         onBlur={onBlur}
         name={name}
       />
-      <Box>
-        {errors ? (errors.name ? errors.name : "") : ""}
-
-        {/* {errors.name && touched.name && <Input_error text={errors.name} />} */}
-      </Box>
+      <Box>{typeof error == 'string' ? error : null}</Box>
     </>
   );
 };

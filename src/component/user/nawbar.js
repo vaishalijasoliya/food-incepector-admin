@@ -52,7 +52,7 @@ const Home = (props) => {
       key={2}
       className={currentPath == "/inspectorList" ? styles.active : ""}
     >
-      <span>inspector</span>
+      <span>Auditor </span>
     </Button>,
     <Button
       onClick={() => {

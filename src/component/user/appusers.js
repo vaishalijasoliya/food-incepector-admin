@@ -38,6 +38,7 @@ import { Button_ } from "../../Layout/buttons";
 import MainStyles from "../../styles/mainstyles.module.css";
 import { InputLable } from "../../Layout/inputlable";
 import { TextField } from "@mui/material";
+import { auditorData } from "../Utils/data";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -49,22 +50,7 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
+
 const headCells = [
   {
     id: "Phone",
@@ -115,14 +101,6 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected, status } = props;
@@ -169,15 +147,6 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 const EnhancedTable = (props) => {
-  const grey = {
-    400: "#BFC7CF",
-    500: "#AAB4BE",
-    600: "#6F7E8C",
-  };
-  const blue = {
-    500: "#36DAB2",
-  };
-
   // console.log(props, 'mirav');
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("");
@@ -185,16 +154,8 @@ const EnhancedTable = (props) => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
-  const [signupList, setSignupList] = React.useState([]);
-  const [onlineList, setOnlineList] = React.useState([]);
-  const [inactiveList, setInactiveList] = React.useState([]);
   const [customer, setCustomer] = React.useState([]);
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
   const [customerList, setCustomerList] = React.useState([]);
-  const [dateStart, setDateStart] = React.useState("");
-  const [dateEnd, setDateEnd] = React.useState("");
-  const [tableData, setTableData] = React.useState([]);
   const isSelected = (name) => customer.indexOf(name) !== -1;
   const label = { componentsProps: { input: { "aria-label": "Demo switch" } } };
   const [checked, setChecked] = React.useState(true);
@@ -222,9 +183,6 @@ const EnhancedTable = (props) => {
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
-  const handleChange = (newValue) => {
-    setStartDate(newValue);
-  };
 
   React.useEffect(() => {
     console.log(props.userList, "props.userList");
@@ -236,68 +194,6 @@ const EnhancedTable = (props) => {
   const handleChangeRowsPerPage = (event = React.ChangeEvent) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
-  const userReActive = async (id) => {
-    var headers = {
-      "Content-Type": "application/json",
-      "x-access-token": props.profile.token,
-    };
-    var body = { id_user: id };
-    props.props.loaderRef(true);
-    const data = await ApiServices.PostApiCall(
-      ApiEndpoint.USER_REACTIVE,
-      JSON.stringify(body),
-      headers
-    );
-    props.props.loaderRef(false);
-    if (!!data) {
-      if (data.status == true) {
-        props.getInActiveUserList();
-        props.getOnlineiUserList();
-        props.getSingUpUserList();
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
-    } else {
-      toast.error("Something went wrong.");
-    }
-  };
-
-  const userCancel = async (id) => {
-    var headers = {
-      "Content-Type": "application/json",
-      "x-access-token": props.profile.token,
-    };
-    var body = { id_user: id };
-    props.props.loaderRef(true);
-    const data = await ApiServices.PostApiCall(
-      ApiEndpoint.USER_CANCEL,
-      JSON.stringify(body),
-      headers
-    );
-    props.props.loaderRef(false);
-    if (!!data) {
-      if (data.status == true) {
-        props.getInActiveUserList();
-        props.getOnlineiUserList();
-        props.getSingUpUserList();
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
-    } else {
-      toast.error("Something went wrong.");
-    }
   };
 
   return (
@@ -354,11 +250,6 @@ const EnhancedTable = (props) => {
                   className={MainStyles.Input_field}
                   variant="outlined"
                 />
-                {/* <Box className={Styles.error_text_view}>
-                  {formik.errors.userName && formik.touched.userName && (
-                    <Input_error text={formik.errors.userName} />
-                  )}
-                </Box> */}
               </Box>
               <Box className={"Input_box"}>
                 <InputLable text={"Password"} />
@@ -426,10 +317,6 @@ const EnhancedTable = (props) => {
                 sx={{ width: "100%", mb: 2 }}
                 className={styles.maentebal2}
               >
-                <EnhancedTableToolbar
-                  status={props.status}
-                  numSelected={selected.length}
-                />
                 <TableContainer>
                   <Table
                     sx={{ minWidth: 750 }}
@@ -447,46 +334,12 @@ const EnhancedTable = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {stableSort(customer, getComparator(order, orderBy))
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
+                      {auditorData.map((item , index)=>{
+                        return(
+
                         )
-                        .map((row, index) => {
-                          const isItemSelected = isSelected(row.name);
-                          const labelId = `enhanced-table-checkbox-${index}`;
-
-                          return (
-                            <TableRow key={index}>
-                              <TableCell className={styles.addnmejdhd2}>
-                                {row.Phone}
-                              </TableCell>
-
-                              <TableCell className={styles.datatrgaffa}>
-                                <Button
-                                  className={styles.editbtntebal}
-                                  onClick={() => {
-                                    handleClickOpenTWO(),
-                                      setEditdata(row.Phone);
-                                  }}
-                                >
-                                  <ModeEditIcon style={{ fontSize: "17px" }} />
-                                </Button>
-                                <Button className={styles.editbtntebal2}>
-                                  <DeleteOutlineIcon
-                                    style={{
-                                      fontSize: "17px",
-                                      color: "#E31E24",
-                                    }}
-                                  />
-                                </Button>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
-
-                      {/* {emptyRows > 0 && ( */}
-                      <TableRow></TableRow>
+                      })}
+                    
                     </TableBody>
                   </Table>
                 </TableContainer>
