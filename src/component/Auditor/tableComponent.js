@@ -44,7 +44,7 @@ export const TableComponent = ({
             : data
           ).map((item, index) => {
             return (
-              <TableRow className={Style.table_row}>
+              <TableRow className={Style.table_row} key={index}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.company}</TableCell>
                 <TableCell>{item.userName}</TableCell>

@@ -375,9 +375,9 @@ const Hotels_list = (props) => {
                             page * rowsPerPage + rowsPerPage
                           )
                         : hotelsData_
-                      ).map((item) => {
+                      ).map((item, index) => {
                         return (
-                          <TableRow>
+                          <TableRow key={index}>
                             <TableCell>{item.name}</TableCell>
                             <TableCell>{item.company}</TableCell>
                             <TableCell>
