@@ -57,7 +57,7 @@
 }
 
 .bakgvcal {
-  background-color: #57b0af;
+  background-color: #ae802c;
   border-radius: 0px 0px 20px 20px;
   font-size: 16px;
   line-height: 19px;
@@ -159,7 +159,7 @@
   color: white;
   background-color: black !important;
 }
-.Change_profile_icon_btn svg{
+.Change_profile_icon_btn svg {
   color: white;
 }
 .Change_profile_icon_btn input {
