@@ -34,7 +34,10 @@ a {
   text-align: center;
   color: #747474;
   margin: 0;
-  margin-top: 14px;
+  // margin-top: 14px;
+}
+.error_text_view {
+  height: 20px;
 }
 .Input_field {
   background: #fff;
@@ -45,8 +48,8 @@ a {
 }
 .Input_field input {
   color: #000;
-  padding: 13px 18px;
-  font-size: 20px;
+  padding: 10px 18px;
+  font-size: 15px;
   font-family: Poppins-400;
 }
 .Input_field fieldset {
@@ -761,13 +764,17 @@ a {
   flex-direction: column;
   column-gap: 11px;
   align-items: flex-start;
-  padding-top: 10px;
+  // padding-top: 10px;
 }
 
 .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar {
   background-color: #ae802c !important;
   color: white !important;
   border-radius: 0px 0px 20px 20px !important;
+}
+.content_end {
+  display: flex !important;
+  justify-content:flex-end !important;
 }
 
 .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {

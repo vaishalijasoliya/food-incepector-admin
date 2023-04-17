@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
+  Avatar,
 } from "@mui/material";
 import styles from "../../styles/user/paymenttable.module.css";
 import { useRouter } from "next/router";
@@ -22,83 +23,37 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
-import ApiServices from "../../config/ApiServices";
-import ApiEndpoint from "../../config/ApiEndpoint";
-import moment from "moment";
-import { Table_Pagination } from "../../Layout/Pagination/pagination";
 import { Button_ } from "../../Layout/buttons";
 import { InputLable } from "../../Layout/inputlable";
-import { InputField } from "../../Layout/input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
-const inputProps = {
-  min: 0,
-  max: 10,
-};
-
-//for size*****
-const inputPropssize = {
-  min: 0,
-  max: 10,
-};
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
+import { Input_error } from "../Utils/string";
+import { HotelsData } from "../Utils/data";
+import moment from "moment";
 
 const Hotels_list = (props) => {
   const router = useRouter();
-  // console.log(props, 'mirav');
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
   const [paymentlist, setPaymentlist] = React.useState([]);
   const [payment, setPayment] = React.useState([]);
-  const [customer, setCustomer] = React.useState([]);
   const [saesData, setSaesData] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
+  const [hotelsData_, setHotelData] = React.useState([]);
+  const [hotelSearch, setHotelSearch] = React.useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
-  };
-  const handleClickOpenTWO = () => {
-    setOpenTWO(true);
+    formik.resetForm();
   };
 
   const handleCloseTWO = () => {
     setOpenTWO(false);
   };
-  const isSelected = (name) => customer.indexOf(name) !== -1;
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
@@ -106,69 +61,27 @@ const Hotels_list = (props) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const getInActiveUserList = async (startDate, endDate) => {
-    var headers = {
-      "Content-Type": "application/json",
-      "x-access-token": props.props.profile.token,
-    };
-    var body = {};
-    if (!!startDate && !!endDate) {
-      body.start_day = moment(startDate).format("MM/DD/YYYY");
-      body.end_day = moment(endDate).format("MM/DD/YYYY");
-    }
-    props.props.loaderRef(true);
-    const data = await ApiServices.PostApiCall(
-      ApiEndpoint.USER_PAYMENT_LIST,
-      JSON.stringify(body),
-      headers
-    );
-    props.props.loaderRef(false);
-    // console.log(data, "DATA")
-    if (!!data) {
-      if (data.status == true && data.data.length > 0) {
-        console.log(data.data, "dataa");
-        const inactiveData = [];
-        for (let index = 0; index < data.data.length; index++) {
-          const element = data.data[index];
-          const object = {
-            id: element.id,
-            All: element.payment,
-            Email: element.email,
-            Gender: element.gender,
-            Name: element.full_name,
-            Phone: element.phone_number,
-            User: element.profile_photo,
-          };
-          inactiveData.push(object);
-        }
-        setPayment(inactiveData);
-        setPaymentlist(inactiveData);
-        // setActiveuser('inactive')
-      } else {
-        setPayment([]);
-        setPaymentlist([]);
-      }
-    }
-  };
-  // console.log(payment, "paymentlist");
-  //   React.useEffect(() => {
-  //     if (!!props.props.profile && !!props.props.profile.token) {
-  //       getInActiveUserList();
-  //     }
-  //   }, []);
 
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
-      mobileNo: "",
+      supervisor: "",
+      category: "",
+      hos: "",
+      location: "",
+      timing: "",
+      size: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required."),
-      email: Yup.string()
-        .required("Email Adderess is required.")
-        .email("Enter Valid Email"),
       mobileNo: Yup.string().required("Mobile number is required."),
+      supervisor: Yup.string().required("Superviser in required."),
+      category: Yup.string().required("Category is required"),
+      hos: Yup.string().required("Head of staff in required."),
+      location: Yup.string().required("Location is required."),
+      timing: Yup.string().required("Timing is required."),
+      size: Yup.string().required("Size is required"),
     }),
     onSubmit: () => {
       const userData = {
@@ -178,6 +91,42 @@ const Hotels_list = (props) => {
       dispatchStore(userActions.userProfileupdate_(userData, nextpage));
     },
   });
+
+  const Header = [
+    {
+      name: "Name",
+      id: 1,
+    },
+    {
+      name: "Company",
+      id: 2,
+    },
+    {
+      name: "Timing",
+      id: 3,
+    },
+    {
+      name: "Location",
+      id: 4,
+    },
+    {
+      name: "Head of staff",
+      id: 5,
+    },
+    {
+      name: "category",
+      id: 6,
+    },
+    {
+      name: "Size",
+      id: 7,
+    },
+  ];
+
+  React.useEffect(() => {
+    setHotelData(HotelsData);
+    setHotelSearch(HotelsData);
+  }, []);
 
   return (
     <Grid container>
@@ -199,15 +148,15 @@ const Hotels_list = (props) => {
                 //  onChange={(e) => setText(e.target.value)}
                 if (typeof value !== "object") {
                   if (!value || value == "") {
-                    setPayment(paymentlist);
+                    setHotelData(hotelSearch);
                   } else {
-                    var filteredData = paymentlist.filter((item) => {
-                      let searchValue = item.Name.toLowerCase();
+                    var filteredData = hotelSearch.filter((item) => {
+                      let searchValue = item.name.toLowerCase();
                       return searchValue.includes(
                         value.toString().toLowerCase()
                       );
                     });
-                    setPayment(filteredData);
+                    setHotelData(filteredData);
                   }
                 }
               }}
@@ -220,132 +169,144 @@ const Hotels_list = (props) => {
           </Button>
           <Dialog
             fullWidth={true}
-            maxWidth={"sm"}
+            maxWidth={"md"}
             open={open}
             onClose={handleClose}
+            key={1}
           >
-            <DialogTitle className={styles.addtitalaja}>Add hotel</DialogTitle>
-            <DialogContent>
-              <Box className={"Input_box"}>
-                <InputField
-                  name={"name"}
-                  placeholder={"Enter Name"}
-                  lable={"Name"}
-                  className={styles.inputfield}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"supervisor"}
-                  placeholder={"Enter supervisor Name"}
-                  lable={"supervisor"}
-                  error={formik.errors}
-                  className={styles.inputfield}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"Head of staff"}
-                  type={"number"}
-                  placeholder={"Enter Head of Staff Name"}
-                  lable={"Head of staff"}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"location"}
-                  placeholder={"Enter your location"}
-                  lable={"Add a location"}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"catagory"}
-                  placeholder={"catagory"}
-                  lable={"catagory"}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {/* <InputField
-                  name={"Timing"}
-                  placeholder={"00:00:00"}
-                  lable={"Timing"}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />  */}
+            <DialogTitle className={styles.addtitalaja}>
+              Add kitchens
+            </DialogTitle>
+            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+              <Grid container justifyContent={"space-between"}>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Name"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="name"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.name}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.name && formik.touched.name && (
+                        <Input_error text={formik.errors.name} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Supervisor"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="supervisor"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.supervisor}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.supervisor &&
+                        formik.touched.supervisor && (
+                          <Input_error text={formik.errors.supervisor} />
+                        )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Size"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="size"
+                      type="number"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.size}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.size && formik.touched.size && (
+                        <Input_error text={formik.errors.size} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Location"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="location"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.location}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.location && formik.touched.location && (
+                        <Input_error text={formik.errors.location} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Category"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="category"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.category}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.category && formik.touched.category && (
+                        <Input_error text={formik.errors.category} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Head of staff"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="hos"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.hos}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.hos && formik.touched.hos && (
+                        <Input_error text={formik.errors.hos} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Timing"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="timing"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.timing}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.timing && formik.touched.timing && (
+                        <Input_error text={formik.errors.timing} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
 
-                {/* <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={top100Films}
-                  // sx={{ width: 300 }}
-                  className={styles.autocomplete_styles}
-                  placeholder={"Add a location"}
-                  renderInput={(params) => (
-                    <TextField {...params}  label="Add a location" />
-                  )}
-                /> */}
-
-                {/* <FormControl
-                  className={styles.catagory_style}
-                  sx={{ m: 1, minWidth: 120, margin: 0}}
-                >
-                  <InputLabel  className={styles.catagory_input_lable} htmlFor="grouped-native-select">
-                    Catagory
-                  </InputLabel>
-                  <Select
-                    native
-                    defaultValue=""
-                    id="grouped-native-select"
-                    label="Catagory"
-                  >
-                    <option aria-label="None" value="" />
-                    <optgroup label="Category 1">
-                      <option value={1}>Option 1</option>
-                      <option value={2}>Option 2</option>
-                    </optgroup>
-                    <optgroup label="Category 2">
-                      <option value={3}>Option 3</option>
-                      <option value={4}>Option 4</option>
-                    </optgroup>
-                  </Select>
-                </FormControl> */}
-
-                <div className={styles.time_and_size_div}>
-                  {/* //for timing************* */}
-                  <TextField
-                    id="time"
-                    className={styles.time_style}
-                    placeholder={"set Time"}
-                    type="time"
-                    inputProps={inputProps}
-                  />
-
-                  {/* //for size*** */}
-                  <TextField
-                    placeholder={"Size"}
-                    className={styles.size_style}
-                    type="number"
-                    inputProps={inputPropssize}
-                  />
-                </div>
-
-                {/* <Box className={styles.error_text_view}>
-                  {formik.errors.name && formik.touched.name && (
-                    <Input_error text={formik.errors.name} />
-                  )}
-                </Box> */}
-              </Box>
               <div className={styles.cesalbtncss}>
                 <Button_ handleClick={handleClose} text={"Cancle"} />
-                <Button_ handleClick={handleClose} text={"Add"} />
+                <Button_ handleClick={handleClose} text={"Add"} />{" "}
               </div>
-            </DialogContent>
+            </Box>
           </Dialog>
           <Dialog
             fullWidth={true}
@@ -392,53 +353,43 @@ const Hotels_list = (props) => {
                     aria-labelledby="tableTitle"
                     size={"medium"}
                   >
-                    {" "}
                     <TableHead>
                       <TableRow>
-                        <TableCell align="left" className={styles.addnmejdhd}>
-                          Name
-                        </TableCell>
-                        <TableCell align="right" className={styles.hediangada}>
-                          Actions
-                        </TableCell>
+                        {Header.map((item, index) => {
+                          return (
+                            <TableCell
+                              key={index}
+                              align="left"
+                              className={styles.addnmejdhd}
+                            >
+                              {item.name}
+                            </TableCell>
+                          );
+                        })}
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {stableSort(payment, getComparator(order, orderBy))
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        )
-                        .map((row, index) => {
-                          return (
-                            <TableRow key={index}>
-                              <TableCell className={styles.addnmejdhd2}>
-                                {row.Email}
-                              </TableCell>
-                              <TableCell className={styles.datatrgaffa}>
-                                {" "}
-                                <Button
-                                  className={styles.editbtntebal}
-                                  onClick={handleClickOpenTWO}
-                                >
-                                  <ModeEditIcon style={{ fontSize: "17px" }} />
-                                </Button>
-                                <Button className={styles.editbtntebal2}>
-                                  <DeleteOutlineIcon
-                                    style={{
-                                      fontSize: "17px",
-                                      color: "#E31E24",
-                                    }}
-                                  />
-                                </Button>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
-
-                      {/* {emptyRows > 0 && ( */}
-                      <TableRow></TableRow>
-                      {/* )} */}
+                      {(rowsPerPage > 0
+                        ? hotelsData_.slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage
+                          )
+                        : hotelsData_
+                      ).map((item) => {
+                        return (
+                          <TableRow>
+                            <TableCell>{item.name}</TableCell>
+                            <TableCell>{item.company}</TableCell>
+                            <TableCell>
+                              {moment(item.timing).format("DD/MM/YYYY")}
+                            </TableCell>
+                            <TableCell>{item.location}</TableCell>
+                            <TableCell>{item.head}</TableCell>
+                            <TableCell>{item.category}</TableCell>
+                            <TableCell>{item.size}</TableCell>
+                          </TableRow>
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -446,13 +397,12 @@ const Hotels_list = (props) => {
                   rowsPerPageOptions={[7, 10, 25, 100]}
                   component="div"
                   className={"Pagination__style"}
-                  count={payment.length}
+                  count={hotelsData_.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-                
               </Paper>
             </Box>
           </div>

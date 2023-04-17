@@ -9,7 +9,14 @@ export const InputField = ({
   name,
   error,
   onBlur,
+  value,
 }) => {
+
+  console.log(error ,'is____error')
+
+
+  const arr = error
+
   return (
     <>
       <InputLable text={lable} />
@@ -21,8 +28,11 @@ export const InputField = ({
         onChange={onChange}
         onBlur={onBlur}
         name={name}
+        value={value}
       />
-      <Box>{typeof error == 'string' ? error : null}</Box>
+      <Box>
+        {/* {typeof error == "string" ? myArray.includes(name) ? error ==  : null} */}
+      </Box>
     </>
   );
 };

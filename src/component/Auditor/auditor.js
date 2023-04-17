@@ -8,35 +8,35 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import styles from "../../styles/user/paymenttable.module.css";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button_ } from "../../Layout/buttons";
-import MainStyles from "../../styles/mainstyles.module.css";
+import Tabbar_style from "../../styles/tabbar.module.css";
 import { InputLable } from "../../Layout/inputlable";
-import { Dialog, IconButton, TextField } from "@mui/material";
+import {
+  Avatar,
+  Dialog,
+  IconButton,
+  Tab,
+  Tabs,
+  TextField,
+  ThemeProvider,
+  Typography,
+  createTheme,
+} from "@mui/material";
 import { auditorData } from "../Utils/data";
 import Style from "./auditor.module.css";
 import { DeleteIcon_, Editicon } from "../Utils/icons";
 import { useFormik } from "formik";
-import { InputField } from "../../Layout/input";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import * as Yup from "yup";
 import { Input_error } from "../Utils/string";
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
+import { TabPanel, a11yProps } from "../Tabs/tabs";
+import { TableComponent } from "./tableComponent";
 
 const Auditor_page = (props) => {
   const [page, setPage] = React.useState(0);
@@ -44,20 +44,25 @@ const Auditor_page = (props) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
   const [customer, setCustomer] = React.useState([]);
   const [customerList, setCustomerList] = React.useState([]);
-  const isSelected = (name) => customer.indexOf(name) !== -1;
-  const label = { componentsProps: { input: { "aria-label": "Demo switch" } } };
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
+  const [value, setValue] = React.useState(0);
+  const [aciveData, setActiveData] = React.useState([]);
+  const [deletedData, setDeleteddata] = React.useState([]);
+  const [activeSearch, setActiveSearch] = React.useState([]);
+  const [deletedSearch, setDeletedSearch] = React.useState([]);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
 
-  const [maxWidth, setMaxWidth] = React.useState("sm");
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [editdata, setEditdata] = React.useState("");
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
-  console.log(editdata, "editdata");
   const handleClose = () => {
     setOpen(false);
+    formik.resetForm();
   };
   const handleClickOpenTWO = () => {
     setOpenTWO(true);
@@ -65,6 +70,15 @@ const Auditor_page = (props) => {
 
   const handleCloseTWO = () => {
     setOpenTWO(false);
+    formik.resetForm();
+  };
+
+  const handleClose_delete = () => {
+    setDeleteOpen(false);
+  };
+
+  const handleOpen_delete = () => {
+    setDeleteOpen(true);
   };
   const Header = [
     // { id: 1, name: "Index" },
@@ -109,6 +123,32 @@ const Auditor_page = (props) => {
     },
   });
 
+  React.useEffect(() => {
+    const ActiveArr = [];
+    const DeletedArr = [];
+    for (let index = 0; index < auditorData.length; index++) {
+      const element = auditorData[index];
+      if (element.status == "active") {
+        ActiveArr.push(element);
+      } else if (element.status == "deleted") {
+        DeletedArr.push(element);
+      }
+      console.log(element);
+    }
+    setActiveSearch(ActiveArr);
+    setActiveData(ActiveArr);
+    setDeletedSearch(DeletedArr);
+    setDeleteddata(DeletedArr);
+  }, []);
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#ae802c",
+      },
+    },
+  });
+
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
@@ -122,19 +162,35 @@ const Auditor_page = (props) => {
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
-                setPage(0);
-                var value = e.target.value;
-                if (typeof value !== "object") {
-                  if (!value || value == "") {
-                    setCustomer(customerList);
-                  } else {
-                    var filteredData = customerList.filter((item) => {
-                      let searchValue = item.Name.toLowerCase();
-                      return searchValue.includes(
-                        value.toString().toLowerCase()
-                      );
-                    });
-                    setCustomer(filteredData);
+                if (value == 0) {
+                  var value_ = e.target.value;
+                  if (typeof value_ !== "object") {
+                    if (!value_ || value_ == "") {
+                      setActiveData(activeSearch);
+                    } else {
+                      var filteredData = activeSearch.filter((item) => {
+                        let searchValue = item.name.toLowerCase();
+                        return searchValue.includes(
+                          value_.toString().toLowerCase()
+                        );
+                      });
+                      setActiveData(filteredData);
+                    }
+                  }
+                } else {
+                  var value_ = e.target.value;
+                  if (typeof value_ !== "object") {
+                    if (!value_ || value_ == "") {
+                      setDeleteddata(deletedSearch);
+                    } else {
+                      var filteredData = deletedSearch.filter((item) => {
+                        let searchValue = item.name.toLowerCase();
+                        return searchValue.includes(
+                          value_.toString().toLowerCase()
+                        );
+                      });
+                      setDeleteddata(filteredData);
+                    }
                   }
                 }
               }}
@@ -146,7 +202,7 @@ const Auditor_page = (props) => {
             Add Incepector
           </Button>
           <Dialog
-            fullWidth={fullWidth}
+            fullWidth={true}
             maxWidth={"md"}
             open={open}
             onClose={handleClose}
@@ -155,8 +211,32 @@ const Auditor_page = (props) => {
             <DialogTitle className={styles.addtitalaja}>
               Add Incepector
             </DialogTitle>
-            <DialogContent>
+            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
               <Grid container justifyContent={"space-between"}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  xl={12}
+                  lg={12}
+                  className={styles.Image_user_item}
+                >
+                  <Box className={styles.Image_user_item_div}>
+                    <Box className={styles.Profile_photo_div}>
+                      <Avatar
+                        className={styles.Profile_photo_avtar}
+                        alt="user profile photo"
+                        // src={userProfileImage}
+                      />
+                    </Box>
+
+                    <IconButton className={styles.Change_profile_icon_btn}>
+                      <input type="file" name="myImage" />
+                      <AddRoundedIcon />
+                    </IconButton>
+                  </Box>
+                </Grid>
                 <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                   <Box className={"Input_box"}>
                     <InputLable text={"Enter name"} fs={"12px"} />
@@ -176,7 +256,7 @@ const Auditor_page = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                   <Box className={"Input_box"}>
-                    <InputLable text={"Company name"} fs={"12px"} />
+                    <InputLable text={"Username"} fs={"12px"} />
                     <TextField
                       className={"Input_field"}
                       name="userName"
@@ -187,23 +267,6 @@ const Auditor_page = (props) => {
                     <Box className={"error_text_view"}>
                       {formik.errors.userName && formik.touched.userName && (
                         <Input_error text={formik.errors.userName} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Company name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="name"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.userName}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.name && formik.touched.name && (
-                        <Input_error text={formik.errors.name} />
                       )}
                     </Box>
                   </Box>
@@ -227,21 +290,39 @@ const Auditor_page = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                   <Box className={"Input_box"}>
-                    <InputLable text={"Enter name"} fs={"12px"} />
+                    <InputLable text={"Password"} fs={"12px"} />
                     <TextField
                       className={"Input_field"}
-                      name="name"
+                      name="password"
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={formik.values.name}
+                      value={formik.values.password}
                     />
                     <Box className={"error_text_view"}>
-                      {formik.errors.name && formik.touched.name && (
-                        <Input_error text={formik.errors.name} />
+                      {formik.errors.password && formik.touched.password && (
+                        <Input_error text={formik.errors.password} />
                       )}
                     </Box>
                   </Box>
                 </Grid>
+              </Grid>
+              <div className={styles.cesalbtncss}>
+                <Button_ handleClick={handleClose} text={"Cancle"} />
+                <Button_ handleClick={handleClose} text={"Add"} />{" "}
+              </div>
+            </Box>
+          </Dialog>
+          <Dialog
+            fullWidth={true}
+            maxWidth={"md"}
+            open={openTWO}
+            onClose={handleCloseTWO}
+          >
+            <DialogTitle className={styles.addtitalaja}>
+              Edit Incepector
+            </DialogTitle>
+            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+              <Grid container justifyContent={"space-between"}>
                 <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                   <Box className={"Input_box"}>
                     <InputLable text={"Enter name"} fs={"12px"} />
@@ -259,56 +340,165 @@ const Auditor_page = (props) => {
                     </Box>
                   </Box>
                 </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Username"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="userName"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.userName}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.userName && formik.touched.userName && (
+                        <Input_error text={formik.errors.userName} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Company name"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="company"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.company}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.company && formik.touched.company && (
+                        <Input_error text={formik.errors.company} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Password"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="password"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.password && formik.touched.password && (
+                        <Input_error text={formik.errors.password} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
               </Grid>
-
               <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose} text={"Cancle"} />
-                <Button_ handleClick={handleClose} text={"Add"} />{" "}
+                <Button_ handleClick={handleCloseTWO} text={"Cancle"} />
+                <Button_ handleClick={handleCloseTWO} text={"Add"} />{" "}
               </div>
-            </DialogContent>
+            </Box>
           </Dialog>
           <Dialog
-            fullWidth={fullWidth}
-            maxWidth={maxWidth}
-            open={openTWO}
-            onClose={handleCloseTWO}
+            fullWidth={true}
+            maxWidth={"sm"}
+            open={deleteOpen}
+            onClose={handleClose_delete}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Edit Incepector
+              Delete Incepector
             </DialogTitle>
-            <DialogContent>
-              <p className={styles.lebalpereea}>Enter Number</p>
-              <TextField
-                id="outlined-basic"
-                value={editdata}
-                placeholder="Enter Number"
-                className={styles.addnumbarinput}
-                variant="outlined"
-              />
-              <p className={styles.lebalpereea}>Enter Password</p>
-              <TextField
-                id="outlined-basic"
-                className={styles.addnumbarinput}
-                placeholder="Enter Password"
-                variant="outlined"
-              />
+            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+              <Typography>
+                Are you sure you want to delete Inspector?
+              </Typography>
               <div className={styles.cesalbtncss}>
-                <Button
-                  className={styles.ceselbtfffaa}
-                  onClick={handleCloseTWO}
-                >
-                  Cancel
-                </Button>
-                <Button className={styles.adddatalist}>Edit</Button>
+                <Button_ handleClick={handleClose_delete} text={"Cancle"} />
+                <Button_ handleClick={handleClose_delete} text={"Delete"} />{" "}
               </div>
-            </DialogContent>
+            </Box>
           </Dialog>
         </Grid>
       </Grid>
       <Grid container>
         <Grid item xs={12} md={12}>
           <div>
-            <Box sx={{ width: "100%" }}>
+            <ThemeProvider theme={theme}>
+              <Paper
+                sx={{
+                  width: "100%",
+                  mb: 2,
+                  padding: "0px",
+                  paddingTop: "10px",
+                }}
+                className={styles.maentebal2}
+              >
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                  indicatorColor="primary"
+                  className={Tabbar_style.Tab_container}
+                  sx={{
+                    "& .MuiTabs-flexContainer	": {
+                      columnGap: "20px",
+                    },
+                  }}
+                >
+                  <Tab
+                    className={Tabbar_style.tab_btns}
+                    label="Active"
+                    {...a11yProps(0)}
+                  />
+                  <Tab
+                    className={Tabbar_style.tab_btns}
+                    label="Deleted"
+                    {...a11yProps(1)}
+                  />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                  <TableComponent
+                    handleClickOpenTWO={handleClickOpenTWO}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    handleOpen_delete={handleOpen_delete}
+                    data={aciveData}
+                    Header={Header}
+                  />
+                  <TablePagination
+                    rowsPerPageOptions={[7, 10, 25, 100]}
+                    component="div"
+                    className={styles.bakgvcal}
+                    count={aciveData.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                  <TableComponent
+                    handleClickOpenTWO={handleClickOpenTWO}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    handleOpen_delete={handleOpen_delete}
+                    data={deletedData}
+                    Header={Header}
+                  />
+                  <TablePagination
+                    rowsPerPageOptions={[7, 10, 25, 100]}
+                    component="div"
+                    className={styles.bakgvcal}
+                    count={deletedData.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </TabPanel>
+              </Paper>
+            </ThemeProvider>
+
+            {/* <Box sx={{ width: "100%" }}>
               <Paper
                 sx={{ width: "100%", mb: 2 }}
                 className={styles.maentebal2}
@@ -352,7 +542,10 @@ const Auditor_page = (props) => {
                                 <IconButton className={Style.icon_btn}>
                                   <DeleteIcon_ height={15} width={15} />
                                 </IconButton>
-                                <IconButton className={Style.icon_btn}>
+                                <IconButton
+                                  className={Style.icon_btn}
+                                  onClick={handleClickOpenTWO}
+                                >
                                   <Editicon height={15} width={15} />
                                 </IconButton>
                               </Box>
@@ -374,7 +567,7 @@ const Auditor_page = (props) => {
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
               </Paper>
-            </Box>
+            </Box> */}
           </div>
         </Grid>
       </Grid>

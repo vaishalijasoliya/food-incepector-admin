@@ -68,6 +68,17 @@ const Home = (props) => {
     </Button>,
     <Button
       onClick={() => {
+        router.push("./questions");
+      }}
+      className={currentPath == "/questions" ? styles.active : ""}
+      key="one"
+      variant="outlined"
+      id={styles.butgri}
+    >
+      <span>Questions</span>
+    </Button>,
+    <Button
+      onClick={() => {
         router.push("./hotelList");
       }}
       key={4}
@@ -76,19 +87,9 @@ const Home = (props) => {
       variant="outlined"
       id={styles.butgri}
     >
-      <span>Hotel</span>
+      <span>Locations</span>
     </Button>,
-    // <Button
-    //   onClick={() => {
-    //     router.push("./promotion");
-    //   }}
-    //   className={currentPath == "/promotion" ? styles.active : ""}
-    //   key="one"
-    //   variant="outlined"
-    //   id={styles.butgri}
-    // >
-    //   <span>Questions</span>
-    // </Button>,
+
     <Button
       variant="outlined"
       type="button"

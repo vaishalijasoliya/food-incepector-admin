@@ -50,7 +50,6 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-
 const headCells = [
   {
     id: "Phone",
@@ -100,7 +99,6 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected, status } = props;
@@ -333,14 +331,7 @@ const EnhancedTable = (props) => {
                         </TableCell>
                       </TableRow>
                     </TableHead>
-                    <TableBody>
-                      {auditorData.map((item , index)=>{
-                        return(
-
-                        )
-                      })}
-                    
-                    </TableBody>
+                    <TableBody></TableBody>
                   </Table>
                 </TableContainer>
                 <TablePagination
