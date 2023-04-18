@@ -293,7 +293,7 @@ const EnhancedTable = (props) => {
                       : categoryList
                     ).map((item, index) => {
                       return (
-                        <TableRow>
+                        <TableRow key={index}>
                           <TableCell>{item.category}</TableCell>
                           <TableCell className="content_end">
                             <Box style={{ display: "flex" }}>
