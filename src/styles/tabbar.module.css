@@ -1,0 +1,16 @@
+.tabbar_box {
+  border-bottom: 1px solid #d4e0f1;
+}
+.tab_btns {
+  text-transform: capitalize !important;
+  font-size: 15px !important;
+  font-family: Gilroy-500 !important;
+  /* padding: 0px 10px; */
+  min-height: 40px !important;
+}
+.Tab_container {
+  display: flex;
+  /* column-gap: 20px; */
+  min-height: 40px;
+  border-bottom: 2px solid #ae802c6c;
+}

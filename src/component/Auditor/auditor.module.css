@@ -1,0 +1,11 @@
+.table_row {
+}
+.table_cell {
+  text-transform: capitalize;
+}
+.last_td {
+}
+.icon_btn {
+  width: 30px;
+  height: 30px;
+}

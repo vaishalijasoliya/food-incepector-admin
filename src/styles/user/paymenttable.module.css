@@ -57,7 +57,7 @@
 }
 
 .bakgvcal {
-  background-color: #57b0af;
+  background-color: #ae802c;
   border-radius: 0px 0px 20px 20px;
   font-size: 16px;
   line-height: 19px;
@@ -126,6 +126,54 @@
 
 .maentebal2 {
   border-radius: 20px 20px 20px 20px !important;
+}
+
+.Profile_photo_div {
+  width: 120px;
+  height: 120px;
+  /* border: 2px solid; */
+  overflow: hidden;
+  border-radius: 50%;
+  position: relative;
+}
+.Profile_photo_div img {
+  width: 100%;
+}
+.Profile_photo_avtar {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.Image_user_item {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.Change_profile_icon_btn {
+  position: absolute !important;
+  bottom: 0;
+  height: 30px;
+  width: 30px;
+  right: 0;
+  color: white;
+  background-color: black !important;
+}
+.Change_profile_icon_btn svg {
+  color: white;
+}
+.Change_profile_icon_btn input {
+  width: 30px;
+  height: 30px;
+  border: 1px solid;
+  position: absolute;
+  opacity: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.Image_user_item_div {
+  position: relative;
 }
 
 .addlistselect {
@@ -405,9 +453,7 @@
   margin: 22px 0;
 } */
 
-
-
-.autocomplete_styles{
+.autocomplete_styles {
   width: 100%;
   margin: 6px 0 16px;
   border-radius: 4px;
@@ -418,35 +464,27 @@
   font-family: Poppins-400;
 }
 
-.autocomplete_styles:hover{
+.autocomplete_styles:hover {
   border: none;
 }
-.inputfield{
-margin-bottom: 15px;
+.inputfield {
+  margin-bottom: 15px;
 }
-.catagory_style{
+.catagory_style {
   width: 100%;
-margin: 0;
-border-radius: 4px;
-font-size: 20px;
-font-weight: 400;
-background: #fff;
-/* border: 1px solid #484848 !important; */
-font-family: Poppins-400;
-}
-.catagory_input_lable{
-font-size: 20px;
-font-family: Poppins-400;
-}
-.time_style{
+  margin: 0;
   border-radius: 4px;
-font-size: 20px;
-font-weight: 400;
-background: #fff;
-border: 1px solid #484848 !important;
-font-family: Poppins-400;
+  font-size: 20px;
+  font-weight: 400;
+  background: #fff;
+  /* border: 1px solid #484848 !important; */
+  font-family: Poppins-400;
 }
-.size_style{
+.catagory_input_lable {
+  font-size: 20px;
+  font-family: Poppins-400;
+}
+.time_style {
   border-radius: 4px;
 font-size: 20px;
 width: 100%;
@@ -461,18 +499,6 @@ padding: 0;
   width: 100%;
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media only screen and (max-width: 1000px) {
   .boxreting2 {

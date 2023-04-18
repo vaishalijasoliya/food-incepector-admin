@@ -7,9 +7,16 @@ export const InputField = ({
   lable,
   placeholder,
   name,
-  errors,
+  error,
   onBlur,
+  value,
 }) => {
+
+  console.log(error ,'is____error')
+
+
+  const arr = error
+
   return (
     <>
       <InputLable text={lable} />
@@ -21,11 +28,10 @@ export const InputField = ({
         onChange={onChange}
         onBlur={onBlur}
         name={name}
+        value={value}
       />
       <Box>
-        {errors ? (errors.name ? errors.name : "") : ""}
-
-        {/* {errors.name && touched.name && <Input_error text={errors.name} />} */}
+        {/* {typeof error == "string" ? myArray.includes(name) ? error ==  : null} */}
       </Box>
     </>
   );
