@@ -170,12 +170,6 @@ import * as Yup from "yup";
 // import Select from "@mui/material/Select";
 
 
-//for timing
-const inputProps = {
-  min : 0,
-  max : 10,
-};
-
 //for size*****
 const inputPropssize = {
   min : 0,
@@ -216,6 +210,7 @@ const Hotels_list = (props) => {
   
   const router = useRouter();
   // console.log(props, 'mirav');
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("");
   const [page, setPage] = React.useState(0);
@@ -384,16 +379,16 @@ const Hotels_list = (props) => {
                 <InputField
                   name={"supervisor"}
                   placeholder={"Enter supervisor Name"}
-                  lable={"supervisor"}
+                  lable={"Supervisor"}
                   error={formik.errors}
                   className={styles.inputfield}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 <InputField
-                  name={"Head of staff"}
+                  name={"head of staff"}
                   type={"number"}
-                  placeholder={"Enter Head of Staff Name"}
+                  placeholder={"Enter Your Head of Staff Name"}
                   lable={"Head of staff"}
                   error={formik.errors}
                   onChange={formik.handleChange}
@@ -409,19 +404,28 @@ const Hotels_list = (props) => {
                 />  
                 <InputField
                   name={"catagory"}
-                  placeholder={"catagory"}
-                  lable={"catagory"}
+                  placeholder={"Catagory"}
+                  lable={"Catagory"}
                   error={formik.errors}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 /> 
-                 {/* <InputField
+                 <InputField
                   name={"Timing"}
                   placeholder={"00:00:00"}
                   lable={"Timing"}
                   error={formik.errors}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
+                /> 
+                {/* <InputField
+                  name={"size"}
+                  lable={"Size"}
+                  error={formik.errors}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  type="number"
+                  inputProps={inputPropssize}
                 />  */}
 
                 {/* <Autocomplete
@@ -461,14 +465,10 @@ const Hotels_list = (props) => {
                   </Select>
                 </FormControl> */}
 
-                
-
-                <div className={styles.time_and_size_div}>
-                {/* //for timing************* */}
-                <TextField id="time" className={styles.time_style} placeholder={"set Time"} type="time" inputProps={inputProps} />
             
 
                 {/* //for size*** */}
+                <div  className={styles.size_style_div}>
                 <TextField  placeholder={"Size"} className={styles.size_style} type="number" inputProps={inputPropssize} />
                 </div>
                 
@@ -491,7 +491,7 @@ const Hotels_list = (props) => {
             onClose={handleCloseTWO}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Edit Catergory
+              Edit Category
             </DialogTitle>
             <DialogContent>
               <p className={styles.lebalpereea}>Enter Name</p>

@@ -399,11 +399,11 @@
   /* color: #979797; */
   font-family: Gilroy-700 !important;
 }
-.time_and_size_div{
+/* .time_and_size_div{
   display: flex;
   column-gap: 20px;
   margin: 22px 0;
-}
+} */
 
 
 
@@ -449,10 +449,17 @@ font-family: Poppins-400;
 .size_style{
   border-radius: 4px;
 font-size: 20px;
+width: 100%;
 font-weight: 400;
 background: #fff;
 border: 1px solid #484848 !important;
 font-family: Poppins-400;
+padding: 0;
+}
+.size_style_div{
+  margin-top: 20px;
+  width: 100%;
+  
 }
 
 
