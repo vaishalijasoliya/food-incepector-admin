@@ -25,19 +25,17 @@ import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import { Button_ } from "../../Layout/buttons";
 import { InputLable } from "../../Layout/inputlable";
-import InputField from '@mui/material/Input';
+import InputField from "@mui/material/Input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { HotelsData } from "../Utils/data";
+import moment from "moment";
 
 //for size*****
 const inputPropssize = {
-  min : 0,
-  max : 10,
+  min: 0,
+  max: 10,
 };
-
-
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -216,7 +214,6 @@ const Hotels_list = (props) => {
             <DialogTitle className={styles.addtitalaja}>Add hotel</DialogTitle>
             <DialogContent>
               <Box className={"Input_box"}>
-          
                 <InputField
                   name={"name"}
                   placeholder={"Enter Name"}
@@ -243,15 +240,15 @@ const Hotels_list = (props) => {
                   error={formik.errors}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                />  
-                 <InputField
+                />
+                <InputField
                   name={"location"}
                   placeholder={"Enter your location"}
                   lable={"Add a location"}
                   error={formik.errors}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                />  
+                />
                 <InputField
                   name={"catagory"}
                   placeholder={"Catagory"}
@@ -259,24 +256,26 @@ const Hotels_list = (props) => {
                   error={formik.errors}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                /> 
-                 <InputField
+                />
+                <InputField
                   name={"Timing"}
                   placeholder={"00:00:00"}
                   lable={"Timing"}
                   error={formik.errors}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                /> 
-        
-
-            
+                />
 
                 {/* //for size*** */}
-                <div  className={styles.size_style_div}>
-                <TextField  placeholder={"Size"} className={styles.size_style} type="number" inputProps={inputPropssize} />
+                <div className={styles.size_style_div}>
+                  <TextField
+                    placeholder={"Size"}
+                    className={styles.size_style}
+                    type="number"
+                    inputProps={inputPropssize}
+                  />
                 </div>
-                
+
                 {/* <Box className={styles.error_text_view}>
                   {formik.errors.name && formik.touched.name && (
                     <Input_error text={formik.errors.name} />

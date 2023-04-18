@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Box, IconButton, Table, TableBody, TableCell } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
@@ -61,43 +68,6 @@ const EnhancedTable = (props) => {
                         </TableCell>
                       </TableRow>
                     </TableHead>
-                    <TableBody style={{backgroundColor:"#AE802C"}}>
-                      {stableSort(payment, getComparator(order, orderBy))
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        )
-                        .map((row, index) => {
-                          return (
-                            <TableRow key={index}>
-                              <TableCell className={styles.addnmejdhd2}>
-                                {row.Email}
-                              </TableCell>
-                              <TableCell className={styles.datatrgaffa}>
-                                {" "}
-                                <Button
-                                  className={styles.editbtntebal}
-                                  onClick={handleClickOpenTWO}
-                                >
-                                  <ModeEditIcon style={{ fontSize: "17px" }} />
-                                </Button>
-                                <Button className={styles.editbtntebal2}>
-                                  <DeleteOutlineIcon
-                                    style={{
-                                      fontSize: "17px",
-                                      color: "#E31E24",
-                                    }}
-                                  />
-                                </Button>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
-
-                      {/* {emptyRows > 0 && ( */}
-                      <TableRow></TableRow>
-                      {/* )} */}
-                    </TableBody>
                   </Table>
                 </TableContainer>
                 <TablePagination
