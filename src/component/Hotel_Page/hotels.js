@@ -15,70 +15,39 @@ import {
   DialogTitle,
   TextField,
   Avatar,
+  IconButton,
+  Typography,
 } from "@mui/material";
 import styles from "../../styles/user/paymenttable.module.css";
-import { useRouter } from "next/router";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import { Button_ } from "../../Layout/buttons";
 import { InputLable } from "../../Layout/inputlable";
-import InputField from "@mui/material/Input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { HotelsData } from "../Utils/data";
 import moment from "moment";
-
-//for size*****
-const inputPropssize = {
-  min: 0,
-  max: 10,
-};
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
+import { Input_error } from "../Utils/string";
+import { DeleteIcon_, Editicon } from "../Utils/icons";
 
 const Hotels_list = (props) => {
-  const router = useRouter();
-  // console.log(props, 'mirav');
-
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
-  const [paymentlist, setPaymentlist] = React.useState([]);
-  const [payment, setPayment] = React.useState([]);
   const [saesData, setSaesData] = React.useState("");
   const [open, setOpen] = React.useState(false);
-  const [openTWO, setOpenTWO] = React.useState(false);
   const [hotelsData_, setHotelData] = React.useState([]);
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [hotelSearch, setHotelSearch] = React.useState([]);
+
+  const handleClose_delete = () => {
+    setDeleteOpen(false);
+  };
+
+  const handleOpen_delete = () => {
+    setDeleteOpen(true);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -88,9 +57,6 @@ const Hotels_list = (props) => {
     formik.resetForm();
   };
 
-  const handleCloseTWO = () => {
-    setOpenTWO(false);
-  };
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
@@ -158,6 +124,10 @@ const Hotels_list = (props) => {
       name: "Size",
       id: 7,
     },
+    {
+      name: "Actions",
+      id: 8,
+    },
   ];
 
   React.useEffect(() => {
@@ -165,8 +135,35 @@ const Hotels_list = (props) => {
     setHotelSearch(HotelsData);
   }, []);
 
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+    formik.resetForm();
+  };
+
+  const handleClickOpenEdit = () => {
+    setOpenEdit(true);
+  };
+
   return (
     <Grid container>
+      <Dialog
+        fullWidth={true}
+        maxWidth={"sm"}
+        open={deleteOpen}
+        onClose={handleClose_delete}
+      >
+        <DialogTitle className={styles.addtitalaja}>
+          Delete Locations
+        </DialogTitle>
+        <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+          <Typography>Are you sure you want to delete Location?</Typography>
+          <div className={styles.cesalbtncss}>
+            <Button_ handleClick={handleClose_delete} text={"Cancle"} />
+            <Button_ handleClick={handleClose_delete} text={"Delete"} />{" "}
+          </div>
+        </Box>
+      </Dialog>
+
       <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item xs={12} md={3}>
           <Box className={styles.boxreting} display={"flex"}>
@@ -202,7 +199,7 @@ const Hotels_list = (props) => {
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9}>
           <Button className={styles.megobtn} onClick={handleClickOpen}>
-            Add hotel
+            Add Location
           </Button>
           <Dialog
             fullWidth={true}
@@ -211,114 +208,282 @@ const Hotels_list = (props) => {
             onClose={handleClose}
             key={1}
           >
-            <DialogTitle className={styles.addtitalaja}>Add hotel</DialogTitle>
-            <DialogContent>
-              <Box className={"Input_box"}>
-                <InputField
-                  name={"name"}
-                  placeholder={"Enter Name"}
-                  lable={"Name"}
-                  className={styles.inputfield}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"supervisor"}
-                  placeholder={"Enter supervisor Name"}
-                  lable={"Supervisor"}
-                  error={formik.errors}
-                  className={styles.inputfield}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"head of staff"}
-                  type={"number"}
-                  placeholder={"Enter Your Head of Staff Name"}
-                  lable={"Head of staff"}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"location"}
-                  placeholder={"Enter your location"}
-                  lable={"Add a location"}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"catagory"}
-                  placeholder={"Catagory"}
-                  lable={"Catagory"}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <InputField
-                  name={"Timing"}
-                  placeholder={"00:00:00"}
-                  lable={"Timing"}
-                  error={formik.errors}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-
-                {/* //for size*** */}
-                <div className={styles.size_style_div}>
-                  <TextField
-                    placeholder={"Size"}
-                    className={styles.size_style}
-                    type="number"
-                    inputProps={inputPropssize}
-                  />
-                </div>
-
-                {/* <Box className={styles.error_text_view}>
-                  {formik.errors.name && formik.touched.name && (
-                    <Input_error text={formik.errors.name} />
-                  )}
-                </Box> */}
-              </Box>
+            <DialogTitle className={styles.addtitalaja}>
+              Add Location
+            </DialogTitle>
+            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+              <Grid container justifyContent={"space-between"}>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Name"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="name"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.name}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.name && formik.touched.name && (
+                        <Input_error text={formik.errors.name} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Supervisor"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="supervisor"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.supervisor}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.supervisor &&
+                        formik.touched.supervisor && (
+                          <Input_error text={formik.errors.supervisor} />
+                        )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Size"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="size"
+                      type="number"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.size}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.size && formik.touched.size && (
+                        <Input_error text={formik.errors.size} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Location"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="location"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.location}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.location && formik.touched.location && (
+                        <Input_error text={formik.errors.location} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                {/* </Box> */}
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Category"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="category"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.category}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.category && formik.touched.category && (
+                        <Input_error text={formik.errors.category} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Head of staff"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="hos"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.hos}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.hos && formik.touched.hos && (
+                        <Input_error text={formik.errors.hos} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Timing"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="timing"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.timing}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.timing && formik.touched.timing && (
+                        <Input_error text={formik.errors.timing} />
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
               <div className={styles.cesalbtncss}>
                 <Button_ handleClick={handleClose} text={"Cancle"} />
                 <Button_ handleClick={handleClose} text={"Add"} />{" "}
               </div>
-            </DialogContent>
-          </Dialog>
-          <Dialog
-            fullWidth={true}
-            maxWidth={"sm"}
-            open={openTWO}
-            onClose={handleCloseTWO}
-          >
-            <DialogTitle className={styles.addtitalaja}>
-              Edit Category
-            </DialogTitle>
-            <DialogContent>
-              <p className={styles.lebalpereea}>Enter Name</p>
-              <TextField
-                id="outlined-basic"
-                placeholder="Enter Name"
-                className={styles.addnumbarinput}
-                variant="outlined"
-              />
-
-              <div className={styles.cesalbtncss}>
-                <Button
-                  className={styles.ceselbtfffaa}
-                  onClick={handleCloseTWO}
-                >
-                  Cancel
-                </Button>
-                <Button className={styles.adddatalist}>Edit</Button>
-              </div>
-            </DialogContent>
+            </Box>
           </Dialog>
         </Grid>
       </Grid>
+
+      <Dialog
+        fullWidth={true}
+        maxWidth={"md"}
+        open={openEdit}
+        onClose={handleCloseEdit}
+        key={1}
+      >
+        <DialogTitle className={styles.addtitalaja}>Edit Location</DialogTitle>
+        <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+          <Grid container justifyContent={"space-between"}>
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Name"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="name"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.name && formik.touched.name && (
+                    <Input_error text={formik.errors.name} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Supervisor"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="supervisor"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.supervisor}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.supervisor && formik.touched.supervisor && (
+                    <Input_error text={formik.errors.supervisor} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Size"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="size"
+                  type="number"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.size}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.size && formik.touched.size && (
+                    <Input_error text={formik.errors.size} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Location"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="location"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.location}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.location && formik.touched.location && (
+                    <Input_error text={formik.errors.location} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+            {/* </Box> */}
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Category"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="category"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.category}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.category && formik.touched.category && (
+                    <Input_error text={formik.errors.category} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Head of staff"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="hos"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.hos}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.hos && formik.touched.hos && (
+                    <Input_error text={formik.errors.hos} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Timing"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="timing"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.timing}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.timing && formik.touched.timing && (
+                    <Input_error text={formik.errors.timing} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+          <div className={styles.cesalbtncss}>
+            <Button_ handleClick={handleCloseEdit} text={"Cancle"} />
+            <Button_ handleClick={handleCloseEdit} text={"Edit"} />{" "}
+          </div>
+        </Box>
+      </Dialog>
+
       <Grid container>
         <Grid item xs={12} md={12}>
           <div>
@@ -339,7 +504,7 @@ const Hotels_list = (props) => {
                           return (
                             <TableCell
                               key={index}
-                              align="left"
+                              style={{ textAlign: "left" }}
                               className={styles.addnmejdhd}
                             >
                               {item.name}
@@ -367,6 +532,22 @@ const Hotels_list = (props) => {
                             <TableCell>{item.head}</TableCell>
                             <TableCell>{item.category}</TableCell>
                             <TableCell>{item.size}</TableCell>
+                            <TableCell className="content_end">
+                              <Box style={{ display: "flex" }}>
+                                <IconButton
+                                  className="icon_btn"
+                                  onClick={handleOpen_delete}
+                                >
+                                  <DeleteIcon_ height={15} width={15} />
+                                </IconButton>
+                                <IconButton
+                                  className="icon_btn"
+                                  onClick={handleClickOpenEdit}
+                                >
+                                  <Editicon height={15} width={15} />
+                                </IconButton>
+                              </Box>
+                            </TableCell>
                           </TableRow>
                         );
                       })}

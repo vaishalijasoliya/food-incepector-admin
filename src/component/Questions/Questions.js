@@ -8,6 +8,12 @@ import {
   TableRow,
   TableHead,
   TablePagination,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  TextField,
+  Button,
+  Typography
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Paper from "@mui/material/Paper";
@@ -17,13 +23,21 @@ import Grid from "@mui/material/Grid";
 import styles from "../../styles/user/paymenttable.module.css";
 import Style from "./question.module.css";
 import { questionData } from "../Utils/data";
+import { DeleteIcon_, Editicon } from "../Utils/icons";
+import { useFormik } from "formik";
+import { Button_ } from "../../Layout/buttons";
+import * as Yup from "yup";
+import { InputLable } from "../../Layout/inputlable";
+import { Input_error } from "../Utils/string";
 
 const Questions_page = (props) => {
-  const router = useRouter();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
-  const [saesData, setSaesData] = React.useState("");
   const [questionData_, setQuestionData] = React.useState([]);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const [openEdit, setOpenEdit] = React.useState(false);
   const [questionSearch, setQuestionSearch] = React.useState([]);
 
   React.useEffect(() => {
@@ -31,6 +45,22 @@ const Questions_page = (props) => {
     setQuestionData(questionData);
   }, []);
 
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      category: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Name is required."),
+      category: Yup.string().required("Category is required"),
+    }),
+    onSubmit: () => {
+      const userData = {
+        userId: user.id,
+        name: formik.values.userName,
+      };
+    },
+  });
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
@@ -42,6 +72,7 @@ const Questions_page = (props) => {
   const Head = [
     { id: 1, name: "Name" },
     { id: 2, name: "category" },
+    { id: 3, name: "Actions" },
   ];
 
   const onSearch = (e) => {
@@ -59,8 +90,104 @@ const Questions_page = (props) => {
     }
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    formik.resetForm();
+  };
+
+  const handleClose_delete = () => {
+    setDeleteOpen(false);
+  };
+
+  const handleOpen_delete = () => {
+    setDeleteOpen(true);
+  };
+
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+    formik.resetForm();
+  };
+
+  const handleClickOpenEdit = () => {
+    setOpenEdit(true);
+  };
+
   return (
     <Grid container>
+      <Dialog
+        fullWidth={true}
+        maxWidth={"md"}
+        open={openEdit}
+        onClose={handleCloseEdit}
+        key={1}
+      >
+        <DialogTitle className={styles.addtitalaja}>Edit Questions</DialogTitle>
+        <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+          <Grid container justifyContent={"space-between"}>
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Name"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="name"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.name && formik.touched.name && (
+                    <Input_error text={formik.errors.name} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+              <Box className={"Input_box"}>
+                <InputLable text={"Category"} fs={"12px"} />
+                <TextField
+                  className={"Input_field"}
+                  name="category"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.category}
+                />
+                <Box className={"error_text_view"}>
+                  {formik.errors.category && formik.touched.category && (
+                    <Input_error text={formik.errors.category} />
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+          <div className={styles.cesalbtncss}>
+            <Button_ handleClick={handleCloseEdit} text={"Cancle"} />
+            <Button_ handleClick={handleCloseEdit} text={"Edit"} />{" "}
+          </div>
+        </Box>
+      </Dialog>
+
+      <Dialog
+        fullWidth={true}
+        maxWidth={"sm"}
+        open={deleteOpen}
+        onClose={handleClose_delete}
+      >
+        <DialogTitle className={styles.addtitalaja}>
+          Delete Questions
+        </DialogTitle>
+        <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+          <Typography>Are you sure you want to delete Questions?</Typography>
+          <div className={styles.cesalbtncss}>
+            <Button_ handleClick={handleClose_delete} text={"Cancle"} />
+            <Button_ handleClick={handleClose_delete} text={"Delete"} />{" "}
+          </div>
+        </Box>
+      </Dialog>
+
       <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item xs={12} md={3}>
           <Box className={styles.boxreting} display={"flex"}>
@@ -77,6 +204,64 @@ const Questions_page = (props) => {
             />
           </Box>
         </Grid>
+        <Grid className={styles.maxbox} item xs={12} md={9}>
+          <Button className={styles.megobtn} onClick={handleClickOpen}>
+            Add Questions
+          </Button>
+        </Grid>
+        <Dialog
+          fullWidth={true}
+          maxWidth={"md"}
+          open={open}
+          onClose={handleClose}
+          key={1}
+        >
+          <DialogTitle className={styles.addtitalaja}>
+            Add Questions
+          </DialogTitle>
+          <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+            <Grid container justifyContent={"space-between"}>
+              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                <Box className={"Input_box"}>
+                  <InputLable text={"Name"} fs={"12px"} />
+                  <TextField
+                    className={"Input_field"}
+                    name="name"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                  />
+                  <Box className={"error_text_view"}>
+                    {formik.errors.name && formik.touched.name && (
+                      <Input_error text={formik.errors.name} />
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                <Box className={"Input_box"}>
+                  <InputLable text={"Category"} fs={"12px"} />
+                  <TextField
+                    className={"Input_field"}
+                    name="category"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.category}
+                  />
+                  <Box className={"error_text_view"}>
+                    {formik.errors.category && formik.touched.category && (
+                      <Input_error text={formik.errors.category} />
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+            <div className={styles.cesalbtncss}>
+              <Button_ handleClick={handleClose} text={"Cancle"} />
+              <Button_ handleClick={handleClose} text={"Add"} />{" "}
+            </div>
+          </Box>
+        </Dialog>
       </Grid>
       <Grid container>
         <Grid item xs={12} md={12}>
@@ -98,7 +283,11 @@ const Questions_page = (props) => {
                               className={Style.table_head_cell}
                               style={{
                                 textAlign:
-                                  item.name == "category" ? "left" : "left",
+                                  item.name == "category"
+                                    ? "left"
+                                    : item.name == "Actions"
+                                    ? "right"
+                                    : "left",
                               }}
                             >
                               {item.name}
@@ -119,6 +308,19 @@ const Questions_page = (props) => {
                           <TableRow key={index}>
                             <TableCell>{item.name}</TableCell>
                             <TableCell>{item.company}</TableCell>
+                            <TableCell className="content_end">
+                              <Box style={{ display: "flex" }}>
+                                <IconButton className="icon_btn" onClick={handleOpen_delete}>
+                                  <DeleteIcon_ height={15} width={15} />
+                                </IconButton>
+                                <IconButton
+                                  className="icon_btn"
+                                  onClick={handleClickOpenEdit}
+                                >
+                                  <Editicon height={15} width={15} />
+                                </IconButton>
+                              </Box>
+                            </TableCell>
                           </TableRow>
                         );
                       })}

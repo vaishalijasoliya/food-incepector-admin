@@ -413,7 +413,10 @@ const Auditor_page = (props) => {
               </Typography>
               <div className={styles.cesalbtncss}>
                 <Button_ handleClick={handleClose_delete} text={"Cancle"} />
-                <Button_ handleClick={handleClose_delete} text={"Delete"} />{" "}
+                <Button_
+                  handleClick={handleClose_delete}
+                  text={"Delete"}
+                />{" "}
               </div>
             </Box>
           </Dialog>
