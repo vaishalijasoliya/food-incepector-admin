@@ -1,4 +1,5 @@
-.table_row {
+.table_row:hover {
+  background-color: rgb(240, 240, 240);
 }
 .table_cell {
   text-transform: capitalize;
