@@ -19,6 +19,8 @@ export const TableComponent = ({
   Header,
   handleClickOpenTWO,
   handleOpen_delete,
+  setAuditorDetails,
+  onViewEditor,
 }) => {
   return (
     <TableContainer>
@@ -43,22 +45,30 @@ export const TableComponent = ({
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
           ).map((item, index) => {
+            console.log(item);
             return (
               <TableRow className={Style.table_row} key={index}>
                 <TableCell>{item.name}</TableCell>
-                <TableCell>{item.company}</TableCell>
-                <TableCell>{item.userName}</TableCell>
+                <TableCell>{item.company_name}</TableCell>
+                <TableCell>{item.user_name}</TableCell>
                 <TableCell>
                   <Box className={Style.last_td}>
                     <IconButton
                       className={Style.icon_btn}
-                      onClick={handleClickOpenTWO}
+                      onClick={() => {
+                        handleClickOpenTWO();
+                        setAuditorDetails(item);
+                        onViewEditor({ id_user: item.id });
+                      }}
                     >
                       <Editicon height={15} width={15} />
                     </IconButton>
                     <IconButton
                       className={Style.icon_btn}
-                      onClick={handleOpen_delete}
+                      onClick={() => {
+                        handleOpen_delete();
+                        setAuditorDetails(item);
+                      }}
                     >
                       <DeleteIcon_ height={15} width={15} />
                     </IconButton>

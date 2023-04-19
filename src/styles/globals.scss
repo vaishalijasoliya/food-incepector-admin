@@ -39,6 +39,9 @@ a {
 .error_text_view {
   height: 20px;
 }
+.MuiTableHead-root {
+  text-transform: capitalize !important;
+}
 .Input_field {
   background: #fff;
   border: 1px solid #484848 !important;
@@ -774,7 +777,7 @@ a {
 }
 .content_end {
   display: flex !important;
-  justify-content:flex-end !important;
+  justify-content: flex-end !important;
 }
 
 .icon_btn {
@@ -782,7 +785,7 @@ a {
   height: 30px;
 }
 
-fieldset{
+fieldset {
   border: 0px !important;
 }
 

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import style from "../styles/login.module.css";
@@ -14,14 +13,7 @@ import ApiServices from "../config/ApiServices";
 import ApiEndpoint from "../config/ApiEndpoint";
 import { toast } from "react-toastify";
 
-const Item = styled(Paper)(({ theme }) => ({
-  width: "100%",
-  padding: theme.spacing(2),
-  textAlign: "center",
-}));
-
 const Signin = (props) => {
- 
   const router = useRouter();
 
   const onLoginPress = async () => {

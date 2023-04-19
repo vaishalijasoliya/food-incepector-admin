@@ -43,6 +43,8 @@ const EnhancedTable = (props) => {
   const [userRender, setUserRender] = React.useState(true);
   const [categoryDetails, setCategoryDetails] = React.useState("");
 
+  console.log(props);
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -60,17 +62,45 @@ const EnhancedTable = (props) => {
     },
   });
 
-  const onAddCategory = async () => {
+  const onViewCategory = async ({ id_user }) => {
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.profile.token,
+    };
+    var body = {
+      id_category: id_user,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.VIEW_CATEGORY,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        formik.setFieldValue("name", data.data.name);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+  };
+
+  const onAddCategory = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.props.profile.token,
     };
     var body = {
       name: formik.values.name,
     };
 
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
+    var data = await ApiServices.PostApiCall(
       ApiEndpoint.ADD_CATEGORY,
       JSON.stringify(body),
       headers
@@ -86,8 +116,7 @@ const EnhancedTable = (props) => {
     } else {
       toast.error(Error_msg.NOT_RES);
     }
-
-    console.log(headers, body, "is_________body___is_add", props);
+    getCategoryList();
     setOpen(false);
   };
 
@@ -98,17 +127,15 @@ const EnhancedTable = (props) => {
     };
     var body = {
       name: formik.values.name,
-      id: categoryDetails.id,
+      id_category: categoryDetails.id,
     };
-
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
+    var data = await ApiServices.PostApiCall(
       ApiEndpoint.EDIT_CATEGORY,
       JSON.stringify(body),
       headers
     );
     props.props.loaderRef(false);
-
     if (data) {
       if (data.status) {
         toast.success(data.message);
@@ -120,23 +147,21 @@ const EnhancedTable = (props) => {
     }
 
     setOpenEdit(false);
-    console.log(headers, body, "is_________body___is_edit", props);
+    getCategoryList();
   };
 
   const onDelete = async () => {
-    console.log("is_____delete");
-
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.profile.token,
     };
     var body = {
-      id: categoryDetails.id,
+      id_category: categoryDetails.id,
     };
 
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
-      ApiEndpoint.EDIT_CATEGORY,
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.DELETE_CATEGORY,
       JSON.stringify(body),
       headers
     );
@@ -144,6 +169,7 @@ const EnhancedTable = (props) => {
 
     if (data) {
       if (data.status) {
+        getCategoryList();
         toast.success(data.message);
       } else {
         toast.error(data.message);
@@ -151,7 +177,6 @@ const EnhancedTable = (props) => {
     } else {
       toast.error(Error_msg.NOT_RES);
     }
-
     handleClose_delete();
   };
 
@@ -187,32 +212,36 @@ const EnhancedTable = (props) => {
   const handleOpen_delete = () => {
     setDeleteOpen(true);
   };
-  const getAuditorList = async () => {
+  const getCategoryList = async () => {
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.props.profile.token,
     };
+    var body = {};
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
+    var data = await ApiServices.PostApiCall(
       ApiEndpoint.CATEGORY_LIST,
-      // JSON.stringify(body),
+      JSON.stringify(body),
       headers
     );
     props.props.loaderRef(false);
 
     if (data) {
       if (data.status) {
-        setCategorySearch(categoryData);
-        setCategoryList(categoryData);
+        setCategorySearch(data.data);
+        setCategoryList(data.data);
       }
     }
     setUserRender(false);
-    setCategorySearch(categoryData);
-    setCategoryList(categoryData);
   };
   React.useEffect(() => {
-    if (userRender) {
-      getAuditorList();
+    if (
+      userRender &&
+      props.props &&
+      props.props.profile &&
+      props.props.profile.token
+    ) {
+      getCategoryList();
     }
   }, [props, userRender]);
 
@@ -391,19 +420,24 @@ const EnhancedTable = (props) => {
                     ).map((item, index) => {
                       return (
                         <TableRow key={index}>
-                          <TableCell>{item.category}</TableCell>
+                          <TableCell>{item.name}</TableCell>
                           <TableCell className="content_end">
                             <Box style={{ display: "flex" }}>
                               <IconButton
                                 className="icon_btn"
-                                onClick={handleClickOpenEdit}
+                                onClick={() => {
+                                  handleClickOpenEdit();
+                                  setCategoryDetails(item);
+                                  onViewCategory({ id_user: item.id });
+                                }}
                               >
                                 <Editicon height={15} width={15} />
                               </IconButton>
                               <IconButton
                                 className="icon_btn"
                                 onClick={() => {
-                                  handleOpen_delete(), setCategoryDetails(item);
+                                  setCategoryDetails(item);
+                                  handleOpen_delete();
                                 }}
                               >
                                 <DeleteIcon_ height={15} width={15} />

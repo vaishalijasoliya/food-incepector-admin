@@ -58,6 +58,44 @@ const Questions_page = (props) => {
     }
   }, [props, userRender]);
 
+  console.log(props, "is_____prope");
+
+  // const getCategoryList = async () => {
+  //   var headers = {
+  //     "Content-Type": "application/json",
+  //     "x-access-token": props.profile.token,
+  //   };
+  //   var body = {};
+  //   props.props.loaderRef(true);
+  //   var data = await ApiServices.PostApiCall(
+  //     ApiEndpoint.CATEGORY_LIST,
+  //     null,
+  //     headers
+  //   );
+  // };
+
+  const getCategoryList = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {};
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.CATEGORY_LIST,
+      null,
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        // setCategorySearch(data.data);
+        // setCategoryList(data.data);
+      }
+    }
+  };
+
   const getQuestionList = async () => {
     var headers = {
       "Content-Type": "application/json",
@@ -356,7 +394,14 @@ const Questions_page = (props) => {
           </Box>
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9}>
-          <Button className={styles.megobtn} onClick={handleClickOpen}>
+          <Button
+            className={styles.megobtn}
+            onClick={() => {
+              getCategoryList();
+
+              handleClickOpen();
+            }}
+          >
             Add Questions
           </Button>
         </Grid>
