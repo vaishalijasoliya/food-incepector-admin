@@ -1,3 +1,238 @@
+export const qustionlist = [
+  {
+    qustion: "What platform should I develop it on?"
+  },
+  {
+    qustion: "What platform should I develop it on?"
+  }, 
+  {
+    qustion: "What platform should I develop it on?"
+  }, 
+  {
+    qustion: "What platform should I develop it on?"
+  },
+   {
+    qustion: "What platform should I develop it on?"
+  },
+   {
+    qustion: "What platform should I develop it on?"
+  },
+]
+
+
+export const auditData = [
+  {
+    id: 0,
+    name: "Iva Key",
+    score: "323",
+    userName: "Burton",
+    company: "STEELTAB",
+  },
+  {
+    id: 1,
+    name: "Stout Strickland",
+    score: "223",
+    userName: "Mathis",
+    company: "KOG",
+  },
+  {
+    id: 2,
+    name: "Mcleod Marks",
+    score: "453",
+    userName: "Leola",
+    company: "MAGNINA",
+  },
+  {
+    id: 3,
+    name: "Rosa Waller",
+    score: "360",
+    userName: "Cooper",
+    company: "COMTRACT",
+  },
+  {
+    id: 4,
+    name: "Blair Dejesus",
+    score: "743",
+    userName: "Ross",
+    company: "FLUMBO",
+  },
+  {
+    id: 5,
+    name: "Bentley Melton",
+    score: "120",
+    userName: "Mercer",
+    company: "XYLAR",
+  },
+  {
+    id: 6,
+    name: "Keller Mathis",
+    score: "400",
+    userName: "Sullivan",
+    company: "EQUITAX",
+  },
+  {
+    id: 7,
+    name: "Bishop Mcclain",
+    score: "200",
+    userName: "Felicia",
+    company: "SPRINGBEE",
+  },
+  {
+    id: 8,
+    name: "Sheppard Watkins",
+    score: "320",
+    userName: "Whitney",
+    company: "XERONK",
+  },
+  {
+    id: 9,
+    name: "Nellie Browning",
+    score: "323",
+    userName: "Harriett",
+    company: "DIGIFAD",
+  },
+  {
+    id: 10,
+    name: "Marta Underwood",
+    score: "500",
+    userName: "Diane",
+    company: "ISOSPHERE",
+  },
+  {
+    id: 11,
+    name: "Coffey Patton",
+    score: "403",
+    userName: "Eva",
+    company: "TALAE",
+  },
+  {
+    id: 12,
+    name: "Margie Sargent",
+    score: "402",
+    userName: "Terra",
+    company: "ZORROMOP",
+  },
+  {
+    id: 13,
+    name: "Kirk Long",
+    score: "323",
+    userName: "Burgess",
+    company: "ORGANICA",
+  },
+  {
+    id: 14,
+    name: "Buchanan Coffey",
+    score: "823",
+    userName: "Shaw",
+    company: "IRACK",
+  },
+  {
+    id: 15,
+    name: "Elena Garcia",
+    score: "930",
+    userName: "Patti",
+    company: "PURIA",
+  },
+  {
+    id: 16,
+    name: "Tammie Pollard",
+    score: "240",
+    userName: "Mercado",
+    company: "SENMAO",
+  },
+  {
+    id: 17,
+    name: "Jan Oliver",
+    score: "323",
+    userName: "Neva",
+    company: "BESTO",
+  },
+  {
+    id: 18,
+    name: "Humphrey Perez",
+    score: "323",
+    userName: "Alejandra",
+    company: "NIXELT",
+  },
+  {
+    id: 19,
+    name: "Beck Murray",
+    score: "543",
+    userName: "Sherry",
+    company: "VERTIDE",
+  },
+  {
+    id: 20,
+    name: "Brigitte Watson",
+    score: "623",
+    userName: "Compton",
+    company: "EXOSPEED",
+  },
+  {
+    id: 21,
+    name: "Estes Thornton",
+    score: "323",
+    userName: "Bradley",
+    company: "IMKAN",
+  },
+  {
+    id: 22,
+    name: "Marisol Sharp",
+    score: "253",
+    userName: "Richardson",
+    company: "DECRATEX",
+  },
+  {
+    id: 23,
+    name: "Ebony Cantu",
+    score: "679",
+    userName: "Oneill",
+    company: "NAVIR",
+  },
+  {
+    id: 24,
+    name: "Sykes Barnett",
+    score: "823",
+    userName: "Mclaughlin",
+    company: "IMAGEFLOW",
+  },
+  {
+    id: 25,
+    name: "Ava Franklin",
+    score: "723",
+    userName: "Adrian",
+    company: "PEARLESSA",
+  },
+  {
+    id: 26,
+    name: "Heather Reynolds",
+    score: "223",
+    userName: "Ladonna",
+    company: "ENTROPIX",
+  },
+  {
+    id: 27,
+    name: "Barrett Horn",
+    score: "323",
+    userName: "Faye",
+    company: "DUFLEX",
+  },
+  {
+    id: 28,
+    name: "Pitts Howe",
+    score: "222",
+    userName: "Tammi",
+    company: "ISOLOGICS",
+  },
+  {
+    id: 29,
+    name: "Katy Buckner",
+    score: "213",
+    userName: "Turner",
+    company: "BRAINCLIP",
+  },
+];
+
 export const auditorData = [
   {
     id: 0,
@@ -5,6 +240,7 @@ export const auditorData = [
     status: "deleted",
     userName: "Burton",
     company: "STEELTAB",
+
   },
   {
     id: 1,
@@ -215,6 +451,7 @@ export const questionData = [
     id: 0,
     name: "Tammi Taylor",
     company: "SUPPORTAL",
+
   },
   {
     id: 1,
