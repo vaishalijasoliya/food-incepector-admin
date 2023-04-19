@@ -3,30 +3,42 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField, Button } from "@mui/material";
 import { Container, height, width } from "@mui/system";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Logo from "./logo";
 import { useRouter } from "next/router";
+import ApiServices from "../config/ApiServices";
+import ApiEndpoint from "../config/ApiEndpoint";
+import { toast } from "react-toastify";
+import { Button_ } from "../Layout/buttons";
 
-const Item = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
-  textAlign: "center",
-}));
-
-const Newpass = () => {
+const Newpass = (props) => {
   const router = useRouter();
-  // const onLoginPress = () => {
-  //   var body = {
-  //     newPassword: formik.values.newPassword,
-  //     reTypePassword: formik.values.reTypePassword,
-  //   };
-  //   var headers = {
-  //     "Content-Type": "application/json",
-  //   };
-  //   var data = (JSON.stringify(body), headers);
-  // };
+  const onCreatePassword = async () => {
+    var body = {
+      user_name: formik.values.newPassword,
+      password: formik.values.reTypePassword,
+    };
+    var headers = {
+      "Content-Type": "application/json",
+    };
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.LOGIN_USER,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+    if (!!data) {
+      if (data.status == true) {
+        toast.success(data.message);
+        router.push("/dashboard");
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error("Something went wrong.");
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -35,16 +47,14 @@ const Newpass = () => {
     },
 
     validationSchema: Yup.object({
-      newPassword: Yup.string().max(12).min(8).required("Password is required"),
+      newPassword: Yup.string().min(8).required("Password is required"),
       reTypePassword: Yup.string()
-        .max(12)
         .min(8)
         .required("Repassword is required")
         .oneOf([Yup.ref("newPassword")], "Passwords does not match."),
     }),
     onSubmit: () => {
-      // onLoginPress();
-      router.push("/");
+      onCreatePassword();
     },
   });
 
@@ -95,12 +105,11 @@ const Newpass = () => {
                   formik.touched.reTypePassword && formik.errors.reTypePassword
                 }
               />
+              {/* <Button_ type={"submit"} text={"Set Password"} /> */}
               {/* <a href='./index'> */}
-              <button type="submit" className={style.submitbtn}>
-                {" "}
+              <Button type="submit" className={style.submitbtn}>
                 Set Password{" "}
-              </button>
-              {/* </a> */}
+              </Button>
             </form>
           </Container>
         </Box>

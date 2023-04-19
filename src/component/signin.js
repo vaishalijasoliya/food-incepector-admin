@@ -10,6 +10,9 @@ import { TextField } from "@mui/material";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
+import ApiServices from "../config/ApiServices";
+import ApiEndpoint from "../config/ApiEndpoint";
+import { toast } from "react-toastify";
 
 const Item = styled(Paper)(({ theme }) => ({
   width: "100%",
@@ -18,36 +21,37 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Signin = (props) => {
+ 
   const router = useRouter();
 
   const onLoginPress = async () => {
-    router.push("/dashboard");
-    // var body = {
-    //   user_name: formik.values.username,
-    //   password: formik.values.password,
-    // };
-    // var headers = {
-    //   "Content-Type": "application/json",
-    // };
-    // props.props.loaderRef(true);
-    // var data = await ApiServices.PostApiCall(
-    //   ApiEndpoint.LOGIN_USER,
-    //   JSON.stringify(body),
-    //   headers
-    // );
-    // props.props.loaderRef(false);
-    // if (!!data) {
-    //   if (data.status == true) {
-    //     data.data.token = data.token;
-    //     props.save_user_data({ user: data.data });
-    //     toast.success("Logged In Succesfully");
-    //   } else {
-    //     // setErrorShow(true)
-    //     toast.error(data.message);
-    //   }
-    // } else {
-    //   toast.error("Something went wrong.");
-    // }
+    // router.push("/dashboard");
+    var body = {
+      user_name: formik.values.username,
+      password: formik.values.password,
+    };
+    var headers = {
+      "Content-Type": "application/json",
+    };
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.LOGIN_USER,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+    if (!!data) {
+      if (data.status == true) {
+        props.save_user_data({ user: data });
+        toast.success("Logged In Succesfully");
+        router.push("/dashboard");
+      } else {
+        // setErrorShow(true)
+        toast.error(data.message);
+      }
+    } else {
+      toast.error("Something went wrong.");
+    }
   };
 
   const formik = useFormik({

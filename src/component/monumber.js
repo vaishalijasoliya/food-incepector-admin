@@ -17,7 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Mobile = (props) => {
   const router = useRouter();
-  const onLoginPress = async () => {
+  const onSubmitPress = async () => {
     // var body = {
     //   phone: formik.values.phone,
     //   // 'password': formik.values.password

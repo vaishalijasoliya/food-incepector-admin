@@ -52,15 +52,15 @@ export const TableComponent = ({
                   <Box className={Style.last_td}>
                     <IconButton
                       className={Style.icon_btn}
-                      onClick={handleOpen_delete}
-                    >
-                      <DeleteIcon_ height={15} width={15} />
-                    </IconButton>
-                    <IconButton
-                      className={Style.icon_btn}
                       onClick={handleClickOpenTWO}
                     >
                       <Editicon height={15} width={15} />
+                    </IconButton>
+                    <IconButton
+                      className={Style.icon_btn}
+                      onClick={handleOpen_delete}
+                    >
+                      <DeleteIcon_ height={15} width={15} />
                     </IconButton>
                   </Box>
                 </TableCell>

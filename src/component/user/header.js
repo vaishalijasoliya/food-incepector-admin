@@ -8,6 +8,7 @@ import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 import { PersonAdd } from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { removeData } from "../Utils/func";
 const Nevbar = (props) => {
   const [userCount, setUserCount] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -19,47 +20,11 @@ const Nevbar = (props) => {
     setAnchorEl(null);
   };
   const router = useRouter();
-  // console.log(props, "myprops");
 
-  // const getCountuser = async () => {
-  //   console.log(props, "myusercount");
-  //   var headers = {
-  //     "Content-Type": "application/json",
-  //     "x-access-token": props.props.profile.token,
-  //   };
-  //   var data = await ApiServices.GetApiCall(
-  //     ApiEndpoint.USER_NOTIFICATION_COUNT,
-  //     headers
-  //   );
-  //   if (!!data) {
-  //     if (data.status == true) {
-  //       setUserCount(data.data);
-  //     } else {
-  //     }
-  //   } else {
-  //   }
-  //   console.log(userCount, "pending");
-  // };
-
-  // stockInterval = setInterval(() => {
-  //   getCountuser();
-  // }, 3000);
-
-  // React.useLayoutEffect(() => {
-  //   return () => {
-  //     if (!!stockInterval) {
-  //       clearInterval(stockInterval);
-  //     }
-  //   };
-  // }, []);
-
-  // React.useEffect(() => {
-  //   getCountuser();
-  // }, []);
-
-  // const onHandleclick = () => {
-  //   router.push("./notification");
-  // };
+  const logOut = () => {
+    router.push("/");
+    handleClose();
+  };
 
   return (
     <>
@@ -70,19 +35,12 @@ const Nevbar = (props) => {
         className={styles.maencontainer}
       >
         <Grid className={styles.textheging} item xs={12} md={6}>
-          <Typography
-            gutterBottom
-            component="div"
-            className={styles.hedingh3}
-          >
+          <Typography gutterBottom component="div" className={styles.hedingh3}>
             {props.data.title}
           </Typography>
         </Grid>
         <Grid item xs={12} className={styles.img2} md={6}>
-          <button
-            className={styles.pohotloho1}
-            onClick={handleClick}
-          >
+          <button className={styles.pohotloho1} onClick={handleClick}>
             <Avatar
               alt="Profile Picture"
               src={"./image/image 3.png"}
@@ -139,8 +97,7 @@ const Nevbar = (props) => {
             <MenuItem
               className={styles.Menu_item}
               onClick={() => {
-                router.push("/");
-                handleClose();
+                removeData({ logout: logOut });
               }}
             >
               <LogoutIcon color="action" /> Logout

@@ -13,7 +13,9 @@ import {
   DialogTitle,
   TextField,
   Button,
-  Typography
+  Typography,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Paper from "@mui/material/Paper";
@@ -29,38 +31,170 @@ import { Button_ } from "../../Layout/buttons";
 import * as Yup from "yup";
 import { InputLable } from "../../Layout/inputlable";
 import { Input_error } from "../Utils/string";
-
+import ApiServices from "../../config/ApiServices";
+import ApiEndpoint from "../../config/ApiEndpoint";
+import { toast } from "react-toastify";
+import { Error_msg } from "../Utils/message";
+const options = [
+  { label: "Option 1_______-", value: 1 },
+  { label: "Option 2", value: 2 },
+  { label: "Option 3", value: 3 },
+];
 const Questions_page = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
   const [questionData_, setQuestionData] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-
   const [openEdit, setOpenEdit] = React.useState(false);
   const [questionSearch, setQuestionSearch] = React.useState([]);
+  const [selectedOption, setSelectedOption] = React.useState(options[0].value);
+  const [categoryDetails, setCategoryDetails] = React.useState("");
+  const [userRender, setUserRender] = React.useState(true);
 
   React.useEffect(() => {
+    if (userRender) {
+      getQuestionList();
+    }
+  }, [props, userRender]);
+
+  const getQuestionList = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    props.props.loaderRef(true);
+    var data = await ApiServices.GetApiCall(
+      ApiEndpoint.INSPECTOR_LIST,
+      // JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        setQuestionSearch(questionData);
+        setQuestionData(questionData);
+      }
+    }
     setQuestionSearch(questionData);
     setQuestionData(questionData);
-  }, []);
+    setUserRender(false);
+  };
+
+  const handleChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   const formik = useFormik({
     initialValues: {
       name: "",
-      category: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required."),
-      category: Yup.string().required("Category is required"),
     }),
     onSubmit: () => {
-      const userData = {
-        userId: user.id,
-        name: formik.values.userName,
-      };
+      if (formik.values.name && selectedOption) {
+        if (open) {
+          onAddQuestion();
+        } else if (openEdit) {
+          onEditQuestion();
+        }
+      }
     },
   });
+  const onAddQuestion = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      name: formik.values.name,
+      category: selectedOption,
+    };
+    props.props.loaderRef(true);
+    var data = await ApiServices.GetApiCall(
+      ApiEndpoint.ADD_QUESTION,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+
+    setOpen(false);
+  };
+
+  const onEditQuestion = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      name: formik.values.name,
+      id: categoryDetails.id,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.GetApiCall(
+      ApiEndpoint.EDIT_QUESTION,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+
+    setOpenEdit(false);
+    console.log(headers, body, "is_________body___is_edit", props);
+  };
+
+  const onDelete = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      id: categoryDetails.id,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.GetApiCall(
+      ApiEndpoint.DELETE_QUESTION,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+
+    handleClose_delete();
+  };
+
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
@@ -126,48 +260,65 @@ const Questions_page = (props) => {
         key={1}
       >
         <DialogTitle className={styles.addtitalaja}>Edit Questions</DialogTitle>
-        <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-          <Grid container justifyContent={"space-between"}>
-            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-              <Box className={"Input_box"}>
-                <InputLable text={"Name"} fs={"12px"} />
-                <TextField
-                  className={"Input_field"}
-                  name="name"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.name}
-                />
-                <Box className={"error_text_view"}>
-                  {formik.errors.name && formik.touched.name && (
-                    <Input_error text={formik.errors.name} />
-                  )}
+        <form onSubmit={formik.handleSubmit}>
+          <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+            <Grid container justifyContent={"space-between"}>
+              <Grid item xs={12} sm={8} lg={8} xl={8} md={8}>
+                <Box className={"Input_box"}>
+                  <InputLable text={"Name"} fs={"12px"} />
+                  <TextField
+                    className={"Input_field"}
+                    name="name"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                  />
+                  <Box className={"error_text_view"}>
+                    {formik.errors.name && formik.touched.name && (
+                      <Input_error text={formik.errors.name} />
+                    )}
+                  </Box>
                 </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-              <Box className={"Input_box"}>
-                <InputLable text={"Category"} fs={"12px"} />
-                <TextField
-                  className={"Input_field"}
-                  name="category"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.category}
-                />
-                <Box className={"error_text_view"}>
-                  {formik.errors.category && formik.touched.category && (
-                    <Input_error text={formik.errors.category} />
-                  )}
+              </Grid>
+              <Grid item xs={12} sm={3} lg={3} xl={3} md={3}>
+                <Box className={"Input_box"}>
+                  <InputLable text={"Category"} fs={"12px"} />
+
+                  <Select
+                    value={selectedOption}
+                    sx={{
+                      "& 	.MuiSelect-select": {
+                        padding: "7px 37px 7px 17px",
+                      },
+                      height: "44px",
+                      "& .MuiOutlinedInput": {
+                        border: "0px",
+                      },
+                      width: "100%",
+                      border: "1px solid #484848",
+                    }}
+                    onChange={handleChange}
+                  >
+                    {options.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <Box className={"error_text_view"}>
+                    {!selectedOption && (
+                      <Input_error text={"Select a category"} />
+                    )}
+                  </Box>
                 </Box>
-              </Box>
+              </Grid>
             </Grid>
-          </Grid>
-          <div className={styles.cesalbtncss}>
-            <Button_ handleClick={handleCloseEdit} text={"Cancle"} />
-            <Button_ handleClick={handleCloseEdit} text={"Edit"} />{" "}
-          </div>
-        </Box>
+            <div className={styles.cesalbtncss}>
+              <Button_ handleClick={handleCloseEdit} text={"Cancle"} />
+              <Button_ type={"submit"} text={"Add"} />{" "}
+            </div>
+          </Box>
+        </form>
       </Dialog>
 
       <Dialog
@@ -183,7 +334,7 @@ const Questions_page = (props) => {
           <Typography>Are you sure you want to delete Questions?</Typography>
           <div className={styles.cesalbtncss}>
             <Button_ handleClick={handleClose_delete} text={"Cancle"} />
-            <Button_ handleClick={handleClose_delete} text={"Delete"} />{" "}
+            <Button_ handleClick={onDelete} text={"Delete"} />{" "}
           </div>
         </Box>
       </Dialog>
@@ -219,48 +370,65 @@ const Questions_page = (props) => {
           <DialogTitle className={styles.addtitalaja}>
             Add Questions
           </DialogTitle>
-          <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-            <Grid container justifyContent={"space-between"}>
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Name"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="name"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.name && formik.touched.name && (
-                      <Input_error text={formik.errors.name} />
-                    )}
+          <form onSubmit={formik.handleSubmit}>
+            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+              <Grid container justifyContent={"space-between"}>
+                <Grid item xs={12} sm={8} lg={8} xl={8} md={8}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Name"} fs={"12px"} />
+                    <TextField
+                      className={"Input_field"}
+                      name="name"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.name}
+                    />
+                    <Box className={"error_text_view"}>
+                      {formik.errors.name && formik.touched.name && (
+                        <Input_error text={formik.errors.name} />
+                      )}
+                    </Box>
                   </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Category"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="category"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.category}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.category && formik.touched.category && (
-                      <Input_error text={formik.errors.category} />
-                    )}
+                </Grid>
+                <Grid item xs={12} sm={3} lg={3} xl={3} md={3}>
+                  <Box className={"Input_box"}>
+                    <InputLable text={"Category"} fs={"12px"} />
+
+                    <Select
+                      value={selectedOption}
+                      sx={{
+                        "& 	.MuiSelect-select": {
+                          padding: "7px 37px 7px 17px",
+                        },
+                        height: "44px",
+                        "& .MuiOutlinedInput": {
+                          border: "0px",
+                        },
+                        width: "100%",
+                        border: "1px solid #484848",
+                      }}
+                      onChange={handleChange}
+                    >
+                      {options.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <Box className={"error_text_view"}>
+                      {!selectedOption && (
+                        <Input_error text={"Select a category"} />
+                      )}
+                    </Box>
                   </Box>
-                </Box>
+                </Grid>
               </Grid>
-            </Grid>
-            <div className={styles.cesalbtncss}>
-              <Button_ handleClick={handleClose} text={"Cancle"} />
-              <Button_ handleClick={handleClose} text={"Add"} />{" "}
-            </div>
-          </Box>
+              <div className={styles.cesalbtncss}>
+                <Button_ handleClick={handleClose} text={"Cancle"} />
+                <Button_ type={"submit"} text={"Add"} />{" "}
+              </div>
+            </Box>
+          </form>
         </Dialog>
       </Grid>
       <Grid container>
@@ -310,14 +478,20 @@ const Questions_page = (props) => {
                             <TableCell>{item.company}</TableCell>
                             <TableCell className="content_end">
                               <Box style={{ display: "flex" }}>
-                                <IconButton className="icon_btn" onClick={handleOpen_delete}>
-                                  <DeleteIcon_ height={15} width={15} />
-                                </IconButton>
                                 <IconButton
                                   className="icon_btn"
                                   onClick={handleClickOpenEdit}
                                 >
                                   <Editicon height={15} width={15} />
+                                </IconButton>
+                                <IconButton
+                                  className="icon_btn"
+                                  onClick={() => {
+                                    handleOpen_delete();
+                                    setCategoryDetails(item);
+                                  }}
+                                >
+                                  <DeleteIcon_ height={15} width={15} />
                                 </IconButton>
                               </Box>
                             </TableCell>
@@ -352,9 +526,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
 });
-
-const calenderIcon = () => {
-  return <img src="./image/calender.png" className="calenderimg" />;
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions_page);

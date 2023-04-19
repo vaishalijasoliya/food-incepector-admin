@@ -11,9 +11,6 @@ export const MainLayout = ({ Content, data, props }) => {
         xs={12}
         sm={4}
         md={3}
-
-
-        
         lg={3}
         className="Gridcontainergrid"
         // style={{ border: "3px solid red" }}

@@ -1,12 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import styles from "../../styles/user/paymenttable.module.css";
 import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
@@ -29,21 +23,18 @@ import {
   createTheme,
 } from "@mui/material";
 import { auditorData } from "../Utils/data";
-import Style from "./auditor.module.css";
-import { DeleteIcon_, Editicon } from "../Utils/icons";
 import { useFormik } from "formik";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import * as Yup from "yup";
 import { Input_error } from "../Utils/string";
 import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "./tableComponent";
+import ApiServices from "../../config/ApiServices";
+import ApiEndpoint from "../../config/ApiEndpoint";
 
 const Auditor_page = (props) => {
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
-  const [customer, setCustomer] = React.useState([]);
-  const [customerList, setCustomerList] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
   const [value, setValue] = React.useState(0);
@@ -52,6 +43,7 @@ const Auditor_page = (props) => {
   const [activeSearch, setActiveSearch] = React.useState([]);
   const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [auditorRender, setAuditorRender] = React.useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -92,13 +84,6 @@ const Auditor_page = (props) => {
     setPage(newPage);
   };
 
-  React.useEffect(() => {
-    console.log(props.userList, "props.userList");
-    if (!!props.profile && !!props.profile.token) {
-      setCustomerList(props.userList);
-      setCustomer(props.userList);
-    }
-  }, [props.userList]);
   const handleChangeRowsPerPage = (event = React.ChangeEvent) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
@@ -123,7 +108,37 @@ const Auditor_page = (props) => {
     },
   });
 
-  React.useEffect(() => {
+  const getAuditorList = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.props.profile.token,
+    };
+    props.props.loaderRef(true);
+    var data = await ApiServices.GetApiCall(
+      ApiEndpoint.INSPECTOR_LIST,
+      // JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        const ActiveArr = [];
+        const DeletedArr = [];
+        for (let index = 0; index < auditorData.length; index++) {
+          const element = auditorData[index];
+          if (element.status == "active") {
+            ActiveArr.push(element);
+          } else if (element.status == "deleted") {
+            DeletedArr.push(element);
+          }
+        }
+        setActiveSearch(ActiveArr);
+        setActiveData(ActiveArr);
+        setDeletedSearch(DeletedArr);
+        setDeleteddata(DeletedArr);
+      }
+    }
     const ActiveArr = [];
     const DeletedArr = [];
     for (let index = 0; index < auditorData.length; index++) {
@@ -133,13 +148,19 @@ const Auditor_page = (props) => {
       } else if (element.status == "deleted") {
         DeletedArr.push(element);
       }
-      console.log(element);
     }
     setActiveSearch(ActiveArr);
     setActiveData(ActiveArr);
     setDeletedSearch(DeletedArr);
     setDeleteddata(DeletedArr);
-  }, []);
+    setAuditorRender(false);
+  };
+
+  React.useEffect(() => {
+    if (auditorRender) {
+      getAuditorList();
+    }
+  }, [props, auditorRender]);
 
   const theme = createTheme({
     palette: {
@@ -199,7 +220,7 @@ const Auditor_page = (props) => {
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9} sm={12}>
           <Button className={styles.megobtn} onClick={handleClickOpen}>
-            Add Incepector
+            Add Auditor
           </Button>
           <Dialog
             fullWidth={true}
@@ -209,7 +230,7 @@ const Auditor_page = (props) => {
             key={1}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Add Incepector
+              Add Auditor
             </DialogTitle>
             <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
               <Grid container justifyContent={"space-between"}>
@@ -319,7 +340,7 @@ const Auditor_page = (props) => {
             onClose={handleCloseTWO}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Edit Incepector
+              Edit Auditor
             </DialogTitle>
             <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
               <Grid container justifyContent={"space-between"}>
@@ -405,7 +426,7 @@ const Auditor_page = (props) => {
             onClose={handleClose_delete}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Delete Incepector
+              Delete Auditor
             </DialogTitle>
             <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
               <Typography>
@@ -500,77 +521,6 @@ const Auditor_page = (props) => {
                 </TabPanel>
               </Paper>
             </ThemeProvider>
-
-            {/* <Box sx={{ width: "100%" }}>
-              <Paper
-                sx={{ width: "100%", mb: 2 }}
-                className={styles.maentebal2}
-              >
-                <TableContainer>
-                  <Table
-                    sx={{ minWidth: 750 }}
-                    aria-labelledby="tableTitle"
-                    size={dense ? "small" : "medium"}
-                  >
-                    <TableHead>
-                      <TableRow>
-                        {Header.map((item, index) => {
-                          return (
-                            <TableCell
-                              key={item.id}
-                              //   align="left"
-                              className={Style.table_cell}
-                            >
-                              {item.name}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {(rowsPerPage > 0
-                        ? auditorData.slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                          )
-                        : auditorData
-                      ).map((item, index) => {
-                        return (
-                          <TableRow className={Style.table_row}>
-                            <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.company}</TableCell>
-                            <TableCell>{item.userName}</TableCell>
-                            <TableCell>
-                              <Box className={Style.last_td}>
-                                <IconButton className={Style.icon_btn}>
-                                  <DeleteIcon_ height={15} width={15} />
-                                </IconButton>
-                                <IconButton
-                                  className={Style.icon_btn}
-                                  onClick={handleClickOpenTWO}
-                                >
-                                  <Editicon height={15} width={15} />
-                                </IconButton>
-                              </Box>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  rowsPerPageOptions={[7, 10, 25, 100]}
-                  component="div"
-                  className={styles.bakgvcal}
-                  count={auditorData.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </Paper>
-            </Box> */}
           </div>
         </Grid>
       </Grid>
@@ -584,9 +534,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
 });
-
-const calenderIcon = () => {
-  return <img src="./image/calender.png" className="calenderimg" />;
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auditor_page);
