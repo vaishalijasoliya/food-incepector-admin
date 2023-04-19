@@ -1,47 +1,66 @@
 import style from "../styles/login.module.css";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import OTPInput from "react-otp-input";
+import { Input_error } from "../Layout/textString";
 import ApiServices from "../config/ApiServices";
 import ApiEndpoint from "../config/ApiEndpoint";
+import { convertToIndianMobileNumberFormat } from "./Utils/func";
 import { toast } from "react-toastify";
-import OTPInput from "react-otp-input";
-import { Box } from "@mui/material";
-import { Input_error } from "../Layout/textString";
 
 const Otpbox = (props) => {
   const router = useRouter();
   const [isoutField, setIsOutField] = useState(false);
-  const [outField, setOutField] = useState("");
   const [otp, setOtp] = useState("");
+
   const verifyCode = async () => {
-    console.log("Verification is in process");
+    // router.push("/createPassword");
 
-    router.push('/createPassword')
+    var headers = {
+      "Content-Type": "application/json",
+    };
+    var body = {
+      id: router.query.id,
+      code: otp,
+    };
 
-    // var headers = {
-    //   "Content-Type": "application/json",
-    // };
-    // var body = {
-    //   id: props.id,
-    //   code: outField,
-    // };
-    // props.props.loaderRef(true);
-    // var data = await ApiServices.PostApiCall(
-    //   ApiEndpoint.ADMIN_VERIFY_CODE,
-    //   JSON.stringify(body),
-    //   headers
-    // );
-    // props.props.loaderRef(false);
-    // if (!!data) {
-    //   if (data.status == true) {
-    //     router.push("./creatpass");
-    //   } else {
-    //     toast.error(data.message);
-    //   }
-    // } else {
-    //   toast.error("Something went wrong.");
-    // }
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.VERIFY_OTP,
+      JSON.stringify(body),
+      headers
+    );
+
+    props.props.loaderRef(false);
+
+    router.push("/createPassword");
+
+    if (!!data) {
+      if (data.status == true) {
+        // router.push("./creatpass");
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error("Something went wrong.");
+    }
   };
+
+  const onResend = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+    };
+    var body = {
+      phone_no: router.query.mobile,
+    };
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.FORGET_PASSWORD,
+      JSON.stringify(body),
+      headers
+    );
+  };
+
   return (
     <>
       <div className={style.otpinput}>
@@ -57,15 +76,18 @@ const Otpbox = (props) => {
         <Input_error text={"Please enter Verification code"} />
       ) : null}
       <div className={style.Otpboxlistmenu}>
-        <a
+        <button
+          type="button"
           className={style.averify}
+          style={{ background: "transparent", border: "0px" }}
           onClick={() => {
-            router.push("");
+            onResend();
+            // router.push("");
           }}
         >
           {" "}
           Resend OTP{" "}
-        </a>
+        </button>
       </div>
       <button
         type="button"

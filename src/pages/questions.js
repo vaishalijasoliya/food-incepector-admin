@@ -2,12 +2,19 @@ import React from "react";
 import { Typography } from "@mui/material";
 import { MainLayout } from "../Layout/Pages_layout/mainLayout";
 import Questions_page from "../component/Questions/Questions";
-const Questions = () => {
+const Questions = (props) => {
   const data = {
     title: "Question",
   };
 
-  return <MainLayout data={data} Content={Questions_page} />;
+  return (
+    <MainLayout
+      data={data}
+      Content={() => {
+        return <Questions_page props={props} />;
+      }}
+    />
+  );
 };
 
 export default Questions;

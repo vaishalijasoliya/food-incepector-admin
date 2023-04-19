@@ -5,6 +5,8 @@ import ApiServices from "../config/ApiServices";
 import ApiEndpoint from "../config/ApiEndpoint";
 import { toast } from "react-toastify";
 import { TextField } from "@mui/material";
+import { Error_msg } from "./Utils/message";
+import { convertToIndianMobileNumberFormat } from "./Utils/func";
 
 const Phone = (props) => {
   const router = useRouter();
@@ -44,19 +46,51 @@ const Phone = (props) => {
   //   }
   // };
 
-  const sendOtpMobile = () => {
+  const sendOtpMobile = async () => {
     setIsOutField(true);
 
-    if (mobileNumber) {
+    if (mobileNumber && mobileNumber.length == 10) {
+      var headers = {
+        "Content-Type": "application/json",
+      };
+      var body = {
+        phone_no: convertToIndianMobileNumberFormat(mobileNumber),
+      };
+      var data = await ApiServices.PostApiCall(
+        // ApiEndpoint.FORGET_PASSWORD,
+        JSON.stringify(body),
+        headers
+      );
       router.push({
-        query: { mobile: mobileNumber },
+        query: {
+          mobile: convertToIndianMobileNumberFormat(mobileNumber),
+          id: 2,
+        },
         pathname: "/verification",
       });
-    }
-  };
 
-  const handlePinChange = (moNumber) => {
-    setOutField(moNumber);
+      if (data) {
+        if (data.status == true) {
+          router.push({
+            query: {
+              mobile: convertToIndianMobileNumberFormat(mobileNumber),
+              id: data.data.id,
+            },
+            pathname: "/verification",
+          });
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        toast.error(Error_msg.NOT_RES);
+      }
+
+      // router.push({
+      //   query: { mobile: mobileNumber },
+      //   pathname: "/verification",
+      // });
+    }
   };
 
   return (
@@ -70,7 +104,8 @@ const Phone = (props) => {
         />
       </div>
       {/*  */}
-      {isoutField == true && mobileNumber == "" ? (
+      {isoutField == true &&
+      (mobileNumber == "" || mobileNumber.length != 10) ? (
         <span className={style.otperr}>Enter Valid Mobile-Number</span>
       ) : (
         ""

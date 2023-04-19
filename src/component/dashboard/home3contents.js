@@ -1,14 +1,12 @@
 import { Grid, Box, LinearProgress } from "@mui/material";
 import style from "../../styles/dashboard.module.css";
-import MediaControlCard from "./card";
+
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
-import StickyHeadTable from "./table";
 import React, { useContext } from "react";
 import SupportContext from "../../context/SupportContext";
 
 const Usercount = (props) => {
-  console.log(props.props.profile.token, "props11");
   const [signupCount, setSignupCount] = React.useState(0);
   const [activeCount, setActiveCount] = React.useState(0);
   const [inactiveCount, setInactiveCount] = React.useState(0);
@@ -19,8 +17,6 @@ const Usercount = (props) => {
     viewSupportMsg(key);
     setUserData(data);
   };
-
-  // console.log(handleClick())
 
   const usercountlist = async () => {
     var headers = {
@@ -33,11 +29,9 @@ const Usercount = (props) => {
       ApiEndpoint.USER_COUNT_LIST,
       headers
     );
-    console.log(data, "my data11");
     props.props.loaderRef(false);
     if (!!data) {
       if (data.status == true) {
-        console.log(data);
         setActiveCount(data.activeUser);
         setInactiveCount(data.inactiveUser);
         setSignupCount(data.signUpUser);
@@ -118,22 +112,7 @@ const Usercount = (props) => {
             </Box>
           </Box>
         </Grid>
-
-        {/* <Grid item xs={12} display={"flex"} flexWrap={"wrap"}>
-          <Grid container spacing={2} paddingTop={"30px"}>
-            <Grid item xs={12} md={6}></Grid>
-            <Grid item xs={12} md={6}>
-              <MediaControlCard props={props} />
-            </Grid>
-          </Grid>
-        </Grid> */}
       </Grid>
-
-      {/* <Box>
-        <Grid item xs={12} md={12} className={style.tablediv}>
-          <StickyHeadTable props={props} />
-        </Grid>
-      </Box> */}
     </>
   );
 };

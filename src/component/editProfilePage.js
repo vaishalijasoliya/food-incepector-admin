@@ -16,7 +16,6 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 export const Edit_profilePage = () => {
   const [userProfileImage, setUserProfileImage] = React.useState("");
-  console.log(userProfileImage, "userProfileImage__________");
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -28,7 +27,6 @@ export const Edit_profilePage = () => {
       mobileNumber: Yup.string().required("Mobile number is required."),
     }),
     onSubmit: () => {
-      console.log("submitted");
     },
   });
   const uploadItem = async (e) => {

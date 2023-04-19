@@ -145,10 +145,6 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 const EnhancedTable = (props) => {
-  // console.log(props, 'mirav');
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("");
-  const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
@@ -156,7 +152,6 @@ const EnhancedTable = (props) => {
   const [customerList, setCustomerList] = React.useState([]);
   const isSelected = (name) => customer.indexOf(name) !== -1;
   const label = { componentsProps: { input: { "aria-label": "Demo switch" } } };
-  const [checked, setChecked] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
 
@@ -166,7 +161,6 @@ const EnhancedTable = (props) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  console.log(editdata, "editdata");
   const handleClose = () => {
     setOpen(false);
   };
@@ -183,7 +177,6 @@ const EnhancedTable = (props) => {
   };
 
   React.useEffect(() => {
-    console.log(props.userList, "props.userList");
     if (!!props.profile && !!props.profile.token) {
       setCustomerList(props.userList);
       setCustomer(props.userList);

@@ -14,6 +14,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { Button_ } from "../../Layout/buttons";
 import { Typography } from "@mui/material";
+import { removeData } from "../Utils/func";
 
 const Home = (props) => {
   const router = useRouter();
@@ -112,8 +113,13 @@ const Home = (props) => {
       {/* <CameraFrontIcon className={styles.iconside} /> */}
       <span> Logout </span>
     </Button>,
-
   ];
+
+  const logout = () => {
+    router.push("/");
+    props.save_user_data({ user: "" });
+  };
+
   return (
     <>
       <Grid container className={styles.cantenar2}>
@@ -124,11 +130,6 @@ const Home = (props) => {
               src="./image/favicon.png"
               className={styles.lianpohot}
             />
-
-
-
-
-            
           </div>
           <Box className={styles.btnhoime}>
             <ButtonGroup
@@ -143,12 +144,6 @@ const Home = (props) => {
                 open={com}
                 onClose={handleCloseCom}
                 className={styles.borderredayasfor}
-                md={
-                  {
-                    // borderRadius: '7px'
-                  }
-                }
-                // fullWidth
                 maxWidth="md"
               >
                 <div>
@@ -164,10 +159,11 @@ const Home = (props) => {
                       <Button_
                         text={"Yes"}
                         handleClick={() => {
-                          var profile = "";
-                          props.save_user_data({ user: "" });
-                          router.push("/");
-                          toast.success("Logout Successfully!");
+                          removeData({ logout: logout });
+                          // var profile = "";
+                          // props.save_user_data({ user: "" });
+                          // router.push("/");
+                          // toast.success("Logout Successfully!");
                         }}
                       />
                     </div>

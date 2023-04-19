@@ -6,13 +6,7 @@ import configureStore from "/src/store/configureStore";
 import "../styles/globals.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import {
-  CssBaseline,
-  CircularProgress,
-  Box,
-  StyledEngineProvider,
-} from "@mui/material";
+import { CircularProgress, Box, StyledEngineProvider } from "@mui/material";
 import { connect } from "react-redux";
 import { Types } from "/src/constants/actionTypes";
 import { useRouter } from "next/router";
@@ -33,17 +27,16 @@ const MyApp = (props) => {
     var persistedState = localStorage.getItem("reduxState")
       ? JSON.parse(localStorage.getItem("reduxState"))
       : {};
+
     if (
       !!persistedState &&
       !!persistedState.user &&
       !!persistedState.user.profile.token
     ) {
-      if (router.pathname == "/") {
-        // props.router.push(router.push("./dashboard"));
-      }
+      router.push("./dashboard");
       setIsLoaded(true);
     } else {
-      // props.router.push("/");
+      router.push("/");
       setTimeout(() => {
         setIsLoaded(true);
       }, 300);
