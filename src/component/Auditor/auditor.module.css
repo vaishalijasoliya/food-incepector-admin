@@ -6,7 +6,7 @@
 }
 .last_td {
   display: flex;
-  column-gap: 20px;
+  column-gap: 10px;
 }
 .icon_btn {
   width: 30px;

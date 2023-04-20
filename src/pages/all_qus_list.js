@@ -9,7 +9,7 @@ import Audit_qus_page from "../component/Audit/all_qus_list";
 
 const index = (props) => {
   const data = {
-    title: "All questions ",
+    title: "Audit List ",
   };
   return (
     <>

@@ -74,24 +74,20 @@ const onButtonClick = () => {
               
               return (
                 
-                <TableRow 
-              onClick={quspage}  
+              <TableRow                
               className={currentPath == "./audit.js" ? Style.active : ""}    
               key={index} >
-                <TableCell>{item.name}</TableCell>
-                
-                <TableCell>
+                <TableCell onClick={quspage}>{item.location}</TableCell>
+                <TableCell onClick={quspage}>
                     {moment(item.timing).format("DD/MM/YYYY")}
                  </TableCell>
-                 <TableCell>{item.score}</TableCell>
-                 
-                  <TableCell>{item.company}</TableCell>
+                 <TableCell onClick={quspage}>{item.score}</TableCell>
+                <TableCell onClick={quspage}>{item.name}</TableCell>                                               
                   <TableCell>
                     <button onClick={onButtonClick}>
                   <DownloadIcon/>
                   </button>
-                  </TableCell>
-      
+                  </TableCell>     
                 </TableRow>
               );
             })}

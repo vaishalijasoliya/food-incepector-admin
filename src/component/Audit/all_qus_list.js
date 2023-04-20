@@ -1,23 +1,12 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import styles from "../../styles/user/paymenttable.module.css";
 import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Button_ } from "../../Layout/buttons";
-import Tabbar_style from "../../styles/tabbar.module.css";
-import { InputLable } from "../../Layout/inputlable";
 import {
   Avatar,
   Dialog,
@@ -30,13 +19,8 @@ import {
   createTheme,
 } from "@mui/material";
 import { qustionlist } from "../Utils/data";
-import { useFormik } from "formik";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import * as Yup from "yup";
-import { Input_error } from "../Utils/string";
 import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "../Audit/tablecom_allqus";
-import { Margin } from "@mui/icons-material";
 
 const Auditor_page = (props) => {
   const [page, setPage] = React.useState(0);
@@ -46,6 +30,8 @@ const Auditor_page = (props) => {
   const [customerList, setCustomerList] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
+  const [dataSearch, setDataSearch] = React.useState([]);
+  const [dataList, setDatalist] = React.useState([]);
   const [value, setValue] = React.useState(0);
   const [aciveData, setActiveData] = React.useState([]);
   const [deletedData, setDeleteddata] = React.useState([]);
@@ -81,12 +67,11 @@ const Auditor_page = (props) => {
     setDeleteOpen(true);
   };
   const Header = [
-    { id: 1, name: "Questions " },
-    { id: 1, name: "Images" },
-    { id: 1, name: "Compliance" },
-    { id: 1, name: "Observation" },
-
-
+    {  name: "Catogory" },
+    {  name: "Questions" },
+    {  name: "Images" },
+    {  name: "Compliance" },
+    {  name: "Observation" },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -135,8 +120,7 @@ const Auditor_page = (props) => {
   return (
 
       <Grid container>
-
-      <Grid container display={"flex"} className={styles.hadpeg}>
+        <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
           <Box className={styles.boxreting} display={"flex"}>
             <input
@@ -154,7 +138,7 @@ const Auditor_page = (props) => {
                       setActiveData(activeSearch);
                     } else {
                       var filteredData = activeSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
+                        let searchValue = item.qustion.toLowerCase();
                         return searchValue.includes(
                           value_.toString().toLowerCase()
                         );
@@ -196,10 +180,7 @@ const Auditor_page = (props) => {
                   paddingTop: "10px",
                 }}
                 className={styles.maentebal2}
-              >
-       
-
-                
+              >                   
                 <TabPanel value={value} index={0}>
                   <TableComponent
                     handleClickOpenTWO={handleClickOpenTWO}

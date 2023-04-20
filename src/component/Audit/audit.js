@@ -1,23 +1,12 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import styles from "../../styles/user/paymenttable.module.css";
 import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Button_ } from "../../Layout/buttons";
-import Tabbar_style from "../../styles/tabbar.module.css";
-import { InputLable } from "../../Layout/inputlable";
 
 import {
   Avatar,
@@ -31,14 +20,9 @@ import {
   createTheme,
 } from "@mui/material";
 import { auditData } from "../Utils/data";
-import { DeleteIcon_, Editicon } from "../Utils/icons";
-import { useFormik } from "formik";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import * as Yup from "yup";
-import { Input_error } from "../Utils/string";
 import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "../Audit/tablecomponentaudit";
-import { Margin } from "@mui/icons-material";
+
 
 const Auditor_page = (props) => {
   const [page, setPage] = React.useState(0);
@@ -83,14 +67,11 @@ const Auditor_page = (props) => {
     setDeleteOpen(true);
   };
   const Header = [
-    { id: 1, name: "Review by" },
+    { id: 1, name: "Locations" },
     { id: 2, name: "Date Time " },
-    // { id: 3, name: "Time " },
-    { id: 4, name: "Score" },
-    { id: 5, name: "Locations" },
-    { id: 6, name: "PDF " },
-
-
+    { id: 3, name: "Score" },
+    { id: 4, name: "Review by" },
+    { id: 5, name: "PDF " },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -109,24 +90,6 @@ const Auditor_page = (props) => {
     setPage(0);
   };
 
-  // const formik = useFormik({
-  //   initialValues: {
-  //     userName: "",
-  //     name: "",
-  //     password: "",
-  //     company: "",
-  //   },
-
-  //   validationSchema: Yup.object({
-  //     userName: Yup.string().required("Username is required."),
-  //     password: Yup.string().required("Password is required."),
-  //     name: Yup.string().required("Name is required"),
-  //     company: Yup.string().required("Company name is required"),
-  //   }),
-  //   onSubmit: () => {
-  //     //   router.push("/dashboard");
-  //   },
-  // });
 
   React.useEffect(() => {
     const ActiveArr = [];
@@ -203,227 +166,7 @@ const Auditor_page = (props) => {
             />
           </Box>
         </Grid>
-        <Grid className={styles.maxbox} item xs={12} md={9} sm={12}>
-          {/* <Button className={styles.megobtn} onClick={handleClickOpen}>
-            Add Incepector
-          </Button>
-          <Dialog
-            fullWidth={true}
-            maxWidth={"md"}
-            open={open}
-            onClose={handleClose}
-            key={1}
-          >
-            <DialogTitle className={styles.addtitalaja}>
-              Add Incepector
-            </DialogTitle>
-            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-              <Grid container justifyContent={"space-between"}>
-                <Grid
-                  item
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  xl={12}
-                  lg={12}
-                  className={styles.Image_user_item}
-                >
-                  <Box className={styles.Image_user_item_div}>
-                    <Box className={styles.Profile_photo_div}>
-                      <Avatar
-                        className={styles.Profile_photo_avtar}
-                        alt="user profile photo"
-                        // src={userProfileImage}
-                      />
-                    </Box>
-
-                    <IconButton className={styles.Change_profile_icon_btn}>
-                      <input type="file" name="myImage" />
-                      <AddRoundedIcon />
-                    </IconButton>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Enter name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="name"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.name}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.name && formik.touched.name && (
-                        <Input_error text={formik.errors.name} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Username"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="userName"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.userName}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.userName && formik.touched.userName && (
-                        <Input_error text={formik.errors.userName} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Company name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="company"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.company}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.company && formik.touched.company && (
-                        <Input_error text={formik.errors.company} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Password"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="password"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.password && formik.touched.password && (
-                        <Input_error text={formik.errors.password} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-              </Grid>
-              <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose} text={"Cancle"} />
-                <Button_ handleClick={handleClose} text={"Add"} />{" "}
-              </div>
-            </Box>
-          </Dialog> */}
-          {/* <Dialog
-            fullWidth={true}
-            maxWidth={"md"}
-            open={openTWO}
-            onClose={handleCloseTWO}
-          >
-            <DialogTitle className={styles.addtitalaja}>
-              Edit Incepector
-            </DialogTitle>
-            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-              <Grid container justifyContent={"space-between"}>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Enter name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="name"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.name}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.name && formik.touched.name && (
-                        <Input_error text={formik.errors.name} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Username"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="userName"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.userName}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.userName && formik.touched.userName && (
-                        <Input_error text={formik.errors.userName} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Company name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="company"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.company}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.company && formik.touched.company && (
-                        <Input_error text={formik.errors.company} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Password"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="password"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.password && formik.touched.password && (
-                        <Input_error text={formik.errors.password} />
-                      )}
-                    </Box>
-                  </Box>
-                </Grid>
-              </Grid>
-              <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleCloseTWO} text={"Cancle"} />
-                <Button_ handleClick={handleCloseTWO} text={"Add"} />{" "}
-              </div>
-            </Box>
-          </Dialog>
-          <Dialog
-            fullWidth={true}
-            maxWidth={"sm"}
-            open={deleteOpen}
-            onClose={handleClose_delete}
-          >
-            <DialogTitle className={styles.addtitalaja}>
-              Delete Incepector
-            </DialogTitle>
-            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-              <Typography>
-                Are you sure you want to delete Inspector?
-              </Typography>
-              <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose_delete} text={"Cancle"} />
-                <Button_ handleClick={handleClose_delete} text={"Delete"} />{" "}
-              </div>
-            </Box>
-          </Dialog> */}
-        </Grid>
+        
       </Grid>
       
       <Grid container>
