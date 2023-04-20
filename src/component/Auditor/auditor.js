@@ -22,7 +22,6 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import { auditorData } from "../Utils/data";
 import { useFormik } from "formik";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import * as Yup from "yup";
@@ -31,6 +30,8 @@ import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "./tableComponent";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
+import { toast } from "react-toastify";
+import { Error_msg } from "../Utils/message";
 
 const Auditor_page = (props) => {
   const [page, setPage] = React.useState(0);
@@ -38,15 +39,26 @@ const Auditor_page = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
   const [value, setValue] = React.useState(0);
-  const [aciveData, setActiveData] = React.useState([]);
+  const [dataList, setDatalist] = React.useState([]);
   const [deletedData, setDeleteddata] = React.useState([]);
-  const [activeSearch, setActiveSearch] = React.useState([]);
+  const [dataSearch, setDataSearch] = React.useState([]);
   const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [auditorRender, setAuditorRender] = React.useState(true);
+  const [auditorDetails, setAuditorDetails] = React.useState("");
+  const [userType, setUsertype] = React.useState("active");
 
+  console.log(auditorDetails, "auditorDetails______");
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setDataSearch([]);
+    setDatalist([]);
+    setAuditorRender(true);
+    if (newValue == 1) {
+      setUsertype("cancelled");
+    } else if (newValue == 0) {
+      setUsertype("active");
+    }
   };
 
   const handleClickOpen = () => {
@@ -96,7 +108,6 @@ const Auditor_page = (props) => {
       password: "",
       company: "",
     },
-
     validationSchema: Yup.object({
       userName: Yup.string().required("Username is required."),
       password: Yup.string().required("Password is required."),
@@ -104,7 +115,25 @@ const Auditor_page = (props) => {
       company: Yup.string().required("Company name is required"),
     }),
     onSubmit: () => {
-      //   router.push("/dashboard");
+      onAddAuditor();
+    },
+  });
+
+  const formikEdit = useFormik({
+    initialValues: {
+      userName: "",
+      name: "",
+      company: "",
+    },
+    validationSchema: Yup.object({
+      userName: Yup.string().required("Username is required."),
+      name: Yup.string().required("Name is required"),
+      company: Yup.string().required("Company name is required"),
+    }),
+    onSubmit: () => {
+      onEditAuditor();
+      formikEdit.resetForm();
+      setOpenTWO(false);
     },
   });
 
@@ -113,54 +142,163 @@ const Auditor_page = (props) => {
       "Content-Type": "application/json",
       "x-access-token": props.props.profile.token,
     };
+    var body = {
+      type: userType,
+    };
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
-      ApiEndpoint.INSPECTOR_LIST,
-      // JSON.stringify(body),
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.AUDITOR_LIST,
+      JSON.stringify(body),
       headers
     );
     props.props.loaderRef(false);
 
     if (data) {
       if (data.status) {
-        const ActiveArr = [];
-        const DeletedArr = [];
-        for (let index = 0; index < auditorData.length; index++) {
-          const element = auditorData[index];
-          if (element.status == "active") {
-            ActiveArr.push(element);
-          } else if (element.status == "deleted") {
-            DeletedArr.push(element);
-          }
-        }
-        setActiveSearch(ActiveArr);
-        setActiveData(ActiveArr);
-        setDeletedSearch(DeletedArr);
-        setDeleteddata(DeletedArr);
+        setDataSearch(data.data);
+        setDatalist(data.data);
       }
     }
-    const ActiveArr = [];
-    const DeletedArr = [];
-    for (let index = 0; index < auditorData.length; index++) {
-      const element = auditorData[index];
-      if (element.status == "active") {
-        ActiveArr.push(element);
-      } else if (element.status == "deleted") {
-        DeletedArr.push(element);
-      }
-    }
-    setActiveSearch(ActiveArr);
-    setActiveData(ActiveArr);
-    setDeletedSearch(DeletedArr);
-    setDeleteddata(DeletedArr);
+
     setAuditorRender(false);
+  };
+  const onAddAuditor = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+
+    var body = {
+      name: formik.values.name,
+      user_name: formik.values.userName,
+      password: formik.values.password,
+      role: "incepector",
+      company_name: formik.values.company,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.ADD_AUDITOR,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        getAuditorList();
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+    formik.resetForm();
+
+    setOpen(false);
+  };
+  const onEditAuditor = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      id_auditor: auditorDetails.id,
+      name: formikEdit.values.name,
+      company_name: formikEdit.values.company,
+      user_name: formikEdit.values.userName,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.EDIT_AUDITOR,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        console.log(data);
+        toast.success(data.message);
+        setAuditorDetails("");
+        formikEdit.resetForm();
+        getAuditorList();
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+  };
+  const onViewEditor = async ({ id_user }) => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      id_auditor: id_user,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.VIEW_AUDITOR,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        formikEdit.setFieldValue("userName", data.data.user_name);
+        formikEdit.setFieldValue("name", data.data.name);
+        formikEdit.setFieldValue("company", data.data.company_name);
+        setAuditorDetails("");
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+  };
+  const onDelete = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      id_auditor: auditorDetails.id,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.DELETE_AUDITOR,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        toast.success(data.message);
+        setAuditorDetails("");
+        getAuditorList();
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+
+    handleClose_delete();
   };
 
   React.useEffect(() => {
-    if (auditorRender) {
+    if (auditorRender && props && props.profile && props.profile.token) {
       getAuditorList();
     }
-  }, [props, auditorRender]);
+  }, [props, auditorRender, userType]);
 
   const theme = createTheme({
     palette: {
@@ -187,15 +325,15 @@ const Auditor_page = (props) => {
                   var value_ = e.target.value;
                   if (typeof value_ !== "object") {
                     if (!value_ || value_ == "") {
-                      setActiveData(activeSearch);
+                      setDatalist(dataSearch);
                     } else {
-                      var filteredData = activeSearch.filter((item) => {
+                      var filteredData = dataSearch.filter((item) => {
                         let searchValue = item.name.toLowerCase();
                         return searchValue.includes(
                           value_.toString().toLowerCase()
                         );
                       });
-                      setActiveData(filteredData);
+                      setDatalist(filteredData);
                     }
                   }
                 } else {
@@ -224,7 +362,7 @@ const Auditor_page = (props) => {
           </Button>
           <Dialog
             fullWidth={true}
-            maxWidth={"md"}
+            maxWidth={"sm"}
             open={open}
             onClose={handleClose}
             key={1}
@@ -232,192 +370,206 @@ const Auditor_page = (props) => {
             <DialogTitle className={styles.addtitalaja}>
               Add Auditor
             </DialogTitle>
-            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-              <Grid container justifyContent={"space-between"}>
-                <Grid
-                  item
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  xl={12}
-                  lg={12}
-                  className={styles.Image_user_item}
-                >
-                  <Box className={styles.Image_user_item_div}>
-                    <Box className={styles.Profile_photo_div}>
-                      <Avatar
-                        className={styles.Profile_photo_avtar}
-                        alt="user profile photo"
-                        // src={userProfileImage}
-                      />
-                    </Box>
+            <form onSubmit={formik.handleSubmit}>
+              <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+                <Grid container justifyContent={"space-between"}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    xl={12}
+                    lg={12}
+                    className={styles.Image_user_item}
+                  >
+                    <Box className={styles.Image_user_item_div}>
+                      <Box className={styles.Profile_photo_div}>
+                        <Avatar
+                          className={styles.Profile_photo_avtar}
+                          alt="user profile photo"
+                          // src={userProfileImage}
+                        />
+                      </Box>
 
-                    <IconButton className={styles.Change_profile_icon_btn}>
-                      <input type="file" name="myImage" />
-                      <AddRoundedIcon />
-                    </IconButton>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Enter name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="name"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.name}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.name && formik.touched.name && (
-                        <Input_error text={formik.errors.name} />
-                      )}
+                      <IconButton className={styles.Change_profile_icon_btn}>
+                        <input type="file" name="myImage" />
+                        <AddRoundedIcon />
+                      </IconButton>
                     </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Username"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="userName"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.userName}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.userName && formik.touched.userName && (
-                        <Input_error text={formik.errors.userName} />
-                      )}
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Enter name"} fs={"12px"} />
+                      <TextField
+                        className={"Input_field"}
+                        name="name"
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.name}
+                      />
+                      <Box className={"error_text_view"}>
+                        {formik.errors.name && formik.touched.name && (
+                          <Input_error text={formik.errors.name} />
+                        )}
+                      </Box>
                     </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Company name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="company"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.company}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.company && formik.touched.company && (
-                        <Input_error text={formik.errors.company} />
-                      )}
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Username"} fs={"12px"} />
+                      <TextField
+                        className={"Input_field"}
+                        name="userName"
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.userName}
+                      />
+                      <Box className={"error_text_view"}>
+                        {formik.errors.userName && formik.touched.userName && (
+                          <Input_error text={formik.errors.userName} />
+                        )}
+                      </Box>
                     </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Password"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="password"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.password && formik.touched.password && (
-                        <Input_error text={formik.errors.password} />
-                      )}
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Company name"} fs={"12px"} />
+                      <TextField
+                        className={"Input_field"}
+                        name="company"
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.company}
+                      />
+                      <Box className={"error_text_view"}>
+                        {formik.errors.company && formik.touched.company && (
+                          <Input_error text={formik.errors.company} />
+                        )}
+                      </Box>
                     </Box>
-                  </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Password"} fs={"12px"} />
+                      <TextField
+                        className={"Input_field"}
+                        type="password"
+                        name="password"
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                      />
+                      <Box className={"error_text_view"}>
+                        {formik.errors.password && formik.touched.password && (
+                          <Input_error text={formik.errors.password} />
+                        )}
+                      </Box>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose} text={"Cancle"} />
-                <Button_ handleClick={handleClose} text={"Add"} />{" "}
-              </div>
-            </Box>
+                <div className={styles.cesalbtncss}>
+                  <Button_ handleClick={handleClose} text={"Cancle"} />
+                  <Button_ type="submit" text={"Add"} />{" "}
+                </div>
+              </Box>
+            </form>
           </Dialog>
           <Dialog
             fullWidth={true}
-            maxWidth={"md"}
+            maxWidth={"sm"}
             open={openTWO}
             onClose={handleCloseTWO}
           >
             <DialogTitle className={styles.addtitalaja}>
               Edit Auditor
             </DialogTitle>
-            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-              <Grid container justifyContent={"space-between"}>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Enter name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="name"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.name}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.name && formik.touched.name && (
-                        <Input_error text={formik.errors.name} />
-                      )}
+            <form onSubmit={formikEdit.handleSubmit}>
+              <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+                <Grid container justifyContent={"space-between"}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    xl={12}
+                    lg={12}
+                    className={styles.Image_user_item}
+                  >
+                    <Box className={styles.Image_user_item_div}>
+                      <Box className={styles.Profile_photo_div}>
+                        <Avatar
+                          className={styles.Profile_photo_avtar}
+                          alt="user profile photo"
+                          // src={userProfileImage}
+                        />
+                      </Box>
+
+                      <IconButton className={styles.Change_profile_icon_btn}>
+                        <input type="file" name="myImage" />
+                        <AddRoundedIcon />
+                      </IconButton>
                     </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Username"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="userName"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.userName}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.userName && formik.touched.userName && (
-                        <Input_error text={formik.errors.userName} />
-                      )}
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Enter name"} fs={"12px"} />
+                      <TextField
+                        className={"Input_field"}
+                        name="name"
+                        onBlur={formikEdit.handleBlur}
+                        onChange={formikEdit.handleChange}
+                        value={formikEdit.values.name}
+                      />
+                      <Box className={"error_text_view"}>
+                        {formikEdit.errors.name && formikEdit.touched.name && (
+                          <Input_error text={formikEdit.errors.name} />
+                        )}
+                      </Box>
                     </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Company name"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="company"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.company}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.company && formik.touched.company && (
-                        <Input_error text={formik.errors.company} />
-                      )}
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Username"} fs={"12px"} />
+                      <TextField
+                        className={"Input_field"}
+                        name="userName"
+                        onBlur={formikEdit.handleBlur}
+                        onChange={formikEdit.handleChange}
+                        value={formikEdit.values.userName}
+                      />
+                      <Box className={"error_text_view"}>
+                        {formikEdit.errors.userName &&
+                          formikEdit.touched.userName && (
+                            <Input_error text={formikEdit.errors.userName} />
+                          )}
+                      </Box>
                     </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                  <Box className={"Input_box"}>
-                    <InputLable text={"Password"} fs={"12px"} />
-                    <TextField
-                      className={"Input_field"}
-                      name="password"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                    />
-                    <Box className={"error_text_view"}>
-                      {formik.errors.password && formik.touched.password && (
-                        <Input_error text={formik.errors.password} />
-                      )}
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Company name"} fs={"12px"} />
+                      <TextField
+                        className={"Input_field"}
+                        name="company"
+                        onBlur={formikEdit.handleBlur}
+                        onChange={formikEdit.handleChange}
+                        value={formikEdit.values.company}
+                      />
+                      <Box className={"error_text_view"}>
+                        {formikEdit.errors.company &&
+                          formikEdit.touched.company && (
+                            <Input_error text={formikEdit.errors.company} />
+                          )}
+                      </Box>
                     </Box>
-                  </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleCloseTWO} text={"Cancle"} />
-                <Button_ handleClick={handleCloseTWO} text={"Add"} />{" "}
-              </div>
-            </Box>
+                <div className={styles.cesalbtncss}>
+                  <Button_ handleClick={handleCloseTWO} text={"Cancle"} />
+                  <Button_ type={"submit"} text={"Edit"} />{" "}
+                </div>
+              </Box>
+            </form>
           </Dialog>
           <Dialog
             fullWidth={true}
@@ -434,10 +586,7 @@ const Auditor_page = (props) => {
               </Typography>
               <div className={styles.cesalbtncss}>
                 <Button_ handleClick={handleClose_delete} text={"Cancle"} />
-                <Button_
-                  handleClick={handleClose_delete}
-                  text={"Delete"}
-                />{" "}
+                <Button_ handleClick={onDelete} text={"Delete"} />{" "}
               </div>
             </Box>
           </Dialog>
@@ -485,14 +634,16 @@ const Auditor_page = (props) => {
                     rowsPerPage={rowsPerPage}
                     page={page}
                     handleOpen_delete={handleOpen_delete}
-                    data={aciveData}
+                    data={dataList}
+                    onViewEditor={onViewEditor}
+                    setAuditorDetails={setAuditorDetails}
                     Header={Header}
                   />
                   <TablePagination
                     rowsPerPageOptions={[7, 10, 25, 100]}
                     component="div"
                     className={styles.bakgvcal}
-                    count={aciveData.length}
+                    count={dataList.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -503,16 +654,18 @@ const Auditor_page = (props) => {
                   <TableComponent
                     handleClickOpenTWO={handleClickOpenTWO}
                     rowsPerPage={rowsPerPage}
+                    onViewEditor={onViewEditor}
                     page={page}
                     handleOpen_delete={handleOpen_delete}
-                    data={deletedData}
+                    data={dataList}
                     Header={Header}
+                    setAuditorDetails={setAuditorDetails}
                   />
                   <TablePagination
                     rowsPerPageOptions={[7, 10, 25, 100]}
                     component="div"
                     className={styles.bakgvcal}
-                    count={deletedData.length}
+                    count={dataList.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
