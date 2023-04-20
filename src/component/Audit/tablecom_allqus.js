@@ -11,8 +11,6 @@ import {
   } from "@mui/material";
   import React from "react";
   import Style from "../Auditor/auditor.module.css";
-  import moment from "moment";
-  import DownloadIcon from '@mui/icons-material/Download';
   import { useRouter } from "next/router";
 
 
@@ -75,23 +73,29 @@ const onButtonClick = () => {
               return (
                 
                 <TableRow 
-              onClick={quspage}  
-              className={currentPath == "./audit.js" ? Style.active : ""}    
-              key={index} >
-                <TableCell>{item.name}</TableCell>
-                
-                <TableCell>
-                    {moment(item.timing).format("DD/MM/YYYY")}
-                 </TableCell>
-                 <TableCell>{item.score}</TableCell>
-                 
-                  <TableCell>{item.company}</TableCell>
-                  <TableCell>
-                    <button onClick={onButtonClick}>
-                  <DownloadIcon/>
-                  </button>
-                  </TableCell>
-      
+                onClick={quspage}  
+                className={currentPath == "./audit.js" ? Style.active : ""}    
+                key={index} >
+                    <TableCell>{item.qustion}</TableCell>
+                    <TableCell>
+                    <Box className={Style.last_td}>
+                        <IconButton
+                        className={Style.icon_btn}
+                        onClick={handleClickOpenTWO}
+                        >
+                        <img src="/image/imgsmall.png" height="40px" width="50px" alt="img" />
+                        </IconButton>
+                        <IconButton
+                        className={Style.icon_btn}
+                        onClick={handleOpen_delete}
+                        >
+                        <img src="/image/imgsmall2.png" height="40px" width="50px" alt="img"  />
+                        </IconButton>
+                    </Box>
+                </TableCell>
+                    <TableCell>{item.Compliance}</TableCell>
+                    <TableCell>{item.observation}</TableCell>
+
                 </TableRow>
               );
             })}

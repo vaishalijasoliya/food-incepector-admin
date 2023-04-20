@@ -33,10 +33,10 @@ const MyApp = (props) => {
       !!persistedState.user &&
       !!persistedState.user.profile.token
     ) {
-      router.push("./dashboard");
+      // router.push("./dashboard");
       setIsLoaded(true);
     } else {
-      router.push("/");
+      // router.push("/");
       setTimeout(() => {
         setIsLoaded(true);
       }, 300);

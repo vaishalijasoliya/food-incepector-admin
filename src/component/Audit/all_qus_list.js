@@ -18,7 +18,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Button_ } from "../../Layout/buttons";
 import Tabbar_style from "../../styles/tabbar.module.css";
 import { InputLable } from "../../Layout/inputlable";
-import DownloadIcon from '@mui/icons-material/Download';
 import {
   Avatar,
   Dialog,
@@ -31,13 +30,12 @@ import {
   createTheme,
 } from "@mui/material";
 import { qustionlist } from "../Utils/data";
-import { DeleteIcon_, Editicon } from "../Utils/icons";
 import { useFormik } from "formik";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import * as Yup from "yup";
 import { Input_error } from "../Utils/string";
 import { TabPanel, a11yProps } from "../Tabs/tabs";
-import { TableComponent } from "../Audit/tablecomponentaudit";
+import { TableComponent } from "../Audit/tablecom_allqus";
 import { Margin } from "@mui/icons-material";
 
 const Auditor_page = (props) => {
@@ -83,7 +81,11 @@ const Auditor_page = (props) => {
     setDeleteOpen(true);
   };
   const Header = [
-    { id: 1, name: "All Questions List" },
+    { id: 1, name: "Questions " },
+    { id: 1, name: "Images" },
+    { id: 1, name: "Compliance" },
+    { id: 1, name: "Observation" },
+
 
   ];
 
@@ -108,8 +110,8 @@ const Auditor_page = (props) => {
   React.useEffect(() => {
     const ActiveArr = [];
     const DeletedArr = [];
-    for (let index = 0; index < auditData.length; index++) {
-      const element = auditData[index];
+    for (let index = 0; index < qustionlist.length; index++) {
+      const element = qustionlist[index];
       {
         ActiveArr.push(element);
         DeletedArr.push(element);
@@ -133,6 +135,56 @@ const Auditor_page = (props) => {
   return (
 
       <Grid container>
+
+      <Grid container display={"flex"} className={styles.hadpeg}>
+        <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
+          <Box className={styles.boxreting} display={"flex"}>
+            <input
+              type="text"
+              id="myserchbtn"
+              name="search"
+              placeholder="Search"
+              className={styles.searchbtn}
+              autoComplete="off"
+              onChange={(e) => {
+                if (value == 0) {
+                  var value_ = e.target.value;
+                  if (typeof value_ !== "object") {
+                    if (!value_ || value_ == "") {
+                      setActiveData(activeSearch);
+                    } else {
+                      var filteredData = activeSearch.filter((item) => {
+                        let searchValue = item.name.toLowerCase();
+                        return searchValue.includes(
+                          value_.toString().toLowerCase()
+                        );
+                      });
+                      setActiveData(filteredData);
+                    }
+                  }
+                } else {
+                  var value_ = e.target.value;
+                  if (typeof value_ !== "object") {
+                    if (!value_ || value_ == "") {
+                      setDeleteddata(deletedSearch);
+                    } else {
+                      var filteredData = deletedSearch.filter((item) => {
+                        let searchValue = item.name.toLowerCase();
+                        return searchValue.includes(
+                          value_.toString().toLowerCase()
+                        );
+                      });
+                      setDeleteddata(filteredData);
+                    }
+                  }
+                }
+              }}
+            />
+          </Box>
+        </Grid>
+        
+      </Grid>
+
         <Grid item xs={12} md={12}>
           <div>
             <ThemeProvider theme={theme}>

@@ -18,7 +18,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Button_ } from "../../Layout/buttons";
 import Tabbar_style from "../../styles/tabbar.module.css";
 import { InputLable } from "../../Layout/inputlable";
-import DownloadIcon from '@mui/icons-material/Download';
+
 import {
   Avatar,
   Dialog,
@@ -425,6 +425,7 @@ const Auditor_page = (props) => {
           </Dialog> */}
         </Grid>
       </Grid>
+      
       <Grid container>
         <Grid item xs={12} md={12}>
           <div>
@@ -438,31 +439,7 @@ const Auditor_page = (props) => {
                 }}
                 className={styles.maentebal2}
               >
-                {/* <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label="basic tabs example"
-                  indicatorColor="primary"
-                  className={Tabbar_style.Tab_container}
-                  sx={{
-                    "& .MuiTabs-flexContainer	": {
-                      columnGap: "20px",
-                    },
-                  }}
-                >
-                  <Tab
-                    className={Tabbar_style.tab_btns}
-                    label="Active"
-                    {...a11yProps(0)}
-                  />
-                  <Tab
-                    className={Tabbar_style.tab_btns}
-                    label="Deleted"
-                    {...a11yProps(1)}
-                  />
-                </Tabs> */}
-
-                
+             
                 <TabPanel value={value} index={0}>
                   <TableComponent
                     handleClickOpenTWO={handleClickOpenTWO}
@@ -505,77 +482,6 @@ const Auditor_page = (props) => {
                 </TabPanel>
               </Paper>
             </ThemeProvider>
-
-            {/* <Box sx={{ width: "100%" }}>
-              <Paper
-                sx={{ width: "100%", mb: 2 }}
-                className={styles.maentebal2}
-              >
-                <TableContainer>
-                  <Table
-                    sx={{ minWidth: 750 }}
-                    aria-labelledby="tableTitle"
-                    size={dense ? "small" : "medium"}
-                  >
-                    <TableHead>
-                      <TableRow>
-                        {Header.map((item, index) => {
-                          return (
-                            <TableCell
-                              key={item.id}
-                              //   align="left"
-                              className={Style.table_cell}
-                            >
-                              {item.name}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {(rowsPerPage > 0
-                        ? auditorData.slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                          )
-                        : auditorData
-                      ).map((item, index) => {
-                        return (
-                          <TableRow className={Style.table_row}>
-                            <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.company}</TableCell>
-                            <TableCell>{item.userName}</TableCell>
-                            <TableCell>
-                              <Box className={Style.last_td}>
-                                <IconButton className={Style.icon_btn}>
-                                  <DeleteIcon_ height={15} width={15} />
-                                </IconButton>
-                                <IconButton
-                                  className={Style.icon_btn}
-                                  onClick={handleClickOpenTWO}
-                                >
-                                  <Editicon height={15} width={15} />
-                                </IconButton>
-                              </Box>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  rowsPerPageOptions={[7, 10, 25, 100]}
-                  component="div"
-                  className={styles.bakgvcal}
-                  count={auditorData.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </Paper>
-            </Box> */}
           </div>
         </Grid>
       </Grid>

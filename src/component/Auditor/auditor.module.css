@@ -5,6 +5,8 @@
   text-transform: capitalize;
 }
 .last_td {
+  display: flex;
+  column-gap: 20px;
 }
 .icon_btn {
   width: 30px;

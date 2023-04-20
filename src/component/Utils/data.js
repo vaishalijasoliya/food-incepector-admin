@@ -1,22 +1,133 @@
 export const qustionlist = [
   {
-    qustion: "What platform should I develop it on?"
+    id: 1,
+    qustion: "What platform should I develop it on?",
+    Compliance:"Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   },
   {
-    qustion: "What platform should I develop it on?"
+    id: 2,
+    qustion: "What is the ideal refrigerator/food warming tray temperature? ",
+    Compliance:"Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   }, 
   {
-    qustion: "What platform should I develop it on?"
+    id: 3,
+    qustion: "Do you need to clean your food thermometers?",
+    Compliance:" Not Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   }, 
+  
   {
-    qustion: "What platform should I develop it on?"
+    id: 4,
+    qustion: "How often should you wash your hands?",
+    Compliance:"N/A",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   },
    {
-    qustion: "What platform should I develop it on?"
+    id: 5,
+    qustion: "How do you get a food handlers permit?",
+    Compliance:" Not Complied",
+
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   },
    {
-    qustion: "What platform should I develop it on?"
+    id: 6,
+    qustion: "What information would you collect as a food inspector?",
+    Compliance:"N/A",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   },
+  {
+    id: 7,
+    qustion: "What are the 3 safety questions?",
+    Compliance:"N/A",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 8,
+    qustion: "Why is the food inspector important?",
+    Compliance:" Not Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 9,
+    qustion: "Do you need to clean your food thermometers?",
+    Compliance:" Not Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 10,
+    qustion: "How often should you wash your hands?",
+    Compliance:" Not Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 11,
+    qustion: "How do you get a food handlers permit?",
+    Compliance:"Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 12,
+    qustion: "What song was or do you want to be the your first dance at your wedding?",
+    Compliance:"Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 13,
+    qustion: "What is the weirdest food combination you enjoy?",
+    Compliance:"Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 14,
+    qustion: "What is the stupidest thing you ever did on a dare?",
+    Compliance:"Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 15,
+    qustion: "What is your proudest accomplishment?",
+    Compliance:"Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 16,
+    qustion: "If money were no object, how would you spend your time?",
+    Compliance:" Not Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 17,
+    qustion: "Where do you see yourself in five years?",
+    Compliance:" Not Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 18,
+    qustion: "How do you like to spend your free time?",
+    Compliance:"Complied",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 19,
+    qustion: "What is your dream job?",
+    Compliance:"N/A",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 20,
+    qustion: "What platform should I develop it on?",
+    Compliance:"N/A",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 21,
+    qustion: "If you could be any type of dog, what breed would you be and why?",
+    Compliance:"N/A",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+
 ]
 
 
