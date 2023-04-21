@@ -28,14 +28,22 @@ import { Button_ } from "../../Layout/buttons";
 import { InputLable } from "../../Layout/inputlable";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { HotelsData } from "../Utils/data";
-import moment from "moment";
 import { Input_error } from "../Utils/string";
 import { DeleteIcon_, Editicon } from "../Utils/icons";
 import { toast } from "react-toastify";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
 import { Error_msg } from "../Utils/message";
+
+function convertTo24Hour(time) {
+  let [hours, modifier] = time.split(" ");
+  if (hours === "12" && modifier === "am") {
+    hours = "00";
+  } else if (hours !== "12" && modifier === "pm") {
+    hours = parseInt(hours) + 12;
+  }
+  return hours;
+}
 
 const Hotels_list = (props) => {
   const [page, setPage] = React.useState(0);
@@ -51,8 +59,11 @@ const Hotels_list = (props) => {
   const [selectedOption, setSelectedOption] = React.useState("select_category");
   const [auditorList, setAuditorList] = React.useState([]);
   const [submitted, setSubmitted] = React.useState(false);
-  const [startTime, setStartTime] = useState("");
+  const [startTime, setStartTime] = useState("9:00 pm");
+  const [isOpen, setIsOpen] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [idLocation, setIdlocation] = React.useState("");
+  // const [userRe]
 
   const handleStartTimeChange = (event) => {
     setStartTime(event.target.value);
@@ -98,11 +109,12 @@ const Hotels_list = (props) => {
   };
 
   React.useEffect(() => {
-    if (props && props.profile) {
+    if (props && props.profile && userRender) {
       getLocationList();
       getAuditorList();
+      setUserRender(false);
     }
-  }, []);
+  }, [props, userRender]);
 
   const handleClose_delete = () => {
     setDeleteOpen(false);
@@ -119,7 +131,58 @@ const Hotels_list = (props) => {
     setOpen(false);
     formik.resetForm();
   };
+  const onViewCategory = async ({ id_user }) => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      id_location: id_user,
+    };
 
+    // props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.VIEW_LOCATION,
+      JSON.stringify(body),
+      headers
+    );
+    // props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        formik.setFieldValue("name", data.data.name);
+        formik.setFieldValue("category", data.data.category);
+        formik.setFieldValue("hos", data.data.head_staff);
+        formik.setFieldValue("location", data.data.location);
+        formik.setFieldValue("size", data.data.size);
+        setSelectedOption(data.data.id_auditor);
+        const [startTimeString, endTimeString] = data.data.timing.split(" to ");
+        const startTime24 = convertTo24Hour(startTimeString);
+        const endTime24 = convertTo24Hour(endTimeString);
+        const timeRangeString24 = `${startTime24}:00to${endTime24}:00`;
+        const cuted = timeRangeString24.split("to");
+        const checkNum = cuted[0].split(":");
+        const isNum = parseFloat(checkNum);
+        if (isNum >= 10) {
+          setStartTime(cuted[0]);
+        } else {
+          setStartTime("0" + cuted[0]);
+          console.log("0" + cuted[0], "is____cutted");
+        }
+        const checkNum_end = cuted[1].split(":");
+        const isNum_end = parseFloat(checkNum_end);
+        if (isNum_end >= 10) {
+          setEndTime(cuted[1]);
+        } else {
+          setEndTime("0" + cuted[1]);
+        }
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+  };
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
@@ -127,7 +190,6 @@ const Hotels_list = (props) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -146,59 +208,50 @@ const Hotels_list = (props) => {
     onSubmit: () => {
       setSubmitted(true);
       if (selectedOption != "select_category" && startTime && endTime) {
-        if (open == true) {
+        if (isOpen == "Add") {
           onAddLocation();
-        } else if (openEdit == true) {
+        } else if (isOpen == "edit") {
           onEditLocation();
         }
       }
+      formik.resetForm();
+      setUserRender(false);
     },
   });
-
   const Header = [
     {
       name: "Name",
       id: 1,
     },
     {
-      name: "Company",
-      id: 2,
+      name: "category",
+      id: 6,
     },
     {
-      name: "Timing",
-      id: 3,
+      name: "supervisior",
+      id: 7,
     },
     {
       name: "Location",
       id: 4,
     },
     {
-      name: "Head of staff",
-      id: 5,
-    },
-    {
-      name: "category",
-      id: 6,
-    },
-    {
       name: "Size",
       id: 7,
+    },
+    {
+      name: "Timing",
+      id: 3,
+    },
+    {
+      name: "Head of staff",
+      id: 5,
     },
     {
       name: "Actions",
       id: 8,
     },
   ];
-
-  const handleCloseEdit = () => {
-    setOpenEdit(false);
-    formik.resetForm();
-  };
-
-  const handleClickOpenEdit = () => {
-    setOpenEdit(true);
-  };
-
   const onAddLocation = async () => {
     var headers = {
       "Content-Type": "application/json",
@@ -236,7 +289,6 @@ const Hotels_list = (props) => {
     setSubmitted(false);
     setOpen(false);
   };
-
   const onEditLocation = async () => {
     var headers = {
       "Content-Type": "application/json",
@@ -244,22 +296,24 @@ const Hotels_list = (props) => {
     };
     var body = {
       name: formik.values.name,
-      // mobileNo: formik.values.mobileNo,
-      supervisor: formik.values.supervisor,
-      category: formik.values.category,
-      hos: formik.values.hos,
+      id_auditor: selectedOption,
       location: formik.values.location,
-      timing: formik.values.timing,
       size: formik.values.size,
+      timing: formatTime(startTime) + " " + "to" + " " + formatTime(endTime),
+      category: formik.values.category,
+      head_staff: formik.values.hos,
+      id_location: idLocation,
     };
 
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
-      ApiEndpoint.EDIT_CATEGORY,
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.EDIT_LOCATION,
       JSON.stringify(body),
       headers
     );
     props.props.loaderRef(false);
+
+    console.log(data, "is___________data");
 
     if (data) {
       if (data.status) {
@@ -273,19 +327,18 @@ const Hotels_list = (props) => {
 
     setOpenEdit(false);
   };
-
   const onDelete = async () => {
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.profile.token,
     };
     var body = {
-      id: categoryDetails.id,
+      id_location: idLocation,
     };
 
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
-      ApiEndpoint.EDIT_CATEGORY,
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.DELETE_LOCATION,
       JSON.stringify(body),
       headers
     );
@@ -294,6 +347,7 @@ const Hotels_list = (props) => {
     if (data) {
       if (data.status) {
         toast.success(data.message);
+        getLocationList();
       } else {
         toast.error(data.message);
       }
@@ -303,7 +357,6 @@ const Hotels_list = (props) => {
 
     handleClose_delete();
   };
-
   const getAuditorList = async () => {
     var headers = {
       "Content-Type": "application/json",
@@ -330,17 +383,6 @@ const Hotels_list = (props) => {
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
   };
-
-  function calculateTimeDiff(start, end) {
-    const startDate = new Date(`1970-01-01T${start}:00`);
-    const endDate = new Date(`1970-01-01T${end}:00`);
-    let diff = (endDate.getTime() - startDate.getTime()) / 1000;
-    const hours = Math.floor(diff / 3600);
-    diff = diff - hours * 3600;
-    const minutes = Math.floor(diff / 60);
-    const seconds = diff - minutes * 60;
-    setTimeDiff(`${hours} hours, ${minutes} minutes, ${seconds} seconds`);
-  }
 
   return (
     <Grid container>
@@ -396,7 +438,12 @@ const Hotels_list = (props) => {
           </Box>
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9}>
-          <Button className={styles.megobtn} onClick={handleClickOpen}>
+          <Button
+            className={styles.megobtn}
+            onClick={() => {
+              handleClickOpen(), setIsOpen("Add");
+            }}
+          >
             Add Location
           </Button>
           <Dialog
@@ -407,7 +454,7 @@ const Hotels_list = (props) => {
             key={1}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Add Location
+              {isOpen == "edit" ? "Edit Location" : "Add Location"}
             </DialogTitle>
             <form onSubmit={formik.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
@@ -582,154 +629,16 @@ const Hotels_list = (props) => {
                 </Grid>
                 <div className={styles.cesalbtncss}>
                   <Button_ handleClick={handleClose} text={"Cancle"} />
-                  <Button_ type={"submit"} text={"Add"} />{" "}
+                  <Button_
+                    type={"submit"}
+                    text={isOpen == "edit" ? "Edit" : "Add"}
+                  />{" "}
                 </div>
               </Box>
             </form>
           </Dialog>
         </Grid>
       </Grid>
-
-      <Dialog
-        fullWidth={true}
-        maxWidth={"md"}
-        open={openEdit}
-        onClose={handleCloseEdit}
-        key={1}
-      >
-        <DialogTitle className={styles.addtitalaja}>Edit Location</DialogTitle>
-        <form onSubmit={formik.handleSubmit}>
-          <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-            <Grid container justifyContent={"space-between"}>
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Name"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="name"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.name && formik.touched.name && (
-                      <Input_error text={formik.errors.name} />
-                    )}
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Supervisor"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="supervisor"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.supervisor}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.supervisor && formik.touched.supervisor && (
-                      <Input_error text={formik.errors.supervisor} />
-                    )}
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Size"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="size"
-                    type="number"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.size}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.size && formik.touched.size && (
-                      <Input_error text={formik.errors.size} />
-                    )}
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Location"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="location"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.location}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.location && formik.touched.location && (
-                      <Input_error text={formik.errors.location} />
-                    )}
-                  </Box>
-                </Box>
-              </Grid>
-              {/* </Box> */}
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Category"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="category"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.category}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.category && formik.touched.category && (
-                      <Input_error text={formik.errors.category} />
-                    )}
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Head of staff"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="hos"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.hos}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.hos && formik.touched.hos && (
-                      <Input_error text={formik.errors.hos} />
-                    )}
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                <Box className={"Input_box"}>
-                  <InputLable text={"Timing"} fs={"12px"} />
-                  <TextField
-                    className={"Input_field"}
-                    name="timing"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.timing}
-                  />
-                  <Box className={"error_text_view"}>
-                    {formik.errors.timing && formik.touched.timing && (
-                      <Input_error text={formik.errors.timing} />
-                    )}
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-            <div className={styles.cesalbtncss}>
-              <Button_ handleClick={handleCloseEdit} text={"Cancle"} />
-              <Button_ type={"submit"} text={"Edit"} />{" "}
-            </div>
-          </Box>
-        </form>
-      </Dialog>
 
       <Grid container>
         <Grid item xs={12} md={12}>
@@ -774,23 +683,31 @@ const Hotels_list = (props) => {
                             key={index}
                           >
                             <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.company}</TableCell>
-                            <TableCell>{item.timing}</TableCell>
-                            <TableCell>{item.location}</TableCell>
-                            <TableCell>{item.head_staff}</TableCell>
                             <TableCell>{item.category}</TableCell>
+                            <TableCell>{item.auditor_name}</TableCell>
+                            <TableCell>{item.location}</TableCell>
                             <TableCell>{item.size}</TableCell>
+
+                            <TableCell>{item.timing}</TableCell>
+                            <TableCell>{item.head_staff}</TableCell>
                             <TableCell className="content_end">
                               <Box style={{ display: "flex" }}>
                                 <IconButton
                                   className="icon_btn"
-                                  onClick={handleClickOpenEdit}
+                                  onClick={() => {
+                                    setIdlocation(item.id);
+                                    onViewCategory({ id_user: item.id });
+                                    handleClickOpen(), setIsOpen("edit");
+                                  }}
                                 >
                                   <Editicon height={15} width={15} />
                                 </IconButton>
                                 <IconButton
                                   className="icon_btn"
-                                  onClick={handleOpen_delete}
+                                  onClick={() => {
+                                    handleOpen_delete();
+                                    setIdlocation(item.id);
+                                  }}
                                 >
                                   <DeleteIcon_ height={15} width={15} />
                                 </IconButton>

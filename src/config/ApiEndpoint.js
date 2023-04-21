@@ -19,13 +19,16 @@ export default {
   VIEW_QUESTION: Constants.BASE_API_URL + "question/view",
   // LOCATIONS
   ADD_LOCATION: Constants.BASE_API_URL + "location/add",
-  EDIT_LOCATION: Constants.BASE_API_URL + "",
-  DELETE_LOCATION: Constants.BASE_API_URL + "",
+  EDIT_LOCATION: Constants.BASE_API_URL + "location/edit",
+  DELETE_LOCATION: Constants.BASE_API_URL + "location/delete",
   LOCATION_LIST: Constants.BASE_API_URL + "location/list",
+  VIEW_LOCATION: Constants.BASE_API_URL + "location/view",
   // AUDITORS
   ADD_AUDITOR: Constants.BASE_API_URL + "user/register",
   EDIT_AUDITOR: Constants.BASE_API_URL + "user/auditor/edit",
   VIEW_AUDITOR: Constants.BASE_API_URL + "user/auditor/view",
   DELETE_AUDITOR: Constants.BASE_API_URL + "user/auditor/delete",
   AUDITOR_LIST: Constants.BASE_API_URL + "user/auditor/list",
+  // UPLOAD
+  UPLOAD_FILE: Constants.BASE_API_URL + "user/upload",
 };

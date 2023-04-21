@@ -11,9 +11,6 @@ const index = (props) => {
     title: "Auditor ",
   };
 
-  console.log(props ,'props_______')
-
-
   return (
     <>
       <Grid container spacing={0} className="mainDiv">
