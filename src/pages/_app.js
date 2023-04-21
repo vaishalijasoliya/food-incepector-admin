@@ -36,7 +36,7 @@ const MyApp = (props) => {
       // router.push("./dashboard");
       setIsLoaded(true);
     } else {
-      router.push("/");
+      // router.push("/");
       setTimeout(() => {
         setIsLoaded(true);
       }, 300);

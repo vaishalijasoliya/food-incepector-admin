@@ -1,22 +1,230 @@
 export const qustionlist = [
   {
-    qustion: "What platform should I develop it on?"
+    id: 1,
+    catogory:"The Burning Brownie",
+    qustion: "What platform should I develop it on?",
+    Compliance:"Complied",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall2.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   },
   {
-    qustion: "What platform should I develop it on?"
+    id: 2,
+    catogory:"The Burning Brownie",
+    qustion: "What is the ideal refrigerator/food warming tray temperature? ",
+    Compliance:"Complied",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   }, 
   {
-    qustion: "What platform should I develop it on?"
+    id: 3,
+    catogory:"The Burning Brownie",
+    qustion: "Do you need to clean your food thermometers?",
+    Compliance:" Not Complied",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   }, 
+  
   {
-    qustion: "What platform should I develop it on?"
+    id: 4,
+    catogory:"The Burning Brownie",
+    qustion: "How often should you wash your hands?",
+    Compliance:"N/A",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall2.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   },
    {
-    qustion: "What platform should I develop it on?"
+    id: 5,
+    catogory:"The Burning Brownie",
+    qustion: "How do you get a food handlers permit?",
+    Compliance:" Not Complied",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   },
    {
-    qustion: "What platform should I develop it on?"
+    id: 6,
+    catogory:"The Burning Brownie",
+    qustion: "What information would you collect as a food inspector?",
+    Compliance:"N/A",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
   },
+  {
+    id: 7,
+    catogory:"The Burning Brownie",
+    qustion: "What are the 3 safety questions?",
+    Compliance:"N/A",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall2.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 8,
+    catogory:"The Burning Brownie",
+    qustion: "Why is the food inspector important?",
+    Compliance:" Not Complied",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 9,
+    catogory:"The Burning Brownie",
+    qustion: "Do you need to clean your food thermometers?",
+    Compliance:" Not Complied",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 10,
+    catogory:"The Burning Brownie",
+    qustion: "How often should you wash your hands?",
+    Compliance:" Not Complied",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 11,
+    catogory:"The Burning Brownie",
+    qustion: "How do you get a food handlers permit?",
+    Compliance:"Complied",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall2.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 12,
+    catogory:"The Burning Brownie",
+    qustion: "What song was or do you want to be the your first dance at your wedding?",
+    Compliance:"Complied",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 13,
+    catogory:"The Burning Brownie",
+    qustion: "What is the weirdest food combination you enjoy?",
+    Compliance:"Complied",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 14,
+    catogory:"The Burning Brownie",
+    qustion: "What is the stupidest thing you ever did on a dare?",
+    Compliance:"Complied",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 15,
+    catogory:"The Burning Brownie",
+    qustion: "What is your proudest accomplishment?",
+    Compliance:"Complied",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall2.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 16,
+    catogory:"The Burning Brownie",
+    qustion: "If money were no object, how would you spend your time?",
+    Compliance:" Not Complied",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 17,
+    catogory:"The Burning Brownie",
+    qustion: "Where do you see yourself in five years?",
+    Compliance:" Not Complied",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 18,
+    catogory:"The Burning Brownie",
+    qustion: "How do you like to spend your free time?",
+    Compliance:"Complied",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 19,
+    catogory:"The Burning Brownie",
+    qustion: "What is your dream job?",
+    Compliance:"N/A",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 20,
+    catogory:"The Burning Brownie",
+    qustion: "What platform should I develop it on?",
+    Compliance:"N/A",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 21,
+    catogory:"The Burning Brownie",
+    qustion: "If you could be any type of dog, what breed would you be and why?",
+    Compliance:"N/A",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 24,
+    catogory:"The Burning Brownie",
+    qustion: "If you could be any type of dog, what breed would you be and why?",
+    Compliance:"N/A",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall2.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 25,
+    qustion: "If you could be any type of dog, what breed would you be and why?",
+    Compliance:"N/A",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall2.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 26,
+    catogory:"The Burning Brownie",
+    qustion: "If you could be any type of dog, what breed would you be and why?",
+    Compliance:"N/A",
+    image: "/image/imgsmall.png",
+    image2: "/image/imgsmall2.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+  {
+    id: 27,
+    catogory:"The Burning Brownie",
+    qustion: "If you could be any type of dog, what breed would you be and why?",
+    Compliance:"N/A",
+    image: "/image/imgsmall2.png",
+    image2: "/image/imgsmall.png",
+    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+  },
+
 ]
 
 
@@ -26,210 +234,210 @@ export const auditData = [
     name: "Iva Key",
     score: "323",
     userName: "Burton",
-    company: "STEELTAB",
+    location: "STEELTAB",
   },
   {
     id: 1,
     name: "Stout Strickland",
     score: "223",
     userName: "Mathis",
-    company: "KOG",
+    location: "KOG",
   },
   {
     id: 2,
     name: "Mcleod Marks",
     score: "453",
     userName: "Leola",
-    company: "MAGNINA",
+    location: "MAGNINA",
   },
   {
     id: 3,
     name: "Rosa Waller",
     score: "360",
     userName: "Cooper",
-    company: "COMTRACT",
+    location: "COMTRACT",
   },
   {
     id: 4,
     name: "Blair Dejesus",
     score: "743",
     userName: "Ross",
-    company: "FLUMBO",
+    location: "FLUMBO",
   },
   {
     id: 5,
     name: "Bentley Melton",
     score: "120",
     userName: "Mercer",
-    company: "XYLAR",
+    location: "XYLAR",
   },
   {
     id: 6,
     name: "Keller Mathis",
     score: "400",
     userName: "Sullivan",
-    company: "EQUITAX",
+    location: "EQUITAX",
   },
   {
     id: 7,
     name: "Bishop Mcclain",
     score: "200",
     userName: "Felicia",
-    company: "SPRINGBEE",
+    location: "SPRINGBEE",
   },
   {
     id: 8,
     name: "Sheppard Watkins",
     score: "320",
     userName: "Whitney",
-    company: "XERONK",
+    location: "XERONK",
   },
   {
     id: 9,
     name: "Nellie Browning",
     score: "323",
     userName: "Harriett",
-    company: "DIGIFAD",
+    location: "DIGIFAD",
   },
   {
     id: 10,
     name: "Marta Underwood",
     score: "500",
     userName: "Diane",
-    company: "ISOSPHERE",
+    location: "ISOSPHERE",
   },
   {
     id: 11,
     name: "Coffey Patton",
     score: "403",
     userName: "Eva",
-    company: "TALAE",
+    location: "TALAE",
   },
   {
     id: 12,
     name: "Margie Sargent",
     score: "402",
     userName: "Terra",
-    company: "ZORROMOP",
+    location: "ZORROMOP",
   },
   {
     id: 13,
     name: "Kirk Long",
     score: "323",
     userName: "Burgess",
-    company: "ORGANICA",
+    location: "ORGANICA",
   },
   {
     id: 14,
     name: "Buchanan Coffey",
     score: "823",
     userName: "Shaw",
-    company: "IRACK",
+    location: "IRACK",
   },
   {
     id: 15,
     name: "Elena Garcia",
     score: "930",
     userName: "Patti",
-    company: "PURIA",
+    location: "PURIA",
   },
   {
     id: 16,
     name: "Tammie Pollard",
     score: "240",
     userName: "Mercado",
-    company: "SENMAO",
+    location: "SENMAO",
   },
   {
     id: 17,
     name: "Jan Oliver",
     score: "323",
     userName: "Neva",
-    company: "BESTO",
+    location: "BESTO",
   },
   {
     id: 18,
     name: "Humphrey Perez",
     score: "323",
     userName: "Alejandra",
-    company: "NIXELT",
+    location: "NIXELT",
   },
   {
     id: 19,
     name: "Beck Murray",
     score: "543",
     userName: "Sherry",
-    company: "VERTIDE",
+    location: "VERTIDE",
   },
   {
     id: 20,
     name: "Brigitte Watson",
     score: "623",
     userName: "Compton",
-    company: "EXOSPEED",
+    location: "EXOSPEED",
   },
   {
     id: 21,
     name: "Estes Thornton",
     score: "323",
     userName: "Bradley",
-    company: "IMKAN",
+    location: "IMKAN",
   },
   {
     id: 22,
     name: "Marisol Sharp",
     score: "253",
     userName: "Richardson",
-    company: "DECRATEX",
+    location: "DECRATEX",
   },
   {
     id: 23,
     name: "Ebony Cantu",
     score: "679",
     userName: "Oneill",
-    company: "NAVIR",
+    location: "NAVIR",
   },
   {
     id: 24,
     name: "Sykes Barnett",
     score: "823",
     userName: "Mclaughlin",
-    company: "IMAGEFLOW",
+    location: "IMAGEFLOW",
   },
   {
     id: 25,
     name: "Ava Franklin",
     score: "723",
     userName: "Adrian",
-    company: "PEARLESSA",
+    location: "PEARLESSA",
   },
   {
     id: 26,
     name: "Heather Reynolds",
     score: "223",
     userName: "Ladonna",
-    company: "ENTROPIX",
+    location: "ENTROPIX",
   },
   {
     id: 27,
     name: "Barrett Horn",
     score: "323",
     userName: "Faye",
-    company: "DUFLEX",
+    location: "DUFLEX",
   },
   {
     id: 28,
     name: "Pitts Howe",
     score: "222",
     userName: "Tammi",
-    company: "ISOLOGICS",
+    location: "ISOLOGICS",
   },
   {
     id: 29,
     name: "Katy Buckner",
     score: "213",
     userName: "Turner",
-    company: "BRAINCLIP",
+    location: "BRAINCLIP",
   },
 ];
 
