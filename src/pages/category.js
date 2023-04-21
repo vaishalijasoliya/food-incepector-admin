@@ -5,6 +5,7 @@ import styles from "../styles/user/index.module.css";
 import Grid from "@mui/material/Grid";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
+import { MainLayout } from "../Layout/Pages_layout/mainLayout";
 
 const index = (props) => {
   const data = {
@@ -13,7 +14,13 @@ const index = (props) => {
   };
   return (
     <>
-      <Grid container spacing={0} className="mainDiv">
+      <MainLayout
+        data={data}
+        Content={() => {
+          return <Paymenttable props={props} />;
+        }}
+      />
+      {/* <Grid container spacing={0} className="mainDiv">
         <Grid xs={12} sm={4} md={3} className="Gridcontainergrid">
           <Nevbar />
         </Grid>
@@ -21,7 +28,7 @@ const index = (props) => {
           <Header data={data} props={props} />
           <Paymenttable props={props} />
         </Grid>
-      </Grid>
+      </Grid> */}
     </>
   );
 };
