@@ -61,6 +61,7 @@ export const TableComponent = ({
                         setAuditorDetails(item);
                       }}
                     >
+                      
                       <Editicon height={15} width={15} />
                     </IconButton>
                     {item.status == "active" ? (
