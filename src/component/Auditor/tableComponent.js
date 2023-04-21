@@ -45,7 +45,6 @@ export const TableComponent = ({
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
           ).map((item, index) => {
-            console.log(item, "is_____item");
             return (
               <TableRow className={Style.table_row} key={index}>
                 <TableCell>{item.name}</TableCell>
