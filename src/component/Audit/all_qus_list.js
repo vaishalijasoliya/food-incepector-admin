@@ -21,8 +21,12 @@ import {
 import { qustionlist } from "../Utils/data";
 import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "../Audit/tablecom_allqus";
+import ApiServices from "../../config/ApiServices";
+import ApiEndpoint from "../../config/ApiEndpoint";
+
 
 const Auditor_page = (props) => {
+  console.log(props, "props")
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
@@ -66,6 +70,33 @@ const Auditor_page = (props) => {
   const handleOpen_delete = () => {
     setDeleteOpen(true);
   };
+
+  const getAuditorList = async () => {
+    console.log( props, 'headers')
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.props.profile.token,
+    };
+    var body = {};
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.CATEGORY_LIST,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        console.log(data, "api_res_qus");
+        // setDataSearch(data.data);
+        // setDatalist(data.data);
+      }
+    }
+
+    // setAuditorRender(false);
+  };
+
   const Header = [
     {  name: "Catogory" },
     {  name: "Questions" },
@@ -77,12 +108,13 @@ const Auditor_page = (props) => {
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
-
+  console.log(props, "propscheck_____");
   React.useEffect(() => {
     console.log(props.userList, "props.userList");
     if (!!props.profile && !!props.profile.token) {
       setCustomerList(props.userList);
       setCustomer(props.userList);
+      getAuditorList();
     }
   }, [props.userList]);
   const handleChangeRowsPerPage = (event = React.ChangeEvent) => {

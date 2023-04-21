@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TablePagination from "@mui/material/TablePagination";
@@ -22,7 +21,8 @@ import {
 import { auditData } from "../Utils/data";
 import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "../Audit/tablecomponentaudit";
-
+import ApiServices from "../../config/ApiServices";
+import ApiEndpoint from "../../config/ApiEndpoint";
 
 const Auditor_page = (props) => {
   const [page, setPage] = React.useState(0);
@@ -66,6 +66,33 @@ const Auditor_page = (props) => {
   const handleOpen_delete = () => {
     setDeleteOpen(true);
   };
+
+  const getAuditorList = async () => {
+    // console.log("headers");
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.props.profile.token,
+    };
+    var body = {};
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.CATEGORY_LIST,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        console.log(data, "api_res");
+        // setDataSearch(data.data);
+        // setDatalist(data.data);
+      }
+    }
+
+    // setAuditorRender(false);
+  };
+
   const Header = [
     { id: 1, name: "Locations" },
     { id: 2, name: "Date Time " },
@@ -78,18 +105,19 @@ const Auditor_page = (props) => {
     setPage(newPage);
   };
 
+  console.log(props, "props_____");
+
   React.useEffect(() => {
-    console.log(props.userList, "props.userList");
     if (!!props.profile && !!props.profile.token) {
       setCustomerList(props.userList);
       setCustomer(props.userList);
+      getAuditorList();
     }
   }, [props.userList]);
   const handleChangeRowsPerPage = (event = React.ChangeEvent) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
 
   React.useEffect(() => {
     const ActiveArr = [];
@@ -117,9 +145,7 @@ const Auditor_page = (props) => {
   });
 
   return (
-
     <Grid container>
-       
       <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
           <Box className={styles.boxreting} display={"flex"}>
@@ -166,9 +192,8 @@ const Auditor_page = (props) => {
             />
           </Box>
         </Grid>
-        
       </Grid>
-      
+
       <Grid container>
         <Grid item xs={12} md={12}>
           <div>
@@ -182,7 +207,6 @@ const Auditor_page = (props) => {
                 }}
                 className={styles.maentebal2}
               >
-             
                 <TabPanel value={value} index={0}>
                   <TableComponent
                     handleClickOpenTWO={handleClickOpenTWO}
