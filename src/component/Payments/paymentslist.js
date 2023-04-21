@@ -283,7 +283,7 @@ const EnhancedTable = (props) => {
                     setCategoryList(categorySearch);
                   } else {
                     var filteredData = categorySearch.filter((item) => {
-                      let searchValue = item.category.toLowerCase();
+                      let searchValue = item.name.toLowerCase();
                       return searchValue.includes(
                         value.toString().toLowerCase()
                       );
