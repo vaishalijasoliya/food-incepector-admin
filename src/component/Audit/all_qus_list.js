@@ -23,6 +23,7 @@ import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "../Audit/tablecom_allqus";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
+import { object } from "prop-types";
 
 
 const Auditor_page = (props) => {
@@ -69,22 +70,26 @@ const Auditor_page = (props) => {
 
   const handleOpen_delete = () => {
     setDeleteOpen(true);
-  };
+  }; 
+
+
+ console.log(props.profile.token, 'profile____')
+
 
   const getAuditorList = async () => {
-    console.log( props, 'headers')
+    // console.log( props, 'headers')
     var headers = {
       "Content-Type": "application/json",
-      "x-access-token": props.props.profile.token,
+      "x-access-token": props.profile.token,
     };
     var body = {};
-    props.props.loaderRef(true);
+    // props.props.loaderRef(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.CATEGORY_LIST,
       JSON.stringify(body),
       headers
     );
-    props.props.loaderRef(false);
+    // props.props.loaderRef(false);
 
     if (data) {
       if (data.status) {
@@ -110,7 +115,7 @@ const Auditor_page = (props) => {
   };
   console.log(props, "propscheck_____");
   React.useEffect(() => {
-    console.log(props.userList, "props.userList");
+    // console.log(props.userList, "props.userList");
     if (!!props.profile && !!props.profile.token) {
       setCustomerList(props.userList);
       setCustomer(props.userList);
