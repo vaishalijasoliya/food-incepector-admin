@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Table,
@@ -17,6 +17,8 @@ import {
   Avatar,
   IconButton,
   Typography,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import styles from "../../styles/user/paymenttable.module.css";
 import Paper from "@mui/material/Paper";
@@ -46,36 +48,62 @@ const Hotels_list = (props) => {
   const [hotelSearch, setHotelSearch] = React.useState([]);
   const [categoryDetails, setCategoryDetails] = React.useState("");
   const [userRender, setUserRender] = React.useState(true);
+  const [selectedOption, setSelectedOption] = React.useState("select_category");
+  const [auditorList, setAuditorList] = React.useState([]);
+  const [submitted, setSubmitted] = React.useState(false);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
 
-  React.useEffect(() => {
-    if (userRender) {
-      getQuestionList();
-    }
-  }, [props, userRender]);
+  const handleStartTimeChange = (event) => {
+    setStartTime(event.target.value);
+  };
 
-  const getQuestionList = async () => {
+  const handleEndTimeChange = (event) => {
+    setEndTime(event.target.value);
+  };
+
+  const isInvalidRange = () => {
+    const start = new Date(`1970-01-01T${startTime}`);
+    const end = new Date(`1970-01-01T${endTime}`);
+    return start >= end;
+  };
+  const formatTime = (time) => {
+    return new Date(`1970-01-01T${time}`).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  };
+
+  const getLocationList = async () => {
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.profile.token,
     };
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
-      ApiEndpoint.INSPECTOR_LIST,
-      // JSON.stringify(body),
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.LOCATION_LIST,
+      null,
       headers
     );
     props.props.loaderRef(false);
 
     if (data) {
       if (data.status) {
-        setHotelData(HotelsData);
-        setHotelSearch(HotelsData);
+        setHotelData(data.data);
+        setHotelSearch(data.data);
       }
     }
-    setHotelData(HotelsData);
-    setHotelSearch(HotelsData);
     setUserRender(false);
   };
+
+  React.useEffect(() => {
+    if (props && props.profile) {
+      getLocationList();
+      getAuditorList();
+    }
+  }, []);
+
   const handleClose_delete = () => {
     setDeleteOpen(false);
   };
@@ -103,29 +131,26 @@ const Hotels_list = (props) => {
   const formik = useFormik({
     initialValues: {
       name: "",
-      //   mobileNo: "",
-      supervisor: "",
       category: "",
       hos: "",
       location: "",
-      timing: "",
       size: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required."),
-      //  mobileNo: Yup.string().required("Mobile number is required."),
-      supervisor: Yup.string().required("Superviser in required."),
       category: Yup.string().required("Category is required"),
       hos: Yup.string().required("Head of staff in required."),
       location: Yup.string().required("Location is required."),
-      timing: Yup.string().required("Timing is required."),
       size: Yup.string().required("Size is required"),
     }),
     onSubmit: () => {
-      if (open == true) {
-        onAddLocation();
-      } else if (openEdit == true) {
-        onEditLocation();
+      setSubmitted(true);
+      if (selectedOption != "select_category" && startTime && endTime) {
+        if (open == true) {
+          onAddLocation();
+        } else if (openEdit == true) {
+          onEditLocation();
+        }
       }
     },
   });
@@ -182,16 +207,16 @@ const Hotels_list = (props) => {
 
     var body = {
       name: formik.values.name,
-      supervisor: formik.values.supervisor,
-      category: formik.values.category,
-      hos: formik.values.hos,
+      id_auditor: selectedOption,
       location: formik.values.location,
-      timing: formik.values.timing,
       size: formik.values.size,
+      timing: formatTime(startTime) + " " + "to" + " " + formatTime(endTime),
+      category: formik.values.category,
+      head_staff: formik.values.hos,
     };
 
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
+    var data = await ApiServices.PostApiCall(
       ApiEndpoint.ADD_LOCATION,
       JSON.stringify(body),
       headers
@@ -201,13 +226,14 @@ const Hotels_list = (props) => {
     if (data) {
       if (data.status) {
         toast.success(data.message);
+        getLocationList();
       } else {
         toast.error(data.message);
       }
     } else {
       toast.error(Error_msg.NOT_RES);
     }
-
+    setSubmitted(false);
     setOpen(false);
   };
 
@@ -277,6 +303,44 @@ const Hotels_list = (props) => {
 
     handleClose_delete();
   };
+
+  const getAuditorList = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      type: "active",
+    };
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.AUDITOR_LIST,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        setAuditorList(data.data);
+      }
+    }
+  };
+
+  const handleChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  function calculateTimeDiff(start, end) {
+    const startDate = new Date(`1970-01-01T${start}:00`);
+    const endDate = new Date(`1970-01-01T${end}:00`);
+    let diff = (endDate.getTime() - startDate.getTime()) / 1000;
+    const hours = Math.floor(diff / 3600);
+    diff = diff - hours * 3600;
+    const minutes = Math.floor(diff / 60);
+    const seconds = diff - minutes * 60;
+    setTimeDiff(`${hours} hours, ${minutes} minutes, ${seconds} seconds`);
+  }
 
   return (
     <Grid container>
@@ -367,20 +431,83 @@ const Hotels_list = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Supervisor"} fs={"12px"} />
-                      <TextField
-                        className={"Input_field"}
-                        name="supervisor"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.supervisor}
-                      />
+                      <InputLable text={"Auditor"} fs={"12px"} />
+                      <Select
+                        value={selectedOption}
+                        sx={{
+                          "& 	.MuiSelect-select": {
+                            padding: "7px 37px 7px 17px",
+                          },
+                          height: "44px",
+                          "& .MuiOutlinedInput": {
+                            border: "0px",
+                          },
+                          width: "100%",
+                          border: "1px solid #484848",
+                        }}
+                        onChange={handleChange}
+                      >
+                        <MenuItem value={"select_category"}>
+                          Select Auditor
+                        </MenuItem>
+
+                        {auditorList.map((option) => (
+                          <MenuItem key={option.value} value={option.id}>
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
                       <Box className={"error_text_view"}>
-                        {formik.errors.supervisor &&
-                          formik.touched.supervisor && (
-                            <Input_error text={formik.errors.supervisor} />
-                          )}
+                        {submitted && selectedOption == "select_category" ? (
+                          <Input_error text={"Select a category"} />
+                        ) : (
+                          ""
+                        )}
                       </Box>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Timing"} fs={"12px"} />
+                      <div className={styles.timing_div}>
+                        <div className={styles.time_input_box}>
+                          <InputLable text={"Start :"} fs={"12px"} />
+                          <input
+                            type="time"
+                            value={startTime}
+                            onChange={handleStartTimeChange}
+                          />
+                        </div>
+                        <div className={styles.time_input_box}>
+                          <InputLable text={"End :"} fs={"12px"} />
+                          <input
+                            type="time"
+                            value={endTime}
+                            onChange={handleEndTimeChange}
+                          />
+                        </div>
+                        <Box className={"error_text_view"}>
+                          {submitted == true ? (
+                            startTime && endTime ? (
+                              isInvalidRange() ? (
+                                <div style={{ color: "red" }}>
+                                  <Input_error
+                                    text={
+                                      "End time should be after start time."
+                                    }
+                                  />
+                                </div>
+                              ) : (
+                                ""
+                              )
+                            ) : (
+                              <Input_error text={"Select Timing."} />
+                            )
+                          ) : (
+                            ""
+                          )}
+                        </Box>
+                      </div>
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
@@ -448,23 +575,6 @@ const Hotels_list = (props) => {
                       <Box className={"error_text_view"}>
                         {formik.errors.hos && formik.touched.hos && (
                           <Input_error text={formik.errors.hos} />
-                        )}
-                      </Box>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
-                    <Box className={"Input_box"}>
-                      <InputLable text={"Timing"} fs={"12px"} />
-                      <TextField
-                        className={"Input_field"}
-                        name="timing"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.timing}
-                      />
-                      <Box className={"error_text_view"}>
-                        {formik.errors.timing && formik.touched.timing && (
-                          <Input_error text={formik.errors.timing} />
                         )}
                       </Box>
                     </Box>
@@ -659,14 +769,15 @@ const Hotels_list = (props) => {
                         : hotelsData_
                       ).map((item, index) => {
                         return (
-                          <TableRow key={index}>
+                          <TableRow
+                            style={{ borderBottom: "1px solid #DCDCDC" }}
+                            key={index}
+                          >
                             <TableCell>{item.name}</TableCell>
                             <TableCell>{item.company}</TableCell>
-                            <TableCell>
-                              {moment(item.timing).format("DD/MM/YYYY")}
-                            </TableCell>
+                            <TableCell>{item.timing}</TableCell>
                             <TableCell>{item.location}</TableCell>
-                            <TableCell>{item.head}</TableCell>
+                            <TableCell>{item.head_staff}</TableCell>
                             <TableCell>{item.category}</TableCell>
                             <TableCell>{item.size}</TableCell>
                             <TableCell className="content_end">
@@ -716,9 +827,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
 });
-
-const calenderIcon = () => {
-  return <img src="./image/calender.png" className="calenderimg" />;
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Hotels_list);

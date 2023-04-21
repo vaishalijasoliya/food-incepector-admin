@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.15",
     "@mui/styles": "^5.9.3",
+    "events": "^3.3.0",
     "formik": "^2.2.9",
     "moment": "^2.29.4",
     "next": "^12.3.0",

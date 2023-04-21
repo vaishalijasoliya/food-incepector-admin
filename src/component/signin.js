@@ -93,7 +93,7 @@ const Signin = (props) => {
             className={style.userinput}
             type="password"
           />
-          <button
+          {/* <button
             type="button"
             onClick={() => {
               router.push("./forgotPassword");
@@ -101,7 +101,7 @@ const Signin = (props) => {
             className={style.frgttxt}
           >
             Forgot password?
-          </button>
+          </button> */}
 
           <button type="submit" className={style.submitbtn}>
             Sign in

@@ -17,7 +17,6 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { useRouter } from "next/router";
 import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
@@ -35,12 +34,16 @@ import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
 import { toast } from "react-toastify";
 import { Error_msg } from "../Utils/message";
+
 const options = [
   { label: "Option 1_______-", value: 1 },
   { label: "Option 2", value: 2 },
   { label: "Option 3", value: 3 },
 ];
+
 const Questions_page = (props) => {
+  // const { profile } = props;
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
   const [questionData_, setQuestionData] = React.useState([]);
@@ -48,31 +51,13 @@ const Questions_page = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [questionSearch, setQuestionSearch] = React.useState([]);
-  const [selectedOption, setSelectedOption] = React.useState(options[0].value);
-  const [categoryDetails, setCategoryDetails] = React.useState("");
+  const [selectedOption, setSelectedOption] = React.useState("select_category");
+  const [questionDetails, setQuestionDetails] = React.useState("");
+  const [categoryList, setCategoryList] = React.useState([]);
+  const [submitted, setSubmitted] = React.useState(false);
   const [userRender, setUserRender] = React.useState(true);
-
-  React.useEffect(() => {
-    if (userRender) {
-      getQuestionList();
-    }
-  }, [props, userRender]);
-
-  console.log(props, "is_____prope");
-
-  // const getCategoryList = async () => {
-  //   var headers = {
-  //     "Content-Type": "application/json",
-  //     "x-access-token": props.profile.token,
-  //   };
-  //   var body = {};
-  //   props.props.loaderRef(true);
-  //   var data = await ApiServices.PostApiCall(
-  //     ApiEndpoint.CATEGORY_LIST,
-  //     null,
-  //     headers
-  //   );
-  // };
+  const [userToken, setUserToken] = React.useState(props.profile.token);
+  const [count, setCount] = React.useState(0);
 
   const getCategoryList = async () => {
     var headers = {
@@ -90,38 +75,62 @@ const Questions_page = (props) => {
 
     if (data) {
       if (data.status) {
-        // setCategorySearch(data.data);
-        // setCategoryList(data.data);
+        setCategoryList(data.data);
       }
     }
   };
-
   const getQuestionList = async () => {
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.profile.token,
     };
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
-      ApiEndpoint.INSPECTOR_LIST,
-      // JSON.stringify(body),
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.GET_QUESTION,
+      null,
       headers
     );
     props.props.loaderRef(false);
 
     if (data) {
       if (data.status) {
-        setQuestionSearch(questionData);
-        setQuestionData(questionData);
+        setUserRender(false);
+        console.log(data, "is______data_question");
+        setQuestionSearch(data.data);
+        setQuestionData(data.data);
       }
     }
-    setQuestionSearch(questionData);
-    setQuestionData(questionData);
-    setUserRender(false);
   };
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
+  };
+  const onViewCategory = async ({ id_user }) => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      id_question: id_user,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.VIEW_QUESTION,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        formik.setFieldValue("name", data.data.name);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
   };
 
   const formik = useFormik({
@@ -132,7 +141,8 @@ const Questions_page = (props) => {
       name: Yup.string().required("Name is required."),
     }),
     onSubmit: () => {
-      if (formik.values.name && selectedOption) {
+      setSubmitted(true);
+      if (formik.values.name && selectedOption != "select_category") {
         if (open) {
           onAddQuestion();
         } else if (openEdit) {
@@ -147,11 +157,11 @@ const Questions_page = (props) => {
       "x-access-token": props.profile.token,
     };
     var body = {
+      id_category: selectedOption,
       name: formik.values.name,
-      category: selectedOption,
     };
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
+    var data = await ApiServices.PostApiCall(
       ApiEndpoint.ADD_QUESTION,
       JSON.stringify(body),
       headers
@@ -177,12 +187,13 @@ const Questions_page = (props) => {
       "x-access-token": props.profile.token,
     };
     var body = {
+      id_question: questionDetails.id,
+      id_category: selectedOption,
       name: formik.values.name,
-      id: categoryDetails.id,
     };
 
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
+    var data = await ApiServices.PostApiCall(
       ApiEndpoint.EDIT_QUESTION,
       JSON.stringify(body),
       headers
@@ -192,6 +203,8 @@ const Questions_page = (props) => {
     if (data) {
       if (data.status) {
         toast.success(data.message);
+        setQuestionDetails("");
+        setSelectedOption("select_category");
       } else {
         toast.error(data.message);
       }
@@ -200,7 +213,6 @@ const Questions_page = (props) => {
     }
 
     setOpenEdit(false);
-    console.log(headers, body, "is_________body___is_edit", props);
   };
 
   const onDelete = async () => {
@@ -209,11 +221,10 @@ const Questions_page = (props) => {
       "x-access-token": props.profile.token,
     };
     var body = {
-      id: categoryDetails.id,
+      id_question: questionDetails.id,
     };
-
     props.props.loaderRef(true);
-    var data = await ApiServices.GetApiCall(
+    var data = await ApiServices.PostApiCall(
       ApiEndpoint.DELETE_QUESTION,
       JSON.stringify(body),
       headers
@@ -284,9 +295,41 @@ const Questions_page = (props) => {
     formik.resetForm();
   };
 
-  const handleClickOpenEdit = () => {
-    setOpenEdit(true);
+  const handleClickOpenEdit = async ({ id_user }) => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    var body = {
+      id_question: id_user,
+    };
+
+    // props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.VIEW_QUESTION,
+      JSON.stringify(body),
+      headers
+    );
+
+    console.log(data, "is______datat", body, headers);
+    // props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        formik.setFieldValue("name", data.data.name);
+        setSelectedOption(data.data.id_category);
+        setOpenEdit(true);
+      }
+    }
   };
+
+  React.useEffect(() => {
+    if (userRender && props && props.profile && props.profile.token) {
+      getCategoryList();
+      getQuestionList();
+      setUserRender(false);
+    }
+  }, [userRender]);
 
   return (
     <Grid container>
@@ -337,14 +380,17 @@ const Questions_page = (props) => {
                     }}
                     onChange={handleChange}
                   >
-                    {options.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                    <MenuItem value={"select_category"}>
+                      Select Category
+                    </MenuItem>
+                    {categoryList.map((option) => (
+                      <MenuItem key={option.value} value={option.id}>
+                        {option.name}
                       </MenuItem>
                     ))}
                   </Select>
                   <Box className={"error_text_view"}>
-                    {!selectedOption && (
+                    {selectedOption == "selectedOption" && (
                       <Input_error text={"Select a category"} />
                     )}
                   </Box>
@@ -397,8 +443,7 @@ const Questions_page = (props) => {
           <Button
             className={styles.megobtn}
             onClick={() => {
-              getCategoryList();
-
+              // getCategoryList();
               handleClickOpen();
             }}
           >
@@ -454,15 +499,21 @@ const Questions_page = (props) => {
                       }}
                       onChange={handleChange}
                     >
-                      {options.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
+                      <MenuItem value={"select_category"}>
+                        Select Category
+                      </MenuItem>
+
+                      {categoryList.map((option) => (
+                        <MenuItem key={option.value} value={option.id}>
+                          {option.name}
                         </MenuItem>
                       ))}
                     </Select>
                     <Box className={"error_text_view"}>
-                      {!selectedOption && (
+                      {submitted && selectedOption == "select_category" ? (
                         <Input_error text={"Select a category"} />
+                      ) : (
+                        ""
                       )}
                     </Box>
                   </Box>
@@ -484,7 +535,9 @@ const Questions_page = (props) => {
                 sx={{ width: "100%", mb: 2 }}
                 className={styles.maentebal2}
               >
-                <TableContainer>
+                <TableContainer
+                  style={{ overflowX: "auto", borderRadius: "0px" }}
+                >
                   <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
                     {" "}
                     <TableHead>
@@ -518,14 +571,30 @@ const Questions_page = (props) => {
                         : questionData_
                       ).map((item, index) => {
                         return (
-                          <TableRow key={index}>
-                            <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.company}</TableCell>
-                            <TableCell className="content_end">
+                          <TableRow
+                            key={index}
+                            style={{
+                              height: "50px",
+                              borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            }}
+                          >
+                            <TableCell className={Style.table_cell}>
+                              {item.name}
+                            </TableCell>
+                            <TableCell className={Style.table_cell}>
+                              {item.category_name}
+                            </TableCell>
+                            <TableCell
+                              className={[Style.table_cell, "content_end"]}
+                            >
                               <Box style={{ display: "flex" }}>
                                 <IconButton
                                   className="icon_btn"
-                                  onClick={handleClickOpenEdit}
+                                  onClick={() => {
+                                    // onViewCategory({ id_user: item.id });
+                                    handleClickOpenEdit({ id_user: item.id });
+                                    setQuestionDetails(item);
+                                  }}
                                 >
                                   <Editicon height={15} width={15} />
                                 </IconButton>
@@ -533,7 +602,7 @@ const Questions_page = (props) => {
                                   className="icon_btn"
                                   onClick={() => {
                                     handleOpen_delete();
-                                    setCategoryDetails(item);
+                                    setQuestionDetails(item);
                                   }}
                                 >
                                   <DeleteIcon_ height={15} width={15} />

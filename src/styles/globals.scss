@@ -808,7 +808,7 @@ fieldset {
 
 .css-1ex1afd-MuiTableCell-root {
   padding: 15px 15px !important;
-  border-bottom: 1px solid #d8d8d8;
+  border-bottom:0px !important;
 }
 
 .gridcontainerdiv {
@@ -832,7 +832,7 @@ fieldset {
   background-color: #f9f9f9;
 }
 .css-rorn0c-MuiTableContainer-root {
-  border-radius: 20px !important;
+  // border-radius: 20px !important;
 }
 
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation24.MuiDialog-paper.MuiDialog-paperScrollPaper.MuiDialog-paperWidthMd.css-12rl710-MuiPaper-root-MuiDialog-paper {
