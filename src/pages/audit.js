@@ -7,10 +7,11 @@ import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
 import Auditor_page from "../component/Audit/audit";
 
-const index = (props) => {
+const Index = (props) => {
   const data = {
     title: "Audit ",
   };
+  console.log(props, 'props')
   return (
     <>
       <Grid container spacing={0} className="mainDiv">
@@ -20,7 +21,7 @@ const index = (props) => {
         <Grid xs={12} sm={8} md={9} className="maenedit">
           <Header data={data} props={props} />
           {/* <Paymenttable props={props} /> */}
-          <Auditor_page />
+          <Auditor_page props={props} />
         </Grid>
       </Grid>
     </>
@@ -35,4 +36,4 @@ const mapDispatchToProps = (dispatch) => ({
   save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(index);
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
