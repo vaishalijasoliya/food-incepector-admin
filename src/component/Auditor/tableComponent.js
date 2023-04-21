@@ -45,7 +45,6 @@ export const TableComponent = ({
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
           ).map((item, index) => {
-            console.log(item);
             return (
               <TableRow className={Style.table_row} key={index}>
                 <TableCell>{item.name}</TableCell>
@@ -57,21 +56,26 @@ export const TableComponent = ({
                       className={Style.icon_btn}
                       onClick={() => {
                         handleClickOpenTWO();
-                        setAuditorDetails(item);
                         onViewEditor({ id_user: item.id });
+                        setAuditorDetails(item);
                       }}
                     >
+                      
                       <Editicon height={15} width={15} />
                     </IconButton>
-                    <IconButton
-                      className={Style.icon_btn}
-                      onClick={() => {
-                        handleOpen_delete();
-                        setAuditorDetails(item);
-                      }}
-                    >
-                      <DeleteIcon_ height={15} width={15} />
-                    </IconButton>
+                    {item.status == "active" ? (
+                      <IconButton
+                        className={Style.icon_btn}
+                        onClick={() => {
+                          handleOpen_delete();
+                          setAuditorDetails(item);
+                        }}
+                      >
+                        <DeleteIcon_ height={15} width={15} />
+                      </IconButton>
+                    ) : (
+                      ""
+                    )}
                   </Box>
                 </TableCell>
               </TableRow>

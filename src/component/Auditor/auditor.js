@@ -47,8 +47,9 @@ const Auditor_page = (props) => {
   const [auditorRender, setAuditorRender] = React.useState(true);
   const [auditorDetails, setAuditorDetails] = React.useState("");
   const [userType, setUsertype] = React.useState("active");
+  const [imageId, setImageId] = React.useState("");
+  const [userProfileImage, setUserProfileImage] = React.useState("");
 
-  console.log(auditorDetails, "auditorDetails______");
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setDataSearch([]);
@@ -61,12 +62,15 @@ const Auditor_page = (props) => {
     }
   };
 
+  console.log(auditorDetails ,'auditorDetails___________')
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
     formik.resetForm();
+    setUserProfileImage("");
   };
   const handleClickOpenTWO = () => {
     setOpenTWO(true);
@@ -75,6 +79,7 @@ const Auditor_page = (props) => {
   const handleCloseTWO = () => {
     setOpenTWO(false);
     formik.resetForm();
+    setUserProfileImage("");
   };
 
   const handleClose_delete = () => {
@@ -176,6 +181,10 @@ const Auditor_page = (props) => {
       company_name: formik.values.company,
     };
 
+    if (imageId) {
+      body.id_item_profile = imageId;
+    }
+
     props.props.loaderRef(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.ADD_AUDITOR,
@@ -204,7 +213,7 @@ const Auditor_page = (props) => {
       "x-access-token": props.profile.token,
     };
     var body = {
-      id_auditor: auditorDetails.id,
+      id_auditor: auditorDetails,
       name: formikEdit.values.name,
       company_name: formikEdit.values.company,
       user_name: formikEdit.values.userName,
@@ -220,7 +229,6 @@ const Auditor_page = (props) => {
 
     if (data) {
       if (data.status) {
-        console.log(data);
         toast.success(data.message);
         setAuditorDetails("");
         formikEdit.resetForm();
@@ -254,7 +262,8 @@ const Auditor_page = (props) => {
         formikEdit.setFieldValue("userName", data.data.user_name);
         formikEdit.setFieldValue("name", data.data.name);
         formikEdit.setFieldValue("company", data.data.company_name);
-        setAuditorDetails("");
+        setAuditorDetails(data.data.id);
+        setUserProfileImage(data.data.profile_url);
       } else {
         toast.error(data.message);
       }
@@ -292,6 +301,45 @@ const Auditor_page = (props) => {
     }
 
     handleClose_delete();
+  };
+
+  const uploadItem = async (e) => {
+    var filename = e.target.files[0];
+    var formData = new FormData();
+
+    if (e.target.files[0]) {
+      setUserProfileImage(URL.createObjectURL(filename));
+      formData.append("file", filename);
+      formData.append("type", "image");
+
+      var header = {
+        "x-access-token": props.profile.token,
+      };
+
+      var requestOptions = {
+        method: "POST",
+        headers: header,
+        body: formData,
+        redirect: "follow",
+      };
+
+      const data = await fetch(ApiEndpoint.UPLOAD_FILE, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          return result;
+        })
+        .catch((error) => console.log("error", error));
+      console.log(data, "is_____data____");
+
+      if (!!data) {
+        if (data.status == true) {
+          toast.success("Successfully Image uploaded");
+          setImageId(data.data.id);
+        } else {
+          toast.error(data.message ? data.message : "Image can't be upload");
+        }
+      }
+    }
   };
 
   React.useEffect(() => {
@@ -387,12 +435,16 @@ const Auditor_page = (props) => {
                         <Avatar
                           className={styles.Profile_photo_avtar}
                           alt="user profile photo"
-                          // src={userProfileImage}
+                          src={userProfileImage}
                         />
                       </Box>
 
                       <IconButton className={styles.Change_profile_icon_btn}>
-                        <input type="file" name="myImage" />
+                        <input
+                          type="file"
+                          name="myImage"
+                          onChange={uploadItem}
+                        />
                         <AddRoundedIcon />
                       </IconButton>
                     </Box>
