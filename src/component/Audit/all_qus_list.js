@@ -19,14 +19,12 @@ import {
   createTheme,
 } from "@mui/material";
 import { qustionlist } from "../Utils/data";
-import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "../Audit/tablecom_allqus";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
-import { object } from "prop-types";
 
 
-const Auditor_page = (props) => {
+const AUDIT_VIEW_PAGE = (props) => {
   console.log(props, "props")
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -36,13 +34,13 @@ const Auditor_page = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
   const [dataSearch, setDataSearch] = React.useState([]);
-  const [dataList, setDatalist] = React.useState([]);
   const [value, setValue] = React.useState(0);
   const [aciveData, setActiveData] = React.useState([]);
   const [deletedData, setDeleteddata] = React.useState([]);
   const [activeSearch, setActiveSearch] = React.useState([]);
   const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [dataList, setDatalist] = React.useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -73,33 +71,31 @@ const Auditor_page = (props) => {
   }; 
 
 
- console.log(props.profile.token, 'profile____')
-
+//  console.log(props.profile.token, 'profile____')
 
   const getAuditorList = async () => {
-    // console.log( props, 'headers')
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.profile.token,
     };
-    var body = {};
-    // props.props.loaderRef(true);
+    var body = {
+      type: userType,
+    };
+        // props.props.loaderRef(true);
     var data = await ApiServices.PostApiCall(
-      ApiEndpoint.CATEGORY_LIST,
+      ApiEndpoint.AUDIT_VIEW,
       JSON.stringify(body),
       headers
     );
-    // props.props.loaderRef(false);
+        // props.props.loaderRef(false);
 
     if (data) {
       if (data.status) {
-        console.log(data, "api_res_qus");
-        // setDataSearch(data.data);
-        // setDatalist(data.data);
+        console.log(data.qustionlist, "api_res_qus");
+        // setDatalist();
       }
     }
 
-    // setAuditorRender(false);
   };
 
   const Header = [
@@ -113,7 +109,7 @@ const Auditor_page = (props) => {
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
-  console.log(props, "propscheck_____");
+  // console.log(props, "propscheck_____");
   React.useEffect(() => {
     // console.log(props.userList, "props.userList");
     if (!!props.profile && !!props.profile.token) {
@@ -175,7 +171,7 @@ const Auditor_page = (props) => {
                       setActiveData(activeSearch);
                     } else {
                       var filteredData = activeSearch.filter((item) => {
-                        let searchValue = item.qustion.toLowerCase();
+                        let searchValue = item.locations.toLowerCase();
                         return searchValue.includes(
                           value_.toString().toLowerCase()
                         );
@@ -218,46 +214,25 @@ const Auditor_page = (props) => {
                 }}
                 className={styles.maentebal2}
               >                   
-                <TabPanel value={value} index={0}>
+        
                   <TableComponent
                     handleClickOpenTWO={handleClickOpenTWO}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     handleOpen_delete={handleOpen_delete}
-                    data={aciveData}
+                    data={dataList}
                     Header={Header}
                   />
                   <TablePagination
                     rowsPerPageOptions={[7, 10, 25, 100]}
                     component="div"
                     className={styles.bakgvcal}
-                    count={aciveData.length}
+                    count={dataList.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                  <TableComponent
-                    handleClickOpenTWO={handleClickOpenTWO}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    handleOpen_delete={handleOpen_delete}
-                    data={deletedData}
-                    Header={Header}
-                  />
-                  <TablePagination
-                    rowsPerPageOptions={[7, 10, 25, 100]}
-                    component="div"
-                    className={styles.bakgvcal}
-                    count={deletedData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TabPanel>
+                  />                
               </Paper>
             </ThemeProvider>
 
@@ -279,4 +254,4 @@ const calenderIcon = () => {
   return <img src="./image/calender.png" className="calenderimg" />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auditor_page);
+export default connect(mapStateToProps, mapDispatchToProps)(AUDIT_VIEW_PAGE);

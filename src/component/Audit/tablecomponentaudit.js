@@ -61,18 +61,21 @@ export const TableComponent = ({
           {(rowsPerPage > 0
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
+            
           ).map((item, index) => {
+            console.log(item, 'item__')
+           
             return (
               <TableRow
                 className={currentPath == "./audit.js" ? Style.active : ""}
                 key={index}
               >
-                <TableCell onClick={quspage}>{item.location}</TableCell>
+                <TableCell onClick={quspage}>{item.location_location}</TableCell>
                 <TableCell onClick={quspage}>
-                  {moment(item.timing).format("DD/MM/YYYY")}
+                  {moment(item.createdAt).format("DD/MM/YYYY")}
                 </TableCell>
-                <TableCell onClick={quspage}>{item.score}</TableCell>
-                <TableCell onClick={quspage}>{item.name}</TableCell>
+                <TableCell onClick={quspage}>678</TableCell>
+                <TableCell onClick={quspage}>{item.location_name}</TableCell>
                 <TableCell>
                   <button onClick={onButtonClick}>
                     <DownloadIcon />

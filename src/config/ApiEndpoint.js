@@ -31,4 +31,8 @@ export default {
   AUDITOR_LIST: Constants.BASE_API_URL + "user/auditor/list",
   // UPLOAD
   UPLOAD_FILE: Constants.BASE_API_URL + "user/upload",
+
+  //AUDIT
+  AUDIT_LIST: Constants.BASE_API_URL + "audit/list",
+  AUDIT_VIEW: Constants.BASE_API_URL + "user/audit/view",
 };

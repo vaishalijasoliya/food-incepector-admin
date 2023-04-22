@@ -22,20 +22,7 @@ export const TableComponent = ({
   handleClickOpenTWO,
   handleOpen_delete,
 }) => {
-  const onButtonClick = () => {
-    // using Java Script method to get PDF file
-    fetch("SamplePDF.pdf").then((response) => {
-      response.blob().then((blob) => {
-        // Creating new object of PDF file
-        const fileURL = window.URL.createObjectURL(blob);
-        // Setting various property values
-        let alink = document.createElement("a");
-        alink.href = fileURL;
-        alink.download = "SamplePDF.pdf";
-        alink.click();
-      });
-    });
-  };
+ 
   const router = useRouter();
   var currentPath = router.pathname;
   const quspage = () => {
@@ -68,24 +55,24 @@ export const TableComponent = ({
                 key={index}
               >
                 <TableCell>{item.catogory}</TableCell>
-                <TableCell>{item.qustion}</TableCell>
+                <TableCell>{item.name}</TableCell>
                 <TableCell>
                   <Box className={Style.last_td}>
                     <Image
-                      src={item.image}
+                      src={item.itemList}
                       alt="picture"
                       width={50}
                       height={45}
                     />
                     <Image
-                      src={item.image2}
+                      src={item.itemList}
                       alt="picture"
                       width={50}
                       height={45}
                     />
                   </Box>
                 </TableCell>
-                <TableCell>{item.Compliance}</TableCell>
+                <TableCell>{item.compliance}</TableCell>
                 <TableCell>{item.observation}</TableCell>
               </TableRow>
             );
