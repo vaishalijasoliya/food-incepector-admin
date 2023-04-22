@@ -62,7 +62,7 @@ const Auditor_page = (props) => {
     }
   };
 
-  console.log(auditorDetails ,'auditorDetails___________')
+  console.log(auditorDetails, "auditorDetails___________");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -369,37 +369,36 @@ const Auditor_page = (props) => {
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
-                if (value == 0) {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setDatalist(dataSearch);
-                    } else {
-                      var filteredData = dataSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setDatalist(filteredData);
-                    }
-                  }
-                } else {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setDeleteddata(deletedSearch);
-                    } else {
-                      var filteredData = deletedSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setDeleteddata(filteredData);
-                    }
+                var value_ = e.target.value;
+                if (typeof value_ !== "object") {
+                  if (!value_ || value_ == "") {
+                    setDatalist(dataSearch);
+                  } else {
+                    var filteredData = dataSearch.filter((item) => {
+                      let searchValue = item.name.toLowerCase();
+                      return searchValue.includes(
+                        value_.toString().toLowerCase()
+                      );
+                    });
+                    setDatalist(filteredData);
                   }
                 }
+                // } else {
+                //   var value_ = e.target.value;
+                //   if (typeof value_ !== "object") {
+                //     if (!value_ || value_ == "") {
+                //       setDatalist(deletedSearch);
+                //     } else {
+                //       var filteredData = deletedSearch.filter((item) => {
+                //         let searchValue = item.name.toLowerCase();
+                //         return searchValue.includes(
+                //           value_.toString().toLowerCase()
+                //         );
+                //       });
+                //       setDatalist(filteredData);
+                //     }
+                //   }
+                // }
               }}
             />
           </Box>
