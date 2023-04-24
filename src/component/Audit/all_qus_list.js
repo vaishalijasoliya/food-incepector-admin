@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TablePagination from "@mui/material/TablePagination";
@@ -22,18 +21,16 @@ import { qustionlist } from "../Utils/data";
 import { TableComponent } from "../Audit/tablecom_allqus";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
-
+import { useRouter } from "next/router";
 
 const AUDIT_VIEW_PAGE = (props) => {
-  console.log(props, "props")
+  console.log(props, "props");
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
   const [customer, setCustomer] = React.useState([]);
   const [customerList, setCustomerList] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
-  const [dataSearch, setDataSearch] = React.useState([]);
   const [value, setValue] = React.useState(0);
   const [aciveData, setActiveData] = React.useState([]);
   const [deletedData, setDeleteddata] = React.useState([]);
@@ -41,7 +38,8 @@ const AUDIT_VIEW_PAGE = (props) => {
   const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
-
+  const router = useRouter();
+  console.log(router.query.id, "router");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -68,10 +66,9 @@ const AUDIT_VIEW_PAGE = (props) => {
 
   const handleOpen_delete = () => {
     setDeleteOpen(true);
-  }; 
+  };
 
-
-//  console.log(props.profile.token, 'profile____')
+  //  console.log(props.profile.token, 'profile____')
 
   const getAuditorList = async () => {
     var headers = {
@@ -79,31 +76,31 @@ const AUDIT_VIEW_PAGE = (props) => {
       "x-access-token": props.profile.token,
     };
     var body = {
-      type: userType,
+      id_audit: router.query.id,
     };
-        // props.props.loaderRef(true);
+    // props.props.loaderRef(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.AUDIT_VIEW,
       JSON.stringify(body),
       headers
     );
-        // props.props.loaderRef(false);
 
+
+    // props.props.loaderRef(false);
+    // console.log(data.data[0].qustionlist, data, "api_res_qus");
     if (data) {
       if (data.status) {
-        console.log(data.qustionlist, "api_res_qus");
-        // setDatalist();
+        setDatalist(data.data);
       }
     }
-
   };
 
   const Header = [
-    {  name: "Catogory" },
-    {  name: "Questions" },
-    {  name: "Images" },
-    {  name: "Compliance" },
-    {  name: "Observation" },
+    { name: "Catogory" },
+    { name: "Questions" },
+    { name: "Images" },
+    { name: "Compliance" },
+    { name: "Observation" },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -111,19 +108,18 @@ const AUDIT_VIEW_PAGE = (props) => {
   };
   // console.log(props, "propscheck_____");
   React.useEffect(() => {
+    console.log(router.query.id,"___function")
     // console.log(props.userList, "props.userList");
-    if (!!props.profile && !!props.profile.token) {
-      setCustomerList(props.userList);
-      setCustomer(props.userList);
+    if (router.query.id && props.profile.token) {
+      console.log(router.query.id, "id_______")
       getAuditorList();
     }
-  }, [props.userList]);
+    
+  }, [router.query.id] );
   const handleChangeRowsPerPage = (event = React.ChangeEvent) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-
 
   React.useEffect(() => {
     const ActiveArr = [];
@@ -150,10 +146,11 @@ const AUDIT_VIEW_PAGE = (props) => {
     },
   });
 
-  return (
+  console.log(dataList, 'dataList')
 
-      <Grid container>
-        <Grid container display={"flex"} className={styles.hadpeg}>
+  return (
+    <Grid container>
+      <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
           <Box className={styles.boxreting} display={"flex"}>
             <input
@@ -199,47 +196,43 @@ const AUDIT_VIEW_PAGE = (props) => {
             />
           </Box>
         </Grid>
-        
       </Grid>
 
-        <Grid item xs={12} md={12}>
-          <div>
-            <ThemeProvider theme={theme}>
-              <Paper
-                sx={{
-                  width: "100%",
-                  mb: 2,
-                  padding: "0px",
-                  paddingTop: "10px",
-                }}
-                className={styles.maentebal2}
-              >                   
-        
-                  <TableComponent
-                    handleClickOpenTWO={handleClickOpenTWO}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    handleOpen_delete={handleOpen_delete}
-                    data={dataList}
-                    Header={Header}
-                  />
-                  <TablePagination
-                    rowsPerPageOptions={[7, 10, 25, 100]}
-                    component="div"
-                    className={styles.bakgvcal}
-                    count={dataList.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />                
-              </Paper>
-            </ThemeProvider>
-
-          </div>
-        </Grid>
+      <Grid item xs={12} md={12}>
+        <div>
+          <ThemeProvider theme={theme}>
+            <Paper
+              sx={{
+                width: "100%",
+                mb: 2,
+                padding: "0px",
+                paddingTop: "10px",
+              }}
+              className={styles.maentebal2}
+            >
+              <TableComponent
+                handleClickOpenTWO={handleClickOpenTWO}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                handleOpen_delete={handleOpen_delete}
+                data={dataList}
+                Header={Header}
+              />
+              <TablePagination
+                rowsPerPageOptions={[7, 10, 25, 100]}
+                component="div"
+                className={styles.bakgvcal}
+                count={dataList.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Paper>
+          </ThemeProvider>
+        </div>
       </Grid>
-
+    </Grid>
   );
 };
 const mapStateToProps = (state) => ({

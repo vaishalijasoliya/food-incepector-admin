@@ -40,6 +40,10 @@ const Audit_page = (props) => {
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
 
+  // const tokenObj = {
+  //   token: "is____token",
+  // };
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -85,11 +89,10 @@ const Audit_page = (props) => {
 
     if (data) {
       if (data.status) {
-        console.log("api_res" , data.data);
+        console.log("api_res", data.data);
         setDatalist(data.data);
       }
     }
-
   };
 
   const Header = [
@@ -105,6 +108,24 @@ const Audit_page = (props) => {
   };
 
   // console.log(props, "props_____");
+  // const formikEdit = useFormik({
+  //   initialValues: {
+  //     userName: "",
+  //     name: "",
+  //     company: "",
+  //   },
+  //   validationSchema: Yup.object({
+  //     userName: Yup.string().required("Username is required."),
+  //     name: Yup.string().required("Name is required"),
+  //     company: Yup.string().required("Company name is required"),
+  //   }),
+  //   onSubmit: () => {
+  //     onEditAuditor();
+  //     formikEdit.resetForm();
+  //     setOpenTWO(false);
+  //   },
+  // });
+
 
   React.useEffect(() => {
     if (!!props.profile && !!props.profile.token) {
@@ -206,26 +227,25 @@ const Audit_page = (props) => {
                 }}
                 className={styles.maentebal2}
               >
-                
-                  <TableComponent
-                    handleClickOpenTWO={handleClickOpenTWO}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    handleOpen_delete={handleOpen_delete}
-                    data={dataList}
-                    Header={Header}
-                  />
-                  <TablePagination
-                    rowsPerPageOptions={[7, 10, 25, 100]}
-                    component="div"
-                    className={styles.bakgvcal}
-                    count={dataList.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                
+                <TableComponent
+                  handleClickOpenTWO={handleClickOpenTWO}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  handleOpen_delete={handleOpen_delete}
+                  data={dataList}
+                  Header={Header}
+                  // tokenObj={tokenObj}
+                />
+                <TablePagination
+                  rowsPerPageOptions={[7, 10, 25, 100]}
+                  component="div"
+                  className={styles.bakgvcal}
+                  count={dataList.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
               </Paper>
             </ThemeProvider>
           </div>

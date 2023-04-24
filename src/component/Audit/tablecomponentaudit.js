@@ -22,6 +22,7 @@ export const TableComponent = ({
   Header,
   handleClickOpenTWO,
   handleOpen_delete,
+  tokenObj
 }) => {
   const onButtonClick = () => {
     // using Java Script method to get PDF file
@@ -39,8 +40,10 @@ export const TableComponent = ({
   };
   const router = useRouter();
   var currentPath = router.pathname;
-  const quspage = () => {
-    router.push("./all_qus_list");
+  const quspage = (item) => {
+    console.log(item, "item__");
+    router.push({ pathname: "/all_qus_list", query: { id: item } });
+    
   };
 
   return (
@@ -61,16 +64,22 @@ export const TableComponent = ({
           {(rowsPerPage > 0
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
-            
           ).map((item, index) => {
-            console.log(item, 'item__')
-           
+            console.log(item, "item__");
+
             return (
               <TableRow
                 className={currentPath == "./audit.js" ? Style.active : ""}
                 key={index}
               >
-                <TableCell onClick={quspage}>{item.location_location}</TableCell>
+                <TableCell
+                  onClick={() => {
+                    // console.log(id,"tokenObj__")
+                    quspage(item.id);
+                  }}
+                >
+                  {item.location_location}
+                </TableCell>
                 <TableCell onClick={quspage}>
                   {moment(item.createdAt).format("DD/MM/YYYY")}
                 </TableCell>

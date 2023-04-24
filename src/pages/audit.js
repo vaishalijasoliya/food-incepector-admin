@@ -5,7 +5,7 @@ import styles from "../styles/user/index.module.css";
 import Grid from "@mui/material/Grid";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
-import Auditor_page from "../component/Audit/audit";
+import Audit_page from "../component/Audit/audit";
 
 const Index = (props) => {
   const data = {
@@ -21,7 +21,7 @@ const Index = (props) => {
         <Grid xs={12} sm={8} md={9} className="maenedit">
           <Header data={data} props={props} />
           {/* <Paymenttable props={props} /> */}
-          <Auditor_page props={props} />
+          <Audit_page props={props} />
         </Grid>
       </Grid>
     </>
