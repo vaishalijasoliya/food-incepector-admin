@@ -27,26 +27,34 @@ const AUDIT_VIEW_PAGE = (props) => {
   console.log(props, "props");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
-  const [customer, setCustomer] = React.useState([]);
-  const [customerList, setCustomerList] = React.useState([]);
+  const [dataSearch, setDataSearch] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
   const [value, setValue] = React.useState(0);
-  const [aciveData, setActiveData] = React.useState([]);
-  const [deletedData, setDeleteddata] = React.useState([]);
-  const [activeSearch, setActiveSearch] = React.useState([]);
-  const [deletedSearch, setDeletedSearch] = React.useState([]);
+  // const [aciveData, setActiveData] = React.useState([]);
+  // const [deletedData, setDeleteddata] = React.useState([]);
+  // const [activeSearch, setActiveSearch] = React.useState([]);
+  // const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
+  // const [questionData_, setQuestionData] = React.useState([]);
+  
+
+  // const loaderRef = {
+  //     token: "is____token",
+  //    }
+// console.log(loaderRef, "loaderrefff__")
+
   const router = useRouter();
   console.log(router.query.id, "router");
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setDataSearch([]);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
   const handleClose = () => {
     setOpen(false);
     formik.resetForm();
@@ -55,14 +63,14 @@ const AUDIT_VIEW_PAGE = (props) => {
     setOpenTWO(true);
   };
 
-  const handleCloseTWO = () => {
-    setOpenTWO(false);
-    formik.resetForm();
-  };
+  // const handleCloseTWO = () => {
+  //   setOpenTWO(false);
+  //   formik.resetForm();
+  // };
 
-  const handleClose_delete = () => {
-    setDeleteOpen(false);
-  };
+  // const handleClose_delete = () => {
+  //   setDeleteOpen(false);
+  // };
 
   const handleOpen_delete = () => {
     setDeleteOpen(true);
@@ -78,22 +86,25 @@ const AUDIT_VIEW_PAGE = (props) => {
     var body = {
       id_audit: router.query.id,
     };
-    // props.props.loaderRef(true);
+    props.props.loaderRef(true);
+    // console.log(props, "propsssss_____")
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.AUDIT_VIEW,
       JSON.stringify(body),
       headers
     );
-
-
-    // props.props.loaderRef(false);
+    props.props.loaderRef(false);
     // console.log(data.data[0].qustionlist, data, "api_res_qus");
     if (data) {
       if (data.status) {
         setDatalist(data.data);
+        setDataSearch(data.data);
+        // setQuestionData(data.data);
+        // setQuestionSearch(data.data);
       }
     }
   };
+
 
   const Header = [
     { name: "Catogory" },
@@ -103,13 +114,30 @@ const AUDIT_VIEW_PAGE = (props) => {
     { name: "Observation" },
   ];
 
+
+  const onSearch = (e) => {
+    var value_ = e.target.value;
+    if (typeof value_ !== "object") {
+      if (!value_ || value_ == "") {
+        setDatalist(dataSearch);
+      } else {
+        var filteredData = dataSearch.filter((item) => {
+          let searchValue = item.name.toLowerCase();
+          return searchValue.includes(value_.toString().toLowerCase());
+        });
+        setDatalist(filteredData);
+      }
+    }
+  };
+
+
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
   // console.log(props, "propscheck_____");
   React.useEffect(() => {
     console.log(router.query.id,"___function")
-    // console.log(props.userList, "props.userList");
+    
     if (router.query.id && props.profile.token) {
       console.log(router.query.id, "id_______")
       getAuditorList();
@@ -132,10 +160,10 @@ const AUDIT_VIEW_PAGE = (props) => {
       }
       console.log(element);
     }
-    setActiveSearch(ActiveArr);
-    setActiveData(ActiveArr);
-    setDeletedSearch(DeletedArr);
-    setDeleteddata(DeletedArr);
+    // setActiveSearch(ActiveArr);
+    // setActiveData(ActiveArr);
+    // setDeletedSearch(DeletedArr);
+    // setDeleteddata(DeletedArr);
   }, []);
 
   const theme = createTheme({
@@ -153,7 +181,7 @@ const AUDIT_VIEW_PAGE = (props) => {
       <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
           <Box className={styles.boxreting} display={"flex"}>
-            <input
+          <input
               type="text"
               id="myserchbtn"
               name="search"
@@ -161,37 +189,7 @@ const AUDIT_VIEW_PAGE = (props) => {
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
-                if (value == 0) {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setActiveData(activeSearch);
-                    } else {
-                      var filteredData = activeSearch.filter((item) => {
-                        let searchValue = item.locations.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setActiveData(filteredData);
-                    }
-                  }
-                } else {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setDeleteddata(deletedSearch);
-                    } else {
-                      var filteredData = deletedSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setDeleteddata(filteredData);
-                    }
-                  }
-                }
+                onSearch(e);
               }}
             />
           </Box>
@@ -217,9 +215,10 @@ const AUDIT_VIEW_PAGE = (props) => {
                 handleOpen_delete={handleOpen_delete}
                 data={dataList}
                 Header={Header}
+                // loaderref={loaderRef}
               />
               <TablePagination
-                rowsPerPageOptions={[7, 10, 25, 100]}
+                rowsPerPageOptions={[7, 10, 25, 100] }
                 component="div"
                 className={styles.bakgvcal}
                 count={dataList.length}

@@ -50,7 +50,7 @@ export const TableComponent = ({
     <TableContainer>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
         <TableHead>
-          <TableRow>
+          <TableRow className={Style.TableRow}>
             {Header.map((item, index) => {
               return (
                 <TableCell key={item.id} className={Style.table_cell}>
@@ -73,20 +73,33 @@ export const TableComponent = ({
                 key={index}
               >
                 <TableCell
+                className={Style.table_cell}
                   onClick={() => {
-                    // console.log(id,"tokenObj__")
                     quspage(item.id);
+                    
                   }}
                 >
                   {item.location_location}
                 </TableCell>
-                <TableCell onClick={quspage}>
+                <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }} >
                   {moment(item.createdAt).format("DD/MM/YYYY")}
                 </TableCell>
-                <TableCell onClick={quspage}>678</TableCell>
-                <TableCell onClick={quspage}>{item.location_name}</TableCell>
+                <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }}>678</TableCell>
+                <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }}>{item.location_name}</TableCell>
                 <TableCell>
-                  <button onClick={onButtonClick}>
+                  <button onClick={onButtonClick}  className={Style.table_cell}>
                     <DownloadIcon />
                   </button>
                 </TableCell>

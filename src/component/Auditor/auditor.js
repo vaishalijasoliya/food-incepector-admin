@@ -143,6 +143,7 @@ const Auditor_page = (props) => {
   });
 
   const getAuditorList = async () => {
+
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.props.profile.token,
@@ -151,6 +152,8 @@ const Auditor_page = (props) => {
       type: userType,
     };
     props.props.loaderRef(true);
+    console.log(props.props, "loaderrefauditor")
+
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.AUDITOR_LIST,
       JSON.stringify(body),

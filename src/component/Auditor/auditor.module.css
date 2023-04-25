@@ -15,3 +15,9 @@
 .table_row {
   border-bottom: 1px solid rgba(224, 224, 224, 1);
 }
+.table_row:hover{
+  cursor: pointer;
+}
+.table_cell:hover{
+  cursor: pointer;
+}

@@ -19,14 +19,12 @@ import {
   createTheme,
 } from "@mui/material";
 import { auditData } from "../Utils/data";
-import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "../Audit/tablecomponentaudit";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
 
 const Audit_page = (props) => {
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
   const [customer, setCustomer] = React.useState([]);
   const [customerList, setCustomerList] = React.useState([]);
@@ -80,6 +78,7 @@ const Audit_page = (props) => {
     };
     var body = {};
     props.props.loaderRef(true);
+    console.log(props.props, "loaderref")
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.AUDIT_LIST,
       JSON.stringify(body),
@@ -91,6 +90,7 @@ const Audit_page = (props) => {
       if (data.status) {
         console.log("api_res", data.data);
         setDatalist(data.data);
+        setActiveData(data.data)
       }
     }
   };
@@ -108,23 +108,7 @@ const Audit_page = (props) => {
   };
 
   // console.log(props, "props_____");
-  // const formikEdit = useFormik({
-  //   initialValues: {
-  //     userName: "",
-  //     name: "",
-  //     company: "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     userName: Yup.string().required("Username is required."),
-  //     name: Yup.string().required("Name is required"),
-  //     company: Yup.string().required("Company name is required"),
-  //   }),
-  //   onSubmit: () => {
-  //     onEditAuditor();
-  //     formikEdit.resetForm();
-  //     setOpenTWO(false);
-  //   },
-  // });
+
 
 
   React.useEffect(() => {

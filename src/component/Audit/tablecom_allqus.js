@@ -13,6 +13,9 @@ import React from "react";
 import Style from "../Auditor/auditor.module.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import image1 from "../../../public/image/imgsmall.png" 
+import image2 from "../../../public/image/imgsmall2.png" 
+
 
 export const TableComponent = ({
   data,
@@ -21,6 +24,7 @@ export const TableComponent = ({
   Header,
   handleClickOpenTWO,
   handleOpen_delete,
+  loaderref
 }) => {
  
 
@@ -29,13 +33,9 @@ export const TableComponent = ({
   const router = useRouter();
   var currentPath = router.pathname;
   const quspage = () => {
-    router.push("./all_qus_list");
+    router.push("./audit");
+  
   };
-
-  // for (let index = 0; index < item.questionList.length; index++) {
-  //   const element = array[index];
-    
-  // }
 
   return (
     <TableContainer>
@@ -70,32 +70,31 @@ export const TableComponent = ({
                       
                       <TableRow
                         onClick={quspage}
-                        className={currentPath == "./audit.js" ? Style.active : ""}
-                        key={index}
-                      
+                        className={currentPath == "/audit" ? Style.active : ""}
+                        key={index}                      
                       >
                         <TableCell>{item.name}</TableCell>
-                        <TableCell>{ quetion.name}</TableCell>
+                        <TableCell>{quetion.name}</TableCell>
                         <TableCell>
                           <Box className={Style.last_td}>
                             <Image
-                              src={'https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b00.jpg'}
-                              //src={quetion.itemList[0]}
+                              src={image1}
+                              // src={quetion.itemList}
                               alt="picture"
                               width={50}
                               height={45}
                             />
                             <Image
-                              src={'https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b00.jpg'}
-                              // src={item.itemList}
+                              src={image2}
+                              // src={quetion.itemList}
                               alt="picture"
                               width={50}
                               height={45}
                             />
                           </Box>
                         </TableCell>
-                        <TableCell>{item.compliance}</TableCell>
-                        <TableCell>{item.observation}</TableCell>
+                        <TableCell>{ quetion.compliance}</TableCell>
+                        <TableCell>{quetion.observation}</TableCell>
                       </TableRow>
 
                     )

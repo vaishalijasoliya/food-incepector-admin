@@ -20,7 +20,7 @@ const index = (props) => {
         <Grid xs={12} sm={8} md={9} className="maenedit">
           <Header data={data} props={props} />
           {/* <Paymenttable props={props} /> */}
-          <Audit_qus_page />
+          <Audit_qus_page props={props}/>
         </Grid>
       </Grid>
     </>

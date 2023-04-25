@@ -56,7 +56,7 @@ const Home = (props) => {
       <span>Auditor </span>
     </Button>,
     <Button
-      onClick={() => {
+      onClick={() => { 
         router.push("./category");
       }}
       key={3}
@@ -96,24 +96,24 @@ const Home = (props) => {
       router.push("./audit");
     }}
     key={6}
-    className={currentPath == "/audit" ? styles.active : ""}
+    className={currentPath == "/audit"  ? styles.active : ""}
     // key="one"
     variant="outlined"
     id={styles.butgri}
     >
     <span>Audit</span>
     </Button>,
-  
-    <Button
-      variant="outlined"
-      type="button"
-      key={5}
-      id={styles.butgri}
-      onClick={handleClickOpenCom}
-    >
-      {/* <CameraFrontIcon className={styles.iconside} /> */}
-      <span> Logout </span>
-    </Button>,
+
+        <Button
+        variant="outlined"
+        type="button"
+        key={5}
+        id={styles.butgri}
+        onClick={handleClickOpenCom}
+      >
+        {/* <CameraFrontIcon className={styles.iconside} /> */}
+        <span> Logout </span>
+      </Button>,
   ];
 
   const logout = () => {
