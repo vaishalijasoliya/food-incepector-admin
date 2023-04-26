@@ -152,6 +152,8 @@ const Auditor_page = (props) => {
       type: userType,
     };
     props.props.loaderRef(true);
+    console.log(props.props, "loaderrefauditor")
+
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.AUDITOR_LIST,
       JSON.stringify(body),

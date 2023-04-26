@@ -13,6 +13,9 @@ import React from "react";
 import Style from "../Auditor/auditor.module.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import image1 from "../../../public/image/imgsmall.png" 
+import image2 from "../../../public/image/imgsmall2.png" 
+
 
 export const TableComponent = ({
   data,
@@ -21,25 +24,17 @@ export const TableComponent = ({
   Header,
   handleClickOpenTWO,
   handleOpen_delete,
+  loaderref
 }) => {
-  const onButtonClick = () => {
-    // using Java Script method to get PDF file
-    fetch("SamplePDF.pdf").then((response) => {
-      response.blob().then((blob) => {
-        // Creating new object of PDF file
-        const fileURL = window.URL.createObjectURL(blob);
-        // Setting various property values
-        let alink = document.createElement("a");
-        alink.href = fileURL;
-        alink.download = "SamplePDF.pdf";
-        alink.click();
-      });
-    });
-  };
+ 
+
+  console.log('data', data)
+
   const router = useRouter();
   var currentPath = router.pathname;
   const quspage = () => {
-    router.push("./all_qus_list");
+    router.push("./audit");
+  
   };
 
   return (
@@ -56,39 +51,56 @@ export const TableComponent = ({
             })}
           </TableRow>
         </TableHead>
+
+        
         <TableBody>
           {(rowsPerPage > 0
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
-          ).map((item, index) => {
+            
+          ).map(
+            (item, index) => {
+            console.log(item, item, 'quetion')
             return (
-              <TableRow
-                onClick={quspage}
-                className={currentPath == "./audit.js" ? Style.active : ""}
-                key={index}
-              >
-                <TableCell>{item.catogory}</TableCell>
-                <TableCell>{item.qustion}</TableCell>
-                <TableCell>
-                  <Box className={Style.last_td}>
-                    <Image
-                      src={item.image}
-                      alt="picture"
-                      width={50}
-                      height={45}
-                    />
-                    <Image
-                      src={item.image2}
-                      alt="picture"
-                      width={50}
-                      height={45}
-                    />
-                  </Box>
-                </TableCell>
-                <TableCell>{item.Compliance}</TableCell>
-                <TableCell>{item.observation}</TableCell>
-              </TableRow>
-            );
+              <>
+                {item.questionList.map((quetion, index1) => {
+                  console.log(quetion, quetion, 'quetion')
+
+                    return (
+                      
+                      <TableRow
+                        onClick={quspage}
+                        className={currentPath == "/audit" ? Style.active : ""}
+                        key={index}                      
+                      >
+                        <TableCell>{item.name}</TableCell>
+                        <TableCell>{quetion.name}</TableCell>
+                        <TableCell>
+                          <Box className={Style.last_td}>
+                            <Image
+                              src={image1}
+                              // src={quetion.itemList}
+                              alt="picture"
+                              width={50}
+                              height={45}
+                            />
+                            <Image
+                              src={image2}
+                              // src={quetion.itemList}
+                              alt="picture"
+                              width={50}
+                              height={45}
+                            />
+                          </Box>
+                        </TableCell>
+                        <TableCell>{ quetion.compliance}</TableCell>
+                        <TableCell>{quetion.observation}</TableCell>
+                      </TableRow>
+
+                    )
+                  })}
+              </>
+            )
           })}
         </TableBody>
       </Table>

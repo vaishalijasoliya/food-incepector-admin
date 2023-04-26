@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TablePagination from "@mui/material/TablePagination";
@@ -19,38 +18,43 @@ import {
   createTheme,
 } from "@mui/material";
 import { qustionlist } from "../Utils/data";
-import { TabPanel, a11yProps } from "../Tabs/tabs";
 import { TableComponent } from "../Audit/tablecom_allqus";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
-import { object } from "prop-types";
+import { useRouter } from "next/router";
 
-
-const Auditor_page = (props) => {
-  console.log(props, "props")
+const AUDIT_VIEW_PAGE = (props) => {
+  console.log(props, "props");
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
-  const [customer, setCustomer] = React.useState([]);
-  const [customerList, setCustomerList] = React.useState([]);
+  const [dataSearch, setDataSearch] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
-  const [dataSearch, setDataSearch] = React.useState([]);
-  const [dataList, setDatalist] = React.useState([]);
   const [value, setValue] = React.useState(0);
-  const [aciveData, setActiveData] = React.useState([]);
-  const [deletedData, setDeleteddata] = React.useState([]);
-  const [activeSearch, setActiveSearch] = React.useState([]);
-  const [deletedSearch, setDeletedSearch] = React.useState([]);
+  // const [aciveData, setActiveData] = React.useState([]);
+  // const [deletedData, setDeleteddata] = React.useState([]);
+  // const [activeSearch, setActiveSearch] = React.useState([]);
+  // const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [dataList, setDatalist] = React.useState([]);
+  // const [questionData_, setQuestionData] = React.useState([]);
+  
 
+  // const loaderRef = {
+  //     token: "is____token",
+  //    }
+// console.log(loaderRef, "loaderrefff__")
+
+  const router = useRouter();
+  console.log(router.query.id, "router");
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setDataSearch([]);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
   const handleClose = () => {
     setOpen(false);
     formik.resetForm();
@@ -59,75 +63,91 @@ const Auditor_page = (props) => {
     setOpenTWO(true);
   };
 
-  const handleCloseTWO = () => {
-    setOpenTWO(false);
-    formik.resetForm();
-  };
+  // const handleCloseTWO = () => {
+  //   setOpenTWO(false);
+  //   formik.resetForm();
+  // };
 
-  const handleClose_delete = () => {
-    setDeleteOpen(false);
-  };
+  // const handleClose_delete = () => {
+  //   setDeleteOpen(false);
+  // };
 
   const handleOpen_delete = () => {
     setDeleteOpen(true);
-  }; 
+  };
 
-
- console.log(props.profile.token, 'profile____')
-
+  //  console.log(props.profile.token, 'profile____')
 
   const getAuditorList = async () => {
-    // console.log( props, 'headers')
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.profile.token,
     };
-    var body = {};
-    // props.props.loaderRef(true);
+    var body = {
+      id_audit: router.query.id,
+    };
+    props.props.loaderRef(true);
+    // console.log(props, "propsssss_____")
     var data = await ApiServices.PostApiCall(
-      ApiEndpoint.CATEGORY_LIST,
+      ApiEndpoint.AUDIT_VIEW,
       JSON.stringify(body),
       headers
     );
-    // props.props.loaderRef(false);
-
+    props.props.loaderRef(false);
+    // console.log(data.data[0].qustionlist, data, "api_res_qus");
     if (data) {
       if (data.status) {
-        console.log(data, "api_res_qus");
-        // setDataSearch(data.data);
-        // setDatalist(data.data);
+        setDatalist(data.data);
+        setDataSearch(data.data);
+        // setQuestionData(data.data);
+        // setQuestionSearch(data.data);
       }
     }
-
-    // setAuditorRender(false);
   };
 
+
   const Header = [
-    {  name: "Catogory" },
-    {  name: "Questions" },
-    {  name: "Images" },
-    {  name: "Compliance" },
-    {  name: "Observation" },
+    { name: "Catogory" },
+    { name: "Questions" },
+    { name: "Images" },
+    { name: "Compliance" },
+    { name: "Observation" },
   ];
+
+
+  const onSearch = (e) => {
+    var value_ = e.target.value;
+    if (typeof value_ !== "object") {
+      if (!value_ || value_ == "") {
+        setDatalist(dataSearch);
+      } else {
+        var filteredData = dataSearch.filter((item) => {
+          let searchValue = item.name.toLowerCase();
+          return searchValue.includes(value_.toString().toLowerCase());
+        });
+        setDatalist(filteredData);
+      }
+    }
+  };
+
 
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
-  console.log(props, "propscheck_____");
+  // console.log(props, "propscheck_____");
   React.useEffect(() => {
-    // console.log(props.userList, "props.userList");
-    if (!!props.profile && !!props.profile.token) {
-      setCustomerList(props.userList);
-      setCustomer(props.userList);
+    console.log(router.query.id,"___function")
+    
+    if (router.query.id && props.profile.token) {
+      console.log(router.query.id, "id_______")
       getAuditorList();
     }
-  }, [props.userList]);
+    
+  }, [router.query.id] );
   const handleChangeRowsPerPage = (event = React.ChangeEvent) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-
 
   React.useEffect(() => {
     const ActiveArr = [];
@@ -140,10 +160,10 @@ const Auditor_page = (props) => {
       }
       console.log(element);
     }
-    setActiveSearch(ActiveArr);
-    setActiveData(ActiveArr);
-    setDeletedSearch(DeletedArr);
-    setDeleteddata(DeletedArr);
+    // setActiveSearch(ActiveArr);
+    // setActiveData(ActiveArr);
+    // setDeletedSearch(DeletedArr);
+    // setDeleteddata(DeletedArr);
   }, []);
 
   const theme = createTheme({
@@ -154,13 +174,14 @@ const Auditor_page = (props) => {
     },
   });
 
-  return (
+  console.log(dataList, 'dataList')
 
-      <Grid container>
-        <Grid container display={"flex"} className={styles.hadpeg}>
+  return (
+    <Grid container>
+      <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
           <Box className={styles.boxreting} display={"flex"}>
-            <input
+          <input
               type="text"
               id="myserchbtn"
               name="search"
@@ -168,103 +189,49 @@ const Auditor_page = (props) => {
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
-                if (value == 0) {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setActiveData(activeSearch);
-                    } else {
-                      var filteredData = activeSearch.filter((item) => {
-                        let searchValue = item.qustion.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setActiveData(filteredData);
-                    }
-                  }
-                } else {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setDeleteddata(deletedSearch);
-                    } else {
-                      var filteredData = deletedSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setDeleteddata(filteredData);
-                    }
-                  }
-                }
+                onSearch(e);
               }}
             />
           </Box>
         </Grid>
-        
       </Grid>
 
-        <Grid item xs={12} md={12}>
-          <div>
-            <ThemeProvider theme={theme}>
-              <Paper
-                sx={{
-                  width: "100%",
-                  mb: 2,
-                  padding: "0px",
-                  paddingTop: "10px",
-                }}
-                className={styles.maentebal2}
-              >                   
-                <TabPanel value={value} index={0}>
-                  <TableComponent
-                    handleClickOpenTWO={handleClickOpenTWO}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    handleOpen_delete={handleOpen_delete}
-                    data={aciveData}
-                    Header={Header}
-                  />
-                  <TablePagination
-                    rowsPerPageOptions={[7, 10, 25, 100]}
-                    component="div"
-                    className={styles.bakgvcal}
-                    count={aciveData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                  <TableComponent
-                    handleClickOpenTWO={handleClickOpenTWO}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    handleOpen_delete={handleOpen_delete}
-                    data={deletedData}
-                    Header={Header}
-                  />
-                  <TablePagination
-                    rowsPerPageOptions={[7, 10, 25, 100]}
-                    component="div"
-                    className={styles.bakgvcal}
-                    count={deletedData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TabPanel>
-              </Paper>
-            </ThemeProvider>
-
-          </div>
-        </Grid>
+      <Grid item xs={12} md={12}>
+        <div>
+          <ThemeProvider theme={theme}>
+            <Paper
+              sx={{
+                width: "100%",
+                mb: 2,
+                padding: "0px",
+                paddingTop: "10px",
+              }}
+              className={styles.maentebal2}
+            >
+              <TableComponent
+                handleClickOpenTWO={handleClickOpenTWO}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                handleOpen_delete={handleOpen_delete}
+                data={dataList}
+                Header={Header}
+                // loaderref={loaderRef}
+              />
+              <TablePagination
+                rowsPerPageOptions={[7, 10, 25, 100] }
+                component="div"
+                className={styles.bakgvcal}
+                count={dataList.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Paper>
+          </ThemeProvider>
+        </div>
       </Grid>
-
+    </Grid>
   );
 };
 const mapStateToProps = (state) => ({
@@ -279,4 +246,4 @@ const calenderIcon = () => {
   return <img src="./image/calender.png" className="calenderimg" />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auditor_page);
+export default connect(mapStateToProps, mapDispatchToProps)(AUDIT_VIEW_PAGE);

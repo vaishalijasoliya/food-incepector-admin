@@ -22,6 +22,7 @@ export const TableComponent = ({
   Header,
   handleClickOpenTWO,
   handleOpen_delete,
+  tokenObj
 }) => {
   const onButtonClick = () => {
     // using Java Script method to get PDF file
@@ -39,15 +40,17 @@ export const TableComponent = ({
   };
   const router = useRouter();
   var currentPath = router.pathname;
-  const quspage = () => {
-    router.push("./all_qus_list");
+  const quspage = (item) => {
+    console.log(item, "item__");
+    router.push({ pathname: "/all_qus_list", query: { id: item } });
+    
   };
 
   return (
     <TableContainer>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
         <TableHead>
-          <TableRow>
+          <TableRow className={Style.TableRow}>
             {Header.map((item, index) => {
               return (
                 <TableCell key={item.id} className={Style.table_cell}>
@@ -62,19 +65,41 @@ export const TableComponent = ({
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
           ).map((item, index) => {
+            console.log(item, "item__");
+
             return (
               <TableRow
                 className={currentPath == "./audit.js" ? Style.active : ""}
                 key={index}
               >
-                <TableCell onClick={quspage}>{item.location}</TableCell>
-                <TableCell onClick={quspage}>
-                  {moment(item.timing).format("DD/MM/YYYY")}
+                <TableCell
+                className={Style.table_cell}
+                  onClick={() => {
+                    quspage(item.id);
+                    
+                  }}
+                >
+                  {item.location_location}
                 </TableCell>
-                <TableCell onClick={quspage}>{item.score}</TableCell>
-                <TableCell onClick={quspage}>{item.name}</TableCell>
+                <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }} >
+                  {moment(item.createdAt).format("DD/MM/YYYY")}
+                </TableCell>
+                <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }}>678</TableCell>
+                <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }}>{item.location_name}</TableCell>
                 <TableCell>
-                  <button onClick={onButtonClick}>
+                  <button onClick={onButtonClick}  className={Style.table_cell}>
                     <DownloadIcon />
                   </button>
                 </TableCell>
