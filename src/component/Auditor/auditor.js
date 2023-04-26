@@ -523,7 +523,7 @@ const Auditor_page = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleClose} text={"Cancle"} />
+                  <Button_ handleClick={handleClose} text={"Cancel"} />
                   <Button_ type="submit" text={"Add"} />{" "}
                 </div>
               </Box>
@@ -620,7 +620,7 @@ const Auditor_page = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleCloseTWO} text={"Cancle"} />
+                  <Button_ handleClick={handleCloseTWO} text={"Cancel"} />
                   <Button_ type={"submit"} text={"Edit"} />{" "}
                 </div>
               </Box>
@@ -640,7 +640,7 @@ const Auditor_page = (props) => {
                 Are you sure you want to delete Inspector?
               </Typography>
               <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose_delete} text={"Cancle"} />
+                <Button_ handleClick={handleClose_delete} text={"Cancel"} />
                 <Button_ handleClick={onDelete} text={"Delete"} />{" "}
               </div>
             </Box>

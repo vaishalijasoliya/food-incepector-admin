@@ -257,7 +257,7 @@ const EnhancedTable = (props) => {
               </Box>
 
               <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose} text={"Cancle"} />
+                <Button_ handleClick={handleClose} text={"Cancel"} />
                 <Button_ handleClick={handleClose} text={"Add"} />{" "}
               </div>
             </DialogContent>

@@ -259,7 +259,7 @@ const EnhancedTable = (props) => {
         <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
           <Typography>Are you sure you want to delete Category?</Typography>
           <div className={styles.cesalbtncss}>
-            <Button_ handleClick={handleClose_delete} text={"Cancle"} />
+            <Button_ handleClick={handleClose_delete} text={"Cancel"} />
             <Button_ handleClick={onDelete} text={"Delete"} />{" "}
           </div>
         </Box>
@@ -331,7 +331,7 @@ const EnhancedTable = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleClose} text={"Cancle"} />
+                  <Button_ handleClick={handleClose} text={"Cancel"} />
                   {/* <Button type="submit">Add</Button> */}
                   <Button_
                     type={"submit"}
@@ -375,7 +375,7 @@ const EnhancedTable = (props) => {
               </Grid>
             </Grid>
             <div className={styles.cesalbtncss}>
-              <Button_ handleClick={handleCloseEdit} text={"Cancle"} />
+              <Button_ handleClick={handleCloseEdit} text={"Cancel"} />
               <Button_ type={"submit"} text={"Edit"} />
             </div>
           </Box>
