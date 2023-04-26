@@ -24,7 +24,9 @@ a {
 * {
   box-sizing: border-box;
 }
-
+.MuiTableHead-root {
+  text-transform: capitalize !important;
+}
 .support-list-bottom {
   height: 100px;
 }
@@ -39,9 +41,7 @@ a {
 .error_text_view {
   height: 20px;
 }
-.MuiTableHead-root {
-  text-transform: capitalize !important;
-}
+
 .Input_field {
   background: #fff;
   border: 1px solid #484848 !important;

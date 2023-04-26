@@ -143,6 +143,7 @@ const Auditor_page = (props) => {
   });
 
   const getAuditorList = async () => {
+    console.log('is____called')
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.props.profile.token,
@@ -160,6 +161,7 @@ const Auditor_page = (props) => {
 
     if (data) {
       if (data.status) {
+        
         setDataSearch(data.data);
         setDatalist(data.data);
       }

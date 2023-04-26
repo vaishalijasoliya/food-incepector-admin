@@ -92,16 +92,16 @@ const Home = (props) => {
     </Button>,
 
     <Button
-    onClick={() => {
-      router.push("./audit");
-    }}
-    key={6}
-    className={currentPath == "/audit" ? styles.active : ""}
-    // key="one"
-    variant="outlined"
-    id={styles.butgri}
+      onClick={() => {
+        router.push("./audit");
+      }}
+      key={6}
+      className={currentPath == "/audit" ? styles.active : ""}
+      // key="one"
+      variant="outlined"
+      id={styles.butgri}
     >
-    <span>Audit</span>
+      <span>Audit</span>
     </Button>,
     <Button
       variant="outlined"
