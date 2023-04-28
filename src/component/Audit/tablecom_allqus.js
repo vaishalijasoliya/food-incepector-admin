@@ -15,6 +15,9 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import image1 from "../../../public/image/imgsmall.png" 
 import image2 from "../../../public/image/imgsmall2.png" 
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 
 export const TableComponent = ({
@@ -32,10 +35,38 @@ export const TableComponent = ({
 
   const router = useRouter();
   var currentPath = router.pathname;
-  const quspage = () => {
-    router.push("./audit");
-  
+  // const quspage = () => {
+  //   router.push("./audit");
+  // };
+
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorE2, setAnchorE2] = React.useState(null);
+
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+
+
+  
+  const handleClick2 = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorE2(null);
+  };
+  const open2 = Boolean(anchorE2);
+  const id2 = open ? 'simple-popover' : undefined;
+
 
   return (
     <TableContainer>
@@ -69,28 +100,80 @@ export const TableComponent = ({
                     return (
                       
                       <TableRow
-                        onClick={quspage}
-                        className={currentPath == "/audit" ? Style.active : ""}
+                        // onClick={quspage}
+                        className={currentPath == "/all_qus_list" ? Style.active : ""}
                         key={index}                      
                       >
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{quetion.name}</TableCell>
                         <TableCell>
                           <Box className={Style.last_td}>
-                            <Image
+                            <Image onClick={handleClick}
+                            className={Style.img1}
+                            aria-describedby={id}
+                            variant="contained"
                               src={image1}
                               // src={quetion.itemList}
                               alt="picture"
                               width={50}
                               height={45}
                             />
+
+                            <Popover className={Style.popup_box}
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                      vertical: 'bottom',
+                                      horizontal: 'center',
+                                    }}
+                                  >
+                                    <Image onClick={handleClick}
+                                                        aria-describedby={id}
+                                                        variant="contained"
+                                                          src={image1}
+                                                          // src={quetion.itemList}
+                                                          alt="picture"
+                                                          width={250}
+                                                          height={245}
+                                                        />
+                            </Popover>
+
+
+
+
                             <Image
+                            onClick={handleClick2}
+                            className={Style.img1}
+                            aria-describedby={id2}
+                            variant="contained"
                               src={image2}
                               // src={quetion.itemList}
                               alt="picture"
                               width={50}
                               height={45}
                             />
+                             <Popover className={Style.popup_box}
+                                    id={id2}
+                                    open={open2}
+                                    anchorEl={anchorE2}
+                                    onClose={handleClose2}
+                                    anchorOrigin={{
+                                      vertical: 'bottom',
+                                      horizontal: 'center',
+                                    }}
+                                  >
+                                    <Image onClick={handleClick2}
+                                        aria-describedby={id2}
+                                        variant="contained"
+                                        src={image2}
+                                        // src={quetion.itemList}
+                                        alt="picture"
+                                        width={250}
+                                        height={245}
+                                        />
+                            </Popover>
                           </Box>
                         </TableCell>
                         <TableCell>{ quetion.compliance}</TableCell>

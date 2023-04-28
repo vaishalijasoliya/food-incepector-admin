@@ -31,13 +31,8 @@ const AUDIT_VIEW_PAGE = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
   const [value, setValue] = React.useState(0);
-  // const [aciveData, setActiveData] = React.useState([]);
-  // const [deletedData, setDeleteddata] = React.useState([]);
-  // const [activeSearch, setActiveSearch] = React.useState([]);
-  // const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
-  // const [questionData_, setQuestionData] = React.useState([]);
   
 
   // const loaderRef = {
