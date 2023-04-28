@@ -398,7 +398,7 @@ const Hotels_list = (props) => {
         <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
           <Typography>Are you sure you want to delete Location?</Typography>
           <div className={styles.cesalbtncss}>
-            <Button_ handleClick={handleClose_delete} text={"Cancle"} />
+            <Button_ handleClick={handleClose_delete} text={"Cancel"} />
             <Button_ handleClick={onDelete} text={"Delete"} />{" "}
           </div>
         </Box>
@@ -628,7 +628,7 @@ const Hotels_list = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleClose} text={"Cancle"} />
+                  <Button_ handleClick={handleClose} text={"Cancel"} />
                   <Button_
                     type={"submit"}
                     text={isOpen == "edit" ? "Edit" : "Add"}

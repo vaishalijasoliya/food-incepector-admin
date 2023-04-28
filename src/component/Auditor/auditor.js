@@ -62,7 +62,7 @@ const Auditor_page = (props) => {
     }
   };
 
-  console.log(auditorDetails ,'auditorDetails___________')
+  console.log(auditorDetails, "auditorDetails___________");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -143,7 +143,7 @@ const Auditor_page = (props) => {
   });
 
   const getAuditorList = async () => {
-
+    console.log('is____called')
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.props.profile.token,
@@ -163,6 +163,7 @@ const Auditor_page = (props) => {
 
     if (data) {
       if (data.status) {
+        
         setDataSearch(data.data);
         setDatalist(data.data);
       }
@@ -372,37 +373,36 @@ const Auditor_page = (props) => {
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
-                if (value == 0) {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setDatalist(dataSearch);
-                    } else {
-                      var filteredData = dataSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setDatalist(filteredData);
-                    }
-                  }
-                } else {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setDeleteddata(deletedSearch);
-                    } else {
-                      var filteredData = deletedSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setDeleteddata(filteredData);
-                    }
+                var value_ = e.target.value;
+                if (typeof value_ !== "object") {
+                  if (!value_ || value_ == "") {
+                    setDatalist(dataSearch);
+                  } else {
+                    var filteredData = dataSearch.filter((item) => {
+                      let searchValue = item.name.toLowerCase();
+                      return searchValue.includes(
+                        value_.toString().toLowerCase()
+                      );
+                    });
+                    setDatalist(filteredData);
                   }
                 }
+                // } else {
+                //   var value_ = e.target.value;
+                //   if (typeof value_ !== "object") {
+                //     if (!value_ || value_ == "") {
+                //       setDatalist(deletedSearch);
+                //     } else {
+                //       var filteredData = deletedSearch.filter((item) => {
+                //         let searchValue = item.name.toLowerCase();
+                //         return searchValue.includes(
+                //           value_.toString().toLowerCase()
+                //         );
+                //       });
+                //       setDatalist(filteredData);
+                //     }
+                //   }
+                // }
               }}
             />
           </Box>
@@ -523,7 +523,7 @@ const Auditor_page = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleClose} text={"Cancle"} />
+                  <Button_ handleClick={handleClose} text={"Cancel"} />
                   <Button_ type="submit" text={"Add"} />{" "}
                 </div>
               </Box>
@@ -620,7 +620,7 @@ const Auditor_page = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleCloseTWO} text={"Cancle"} />
+                  <Button_ handleClick={handleCloseTWO} text={"Cancel"} />
                   <Button_ type={"submit"} text={"Edit"} />{" "}
                 </div>
               </Box>
@@ -640,7 +640,7 @@ const Auditor_page = (props) => {
                 Are you sure you want to delete Inspector?
               </Typography>
               <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose_delete} text={"Cancle"} />
+                <Button_ handleClick={handleClose_delete} text={"Cancel"} />
                 <Button_ handleClick={onDelete} text={"Delete"} />{" "}
               </div>
             </Box>
