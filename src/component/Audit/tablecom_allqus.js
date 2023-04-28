@@ -8,17 +8,28 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Dialog,
+  DialogTitle,
+  TextField,
 } from "@mui/material";
 import React from "react";
 import Style from "../Auditor/auditor.module.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import image1 from "../../../public/image/imgsmall.png" 
-import image2 from "../../../public/image/imgsmall2.png" 
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-
+import image1 from "../../../public/image/imgsmall.png";
+import image2 from "../../../public/image/imgsmall2.png";
+import Grid from "@mui/material/Grid";
+import { InputLable } from "../../Layout/inputlable";
+import { Input_error } from "../Utils/string";
+import { Button_ } from "../../Layout/buttons";
+import styles from "../../styles/user/paymenttable.module.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import {
+  TransformWrapper,
+  TransformComponent,
+  ReactZoomPanPinchRef,
+} from "react-zoom-pan-pinch";
 
 export const TableComponent = ({
   data,
@@ -29,9 +40,7 @@ export const TableComponent = ({
   handleOpen_delete,
   loaderref,
 }) => {
- 
-
-  console.log('data', data)
+  console.log("data", data);
 
   const router = useRouter();
   var currentPath = router.pathname;
@@ -39,37 +48,169 @@ export const TableComponent = ({
   //   router.push("./audit");
   // };
 
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorE2, setAnchorE2] = React.useState(null);
+  const handleClose2 = () => {
+    setOpen2(false);
+    formik.resetForm();
+  };
 
+  const onAddCategory = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.props.profile.token,
+    };
+    var body = {
+      name: formik.values.name,
+    };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.ADD_CATEGORY,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+    getCategoryList();
+    setOpen(false);
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Name is required."),
+    }),
+    onSubmit: (values) => {
+      if (open == true) {
+        onAddCategory();
+      } else if (openEdit == true) {
+        onEditCategory();
+      }
+      formik.resetForm();
+    },
+  });
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
+    formik.resetForm();
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  // const Controls = ({ zoomIn, zoomOut, resetTransform }) => (
+  //   <>
+  //     <button onClick={() => zoomIn()}>+</button>
+  //     <button onClick={() => zoomOut()}>-</button>
+  //     <button onClick={() => resetTransform()}>x</button>
+  //   </>
+  // );
+  // const Component = () => {
+  //   const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
 
-
-
-  
-  const handleClick2 = (event) => {
-    setAnchorE2(event.currentTarget);
-  };
-  const handleClose2 = () => {
-    setAnchorE2(null);
-  };
-  const open2 = Boolean(anchorE2);
-  const id2 = open ? 'simple-popover' : undefined;
-
+  // const zoomToImage = () => {
+  //   if (transformComponentRef.current) {
+  //     const { zoomToElement } = transformComponentRef.current;
+  //     zoomToElement("imgExample");
+  //   }
+  // };
 
   return (
     <TableContainer>
+      <Dialog
+        fullWidth={true}
+        maxWidth={"sm"}
+        open={open}
+        onClose={handleClose}
+        key={1}
+      >
+        <form onSubmit={formik.handleSubmit}>
+          <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+            <Grid container justifyContent={"space-between"}>
+              <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
+                <Box className={"Input_box"}>
+                  <DialogTitle className={styles.addtitalaja}>
+                    Image
+                  </DialogTitle>
+                  <Image
+                    onClick={handleClickOpen}
+                    src={image1}
+                    // src={quetion.itemList}
+                    alt="picture"
+                    width={550}
+                    height={350}
+                  />
+                  {/* <TransformWrapper
+                    initialScale={1}
+                    initialPositionX={200}
+                    initialPositionY={100}
+                    ref={transformComponentRef}
+                  >
+                    {(utils) => (
+                      <React.Fragment>
+                        <Controls {...utils} />
+                        <TransformComponent>
+                          <img src="image.jpg" alt="test" id="imgExample" />
+                          <div onClick={zoomToImage}>Example text</div>
+                        </TransformComponent>
+                      </React.Fragment>
+                    )}
+                  </TransformWrapper> */}
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </form>
+      </Dialog>
+      <Dialog
+        fullWidth={true}
+        maxWidth={"sm"}
+        open={open2}
+        onClose={handleClose2}
+        key={1}
+      >
+        <form onSubmit={formik.handleSubmit}>
+          <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+            <Grid container justifyContent={"space-between"}>
+              <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
+                <Box className={"Input_box"}>
+                  <DialogTitle className={styles.addtitalaja}>
+                    Image
+                  </DialogTitle>
+                  <Image
+                    onClick={handleClickOpen2}
+                    src={image2}
+                    // src={quetion.itemList}
+                    alt="picture"
+                    width={550}
+                    height={350}
+                  />
+                  <div>
+                    <button onClick={() => zoomIn()}>+</button>
+                    <button onClick={() => zoomOut()}>-</button>
+                  </div>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </form>
+      </Dialog>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
         <TableHead>
           <TableRow>
@@ -91,93 +232,44 @@ export const TableComponent = ({
             return (
               <>
                 {item.questionList.map((quetion, index1) => {
-                  console.log(quetion, quetion, 'quetion')
+                  console.log(quetion, quetion, "quetion");
 
-                    return (
-                      
-                      <TableRow
-                        // onClick={quspage}
-                        className={currentPath == "/all_qus_list" ? Style.active : ""}
-                        key={index}                      
-                      >
-                        <TableCell>{item.name}</TableCell>
-                        <TableCell>{quetion.name}</TableCell>
-                        <TableCell>
-                          <Box className={Style.last_td}>
-                            <Image onClick={handleClick}
-                            className={Style.img1}
-                            aria-describedby={id}
-                            variant="contained"
-                              src={image1}
-                              // src={quetion.itemList}
-                              alt="picture"
-                              width={50}
-                              height={45}
-                            />
+                  return (
+                    <TableRow
+                      // onClick={quspage}
+                      className={
+                        currentPath == "/all_qus_list" ? Style.active : ""
+                      }
+                      key={index}
+                    >
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{quetion.name}</TableCell>
+                      <TableCell>
+                        <Box className={Style.last_td}>
+                          <Image
+                            onClick={handleClickOpen}
+                            src={image1}
+                            // src={quetion.itemList}
+                            alt="picture"
+                            width={50}
+                            height={45}
+                          />
 
-                            <Popover className={Style.popup_box}
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                      vertical: 'bottom',
-                                      horizontal: 'center',
-                                    }}
-                                  >
-                                    <Image onClick={handleClick}
-                                                        aria-describedby={id}
-                                                        variant="contained"
-                                                          src={image1}
-                                                          // src={quetion.itemList}
-                                                          alt="picture"
-                                                          width={250}
-                                                          height={245}
-                                                        />
-                            </Popover>
-
-
-
-
-                            <Image
-                            onClick={handleClick2}
-                            className={Style.img1}
-                            aria-describedby={id2}
-                            variant="contained"
-                              src={image2}
-                              // src={quetion.itemList}
-                              alt="picture"
-                              width={50}
-                              height={45}
-                            />
-                             <Popover className={Style.popup_box}
-                                    id={id2}
-                                    open={open2}
-                                    anchorEl={anchorE2}
-                                    onClose={handleClose2}
-                                    anchorOrigin={{
-                                      vertical: 'bottom',
-                                      horizontal: 'center',
-                                    }}
-                                  >
-                                    <Image onClick={handleClick2}
-                                        aria-describedby={id2}
-                                        variant="contained"
-                                        src={image2}
-                                        // src={quetion.itemList}
-                                        alt="picture"
-                                        width={250}
-                                        height={245}
-                                        />
-                            </Popover>
-                          </Box>
-                        </TableCell>
-                        <TableCell>{ quetion.compliance}</TableCell>
-                        <TableCell>{quetion.observation}</TableCell>
-                      </TableRow>
-
-                    )
-                  })}
+                          <Image
+                            onClick={handleClickOpen2}
+                            src={image2}
+                            // src={quetion.itemList}
+                            alt="picture"
+                            width={50}
+                            height={45}
+                          />
+                        </Box>
+                      </TableCell>
+                      <TableCell>{quetion.compliance}</TableCell>
+                      <TableCell>{quetion.observation}</TableCell>
+                    </TableRow>
+                  );
+                })}
               </>
             );
           })}
@@ -186,3 +278,4 @@ export const TableComponent = ({
     </TableContainer>
   );
 };
+// }

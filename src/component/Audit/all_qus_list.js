@@ -184,9 +184,10 @@ const AUDIT_VIEW_PAGE = (props) => {
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
-                onSearch(e);
+              onSearch(e);
               }}
             />
+            
           </Box>
         </Grid>
       </Grid>

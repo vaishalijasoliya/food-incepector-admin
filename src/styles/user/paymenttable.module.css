@@ -563,6 +563,21 @@
   padding: 20px;
 }
 
+.dialog{
+  justify-content: center;
+  background-color: none;
+  height: 500px;
+  /* padding: 20px; */
+  background-color: none;
+  /* max-width: 500px;
+  max-height: 500px; */
+}
+
+
+
+
+
+
 @media only screen and (max-width: 1000px) {
   .boxreting2 {
     margin: 0px 0px 0px 0px;
