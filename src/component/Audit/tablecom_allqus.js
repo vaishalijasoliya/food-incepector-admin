@@ -27,7 +27,7 @@ export const TableComponent = ({
   Header,
   handleClickOpenTWO,
   handleOpen_delete,
-  loaderref
+  loaderref,
 }) => {
  
 
@@ -83,15 +83,11 @@ export const TableComponent = ({
           </TableRow>
         </TableHead>
 
-        
         <TableBody>
           {(rowsPerPage > 0
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
-            
-          ).map(
-            (item, index) => {
-            console.log(item, item, 'quetion')
+          ).map((item, index) => {
             return (
               <>
                 {item.questionList.map((quetion, index1) => {
@@ -183,7 +179,7 @@ export const TableComponent = ({
                     )
                   })}
               </>
-            )
+            );
           })}
         </TableBody>
       </Table>
