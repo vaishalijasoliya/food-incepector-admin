@@ -89,7 +89,7 @@ const AUDIT_VIEW_PAGE = (props) => {
       headers
     );
     props.props.loaderRef(false);
-    console.log(data.data[0].qustionlist, data, "api_res_qus");
+    // console.log(data.data[0].qustionlist, data, "api_res_qus");
     if (data) {
       if (data.status) {
         setDatalist(data.data);

@@ -11,6 +11,7 @@ import {
   Dialog,
   DialogTitle,
   TextField,
+  Zoom,
 } from "@mui/material";
 import React from "react";
 import Style from "../Auditor/auditor.module.css";
@@ -25,11 +26,11 @@ import { Button_ } from "../../Layout/buttons";
 import styles from "../../styles/user/paymenttable.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  TransformWrapper,
-  TransformComponent,
-  ReactZoomPanPinchRef,
-} from "react-zoom-pan-pinch";
+// import React, { useRef, useMemo, useEffect, useState } from "react";
+
+import ReactImageMagnify from "react-image-magnify";
+import Lightbox from "react-awesome-lightbox";
+import "react-awesome-lightbox/build/style.css";
 
 export const TableComponent = ({
   data,
@@ -114,69 +115,63 @@ export const TableComponent = ({
     formik.resetForm();
   };
 
-  // const Controls = ({ zoomIn, zoomOut, resetTransform }) => (
-  //   <>
-  //     <button onClick={() => zoomIn()}>+</button>
-  //     <button onClick={() => zoomOut()}>-</button>
-  //     <button onClick={() => resetTransform()}>x</button>
-  //   </>
-  // );
-  // const Component = () => {
-  //   const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
 
-  // const zoomToImage = () => {
-  //   if (transformComponentRef.current) {
-  //     const { zoomToElement } = transformComponentRef.current;
-  //     zoomToElement("imgExample");
-  //   }
-  // };
+const popupimageurl = "/image/imgsmall.png"
+const popupimageurl2 = "/image/imgsmall2.png"
+
 
   return (
     <TableContainer>
       <Dialog
         fullWidth={true}
-        maxWidth={"sm"}
+        maxWidth={"md"}
         open={open}
         onClose={handleClose}
         key={1}
+        className={Style.dialog}
       >
-        <form onSubmit={formik.handleSubmit}>
-          <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+        {/* <form onSubmit={formik.handleSubmit}> */}
+          {/* <Box className={styles.dialog_box} style={{ paddingTop: 0 }}> */}
             <Grid container justifyContent={"space-between"}>
               <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
-                <Box className={"Input_box"}>
-                  <DialogTitle className={styles.addtitalaja}>
-                    Image
-                  </DialogTitle>
-                  <Image
+                {/* <Box className={"Input_box"}> */}
+                  {/* <Image
                     onClick={handleClickOpen}
                     src={image1}
                     // src={quetion.itemList}
                     alt="picture"
                     width={550}
                     height={350}
-                  />
-                  {/* <TransformWrapper
-                    initialScale={1}
-                    initialPositionX={200}
-                    initialPositionY={100}
-                    ref={transformComponentRef}
-                  >
-                    {(utils) => (
-                      <React.Fragment>
-                        <Controls {...utils} />
-                        <TransformComponent>
-                          <img src="image.jpg" alt="test" id="imgExample" />
-                          <div onClick={zoomToImage}>Example text</div>
-                        </TransformComponent>
-                      </React.Fragment>
-                    )}
-                  </TransformWrapper> */}
-                </Box>
+                  /> */}
+                  <Lightbox image="/image/imgsmall2.png" onClose={true} title="Image Title" width='1120px' height="1000px" alt="image"/>
+                   {/* <div className="App">
+                            <div id="imageMagnifyer" className={Style.imgmodifyer}>
+                            <ReactImageMagnify className={Style.magnifyer} {...{
+                              smallImage: {
+                                  alt: 'Wristwatch by Ted Baker London',
+                                  isFluidWidth: true,
+                                  src: popupimageurl,
+                                  width : 750,
+                                  height : 800,                                                               
+                              },
+                              largeImage: {
+                                  src: popupimageurl,                                
+                                  width: 320,
+                                  height: 450,
+                                },
+
+                                isHintEnabled: true,
+                                shouldHideHintAfterFirstActivation: false
+                                                          
+                          }} />
+                            </div>
+                    </div> */}
+     
+                {/* </Box> */}
               </Grid>
             </Grid>
-          </Box>
-        </form>
+          {/* </Box> */}
+        {/* </form> */}
       </Dialog>
       <Dialog
         fullWidth={true}
@@ -184,31 +179,50 @@ export const TableComponent = ({
         open={open2}
         onClose={handleClose2}
         key={1}
+        className={Style.dialog}
       >
         <form onSubmit={formik.handleSubmit}>
-          <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+          {/* <Box className={styles.dialog_box} style={{ paddingTop: 0 }}> */}
             <Grid container justifyContent={"space-between"}>
-              <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
-                <Box className={"Input_box"}>
-                  <DialogTitle className={styles.addtitalaja}>
-                    Image
-                  </DialogTitle>
-                  <Image
-                    onClick={handleClickOpen2}
+              {/* <Grid item xs={12} sm={12} lg={12} xl={12} md={12}> */}
+                {/* <Box className={"Input_box"}> */}
+                <Lightbox image="/image/imgsmall2.png" onClose={true} title="Image Title" width='1120px' height="1000px" alt="image"/>
+
+                  {/* <Image                  
                     src={image2}
                     // src={quetion.itemList}
                     alt="picture"
                     width={550}
                     height={350}
-                  />
-                  <div>
-                    <button onClick={() => zoomIn()}>+</button>
-                    <button onClick={() => zoomOut()}>-</button>
-                  </div>
-                </Box>
-              </Grid>
+                  /> */}
+                         {/* <div className="App">
+                            <div id="imageMagnifyer" className={Style.imgmodifyer}>
+                            <ReactImageMagnify className={Style.magnifyer} {...{
+                              smallImage: {
+                                  alt: 'Wristwatch by Ted Baker London',
+                                  isFluidWidth: true,
+                                  src: popupimageurl2,
+                                  width : 550,
+                                  height : 500,  
+                                  ishiisHintEnabled : false,
+                                                                                                                        
+                              },
+                              largeImage: {
+                                  src: popupimageurl2,                                
+                                  width: 820,
+                                  height: 750
+                              },
+                              isHintEnabled: true,
+                        shouldHideHintAfterFirstActivation: false
+
+                          }} />
+                            </div>
+                          </div> */}
+                 
+                {/* </Box> */}
+              {/* </Grid> */}
             </Grid>
-          </Box>
+          {/* </Box> */}
         </form>
       </Dialog>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">

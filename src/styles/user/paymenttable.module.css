@@ -565,7 +565,7 @@
 
 .dialog{
   justify-content: center;
-  background-color: none;
+  background-color: rgb(0 0 0 / 69%);;
   height: 500px;
   /* padding: 20px; */
   background-color: none;
