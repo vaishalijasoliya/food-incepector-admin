@@ -57,3 +57,8 @@
 .App{
   justify-content: center;
 }
+.imagepopup_size{
+  width: 525px;
+  height:600px;
+  max-width: 600px;
+}

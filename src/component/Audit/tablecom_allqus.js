@@ -143,7 +143,8 @@ const popupimageurl2 = "/image/imgsmall2.png"
                     width={550}
                     height={350}
                   /> */}
-                  <Lightbox image="/image/imgsmall2.png" onClose={true} title="Image Title" width='1120px' height="1000px" alt="image"/>
+                  <Lightbox  className={Style.imagepopup_size}
+                  image="/image/imgsmall2.png" onClose={true} title="Image Title" width='1120px' height="1000px" alt="image"/>
                    {/* <div className="App">
                             <div id="imageMagnifyer" className={Style.imgmodifyer}>
                             <ReactImageMagnify className={Style.magnifyer} {...{
