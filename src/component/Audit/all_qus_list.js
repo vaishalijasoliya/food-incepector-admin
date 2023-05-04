@@ -7,12 +7,6 @@ import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
 import {
-  Avatar,
-  Dialog,
-  IconButton,
-  Tab,
-  Tabs,
-  TextField,
   ThemeProvider,
   Typography,
   createTheme,
@@ -28,8 +22,6 @@ const AUDIT_VIEW_PAGE = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
   const [dataSearch, setDataSearch] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [openTWO, setOpenTWO] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
@@ -47,9 +39,6 @@ const AUDIT_VIEW_PAGE = (props) => {
     setDataSearch([]);
   };
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
   const handleClose = () => {
     setOpen(false);
     formik.resetForm();
@@ -58,14 +47,6 @@ const AUDIT_VIEW_PAGE = (props) => {
     setOpenTWO(true);
   };
 
-  // const handleCloseTWO = () => {
-  //   setOpenTWO(false);
-  //   formik.resetForm();
-  // };
-
-  // const handleClose_delete = () => {
-  //   setDeleteOpen(false);
-  // };
 
   const handleOpen_delete = () => {
     setDeleteOpen(true);
@@ -94,8 +75,6 @@ const AUDIT_VIEW_PAGE = (props) => {
       if (data.status) {
         setDatalist(data.data);
         setDataSearch(data.data);
-        // setQuestionData(data.data);
-        // setQuestionSearch(data.data);
       }
     }
   };

@@ -26,9 +26,6 @@ import { Button_ } from "../../Layout/buttons";
 import styles from "../../styles/user/paymenttable.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import React, { useRef, useMemo, useEffect, useState } from "react";
-
-import ReactImageMagnify from "react-image-magnify";
 import Lightbox from "react-awesome-lightbox";
 import "react-awesome-lightbox/build/style.css";
 
@@ -130,11 +127,9 @@ const popupimageurl2 = "/image/imgsmall2.png"
         key={1}
         className={Style.dialog}
       >
-        {/* <form onSubmit={formik.handleSubmit}> */}
-          {/* <Box className={styles.dialog_box} style={{ paddingTop: 0 }}> */}
             <Grid container justifyContent={"space-between"}>
               <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
-                {/* <Box className={"Input_box"}> */}
+           
                   {/* <Image
                     onClick={handleClickOpen}
                     src={image1}
@@ -143,36 +138,14 @@ const popupimageurl2 = "/image/imgsmall2.png"
                     width={550}
                     height={350}
                   /> */}
-                  <Lightbox  className={Style.imagepopup_size}
-                  image="/image/imgsmall2.png" onClose={true} title="Image Title" width='1120px' height="1000px" alt="image"/>
-                   {/* <div className="App">
-                            <div id="imageMagnifyer" className={Style.imgmodifyer}>
-                            <ReactImageMagnify className={Style.magnifyer} {...{
-                              smallImage: {
-                                  alt: 'Wristwatch by Ted Baker London',
-                                  isFluidWidth: true,
-                                  src: popupimageurl,
-                                  width : 750,
-                                  height : 800,                                                               
-                              },
-                              largeImage: {
-                                  src: popupimageurl,                                
-                                  width: 320,
-                                  height: 450,
-                                },
-
-                                isHintEnabled: true,
-                                shouldHideHintAfterFirstActivation: false
-                                                          
-                          }} />
-                            </div>
-                    </div> */}
-     
-                {/* </Box> */}
+                <Grid container justifyContent={"space-between"}>
+                <Lightbox 
+                image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b00.jpg" className={Style.lightbox_img} onClose={null} title="Image Title" maxWidth="67vw" height="1000px" alt="image"/>            
+                </Grid>
+                   
               </Grid>
             </Grid>
-          {/* </Box> */}
-        {/* </form> */}
+
       </Dialog>
       <Dialog
         fullWidth={true}
@@ -182,49 +155,13 @@ const popupimageurl2 = "/image/imgsmall2.png"
         key={1}
         className={Style.dialog}
       >
-        <form onSubmit={formik.handleSubmit}>
-          {/* <Box className={styles.dialog_box} style={{ paddingTop: 0 }}> */}
+        
             <Grid container justifyContent={"space-between"}>
-              {/* <Grid item xs={12} sm={12} lg={12} xl={12} md={12}> */}
-                {/* <Box className={"Input_box"}> */}
-                <Lightbox image="/image/imgsmall2.png" onClose={true} title="Image Title" width='1120px' height="1000px" alt="image"/>
-
-                  {/* <Image                  
-                    src={image2}
-                    // src={quetion.itemList}
-                    alt="picture"
-                    width={550}
-                    height={350}
-                  /> */}
-                         {/* <div className="App">
-                            <div id="imageMagnifyer" className={Style.imgmodifyer}>
-                            <ReactImageMagnify className={Style.magnifyer} {...{
-                              smallImage: {
-                                  alt: 'Wristwatch by Ted Baker London',
-                                  isFluidWidth: true,
-                                  src: popupimageurl2,
-                                  width : 550,
-                                  height : 500,  
-                                  ishiisHintEnabled : false,
-                                                                                                                        
-                              },
-                              largeImage: {
-                                  src: popupimageurl2,                                
-                                  width: 820,
-                                  height: 750
-                              },
-                              isHintEnabled: true,
-                        shouldHideHintAfterFirstActivation: false
-
-                          }} />
-                            </div>
-                          </div> */}
-                 
-                {/* </Box> */}
-              {/* </Grid> */}
+                <Lightbox 
+                image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b02.jpg" onClose={null} title="Image Title" width='1120px' height="1000px" alt="image"/>            
             </Grid>
-          {/* </Box> */}
-        </form>
+
+    
       </Dialog>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
         <TableHead>
@@ -247,7 +184,9 @@ const popupimageurl2 = "/image/imgsmall2.png"
             return (
               <>
                 {item.questionList.map((quetion, index1) => {
-                  console.log(quetion, quetion, "quetion");
+                  console.log(quetion.itemList[0],  "quetion");
+                  console.log(item,  "item___");
+
 
                   return (
                     <TableRow
@@ -261,23 +200,22 @@ const popupimageurl2 = "/image/imgsmall2.png"
                       <TableCell>{quetion.name}</TableCell>
                       <TableCell>
                         <Box className={Style.last_td}>
-                          <Image
+                          <img
                             onClick={handleClickOpen}
-                            src={image1}
-                            // src={quetion.itemList}
+                            src={quetion.itemList[0]}
                             alt="picture"
                             width={50}
                             height={45}
                           />
 
-                          <Image
+                          <img
                             onClick={handleClickOpen2}
-                            src={image2}
-                            // src={quetion.itemList}
+                            src={quetion.itemList[1]}
                             alt="picture"
                             width={50}
                             height={45}
                           />
+
                         </Box>
                       </TableCell>
                       <TableCell>{quetion.compliance}</TableCell>
