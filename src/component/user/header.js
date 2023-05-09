@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 import { PersonAdd } from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { removeData } from "../Utils/func";
 const Nevbar = (props) => {
   const [userCount, setUserCount] = React.useState(0);
@@ -83,17 +82,7 @@ const Nevbar = (props) => {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem
-              className={styles.Menu_item}
-              onClick={() => {
-                router.push("/editprofile");
-                handleClose();
-              }}
-            >
-              <AccountCircleIcon />
-              {/* <Avatar /> */}
-              profile
-            </MenuItem>
+
             <MenuItem
               className={styles.Menu_item}
               onClick={() => {
