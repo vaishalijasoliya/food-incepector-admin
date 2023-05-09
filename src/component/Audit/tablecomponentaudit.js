@@ -92,7 +92,7 @@ export const TableComponent = ({
                 className={Style.table_cell}
                  onClick={() => {
                     quspage(item.id);
-                  }}>678</TableCell>
+                  }}>{item.audit_score}</TableCell>
                 <TableCell 
                 className={Style.table_cell}
                  onClick={() => {
