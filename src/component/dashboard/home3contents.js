@@ -38,6 +38,9 @@ const Usercount = (props) => {
   const [categoryList, setCategoryList] = React.useState([]);
   const [categorySearch, setCategorySearch] = React.useState([]);
   const [userRender, setUserRender] = React.useState(true);
+  const [locationCount, setLocationCount] = React.useState(0);
+  const [auditorCount, setAuditorCount] = React.useState(0);
+
 
 
 
@@ -70,9 +73,11 @@ const Usercount = (props) => {
     props.props.loaderRef(false);
 
     if (data) {
-      if (data.status) {
+      if (!!data.status && data.status == true) {
         setCategorySearch(data.data);
-        setCategoryList(data.data);
+        setAuditorCount(data.data.locationCount)
+        setLocationCount(data.data.auditorCount)
+        setCategoryList(data.data.latestAudit);
       }
     }
     setUserRender(false);
@@ -93,13 +98,7 @@ const Usercount = (props) => {
   const handleClickOpenTWO = () => {
     setOpenTWO(true);
   };
-  // React.useEffect(() => {
-  //   if (!!props.profile && !!props.profile.token) {
-  //     setCustomerList(props.userList);
-  //     setCustomer(props.userList);
-  //     getdashgetdata();
-  //   }
-  // }, [props.userList]);
+
   React.useEffect(() => {
     if (
       userRender &&
@@ -148,7 +147,7 @@ const Usercount = (props) => {
               <div className={style.threeuser}>
                 <img src="./image/3 User.svg" />
               </div>
-              <p className={style.signnum}>{signupCount} </p>
+              <p className={style.signnum}>{locationCount} </p>
               <p className={style.signtxt}>Number Of Locations</p>
             </Box>
             {/* <Box
@@ -173,7 +172,7 @@ const Usercount = (props) => {
                   <img src="./image/myprofile.svg" />
                 </div>
               </Box>
-              <p className={style.signnum}> {activeCount} </p>
+              <p className={style.signnum}> {auditorCount} </p>
               <p className={style.signtxt}>Number Of Auditors</p>
             </Box>
           </Box>
@@ -181,78 +180,6 @@ const Usercount = (props) => {
       </Grid>
 
       <Grid container>
-        <Grid container display={"flex"} className={styles.hadpeg}>
-          <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
-            <Box className={styles.boxreting} display={"flex"}>
-              
-              <input
-              type="text"
-              id="myserchbtn"
-              name="search"
-              placeholder="Search"
-              className={styles.searchbtn}
-              autoComplete="off"
-              onChange={(e) => {
-                setPage(0);
-                var value = e.target.value;
-                //  onChange={(e) => setText(e.target.value)}
-                if (typeof value !== "object") {
-                  if (!value || value == "") {
-                    setCategoryList(categorySearch);
-                  } else {
-                    var filteredData = categorySearch.filter((item) => {
-                      let searchValue = item.name.toLowerCase();
-                      return searchValue.includes(
-                        value.toString().toLowerCase()
-                      );
-                    });
-                    setCategoryList(filteredData);
-                  }
-                }
-              }}
-            />
-            </Box>
-          </Grid>
-        </Grid>
-
-        {/* <Grid container>
-        <Grid item xs={12} md={12}>
-          <div>
-            <ThemeProvider theme={theme}>
-              <Paper
-                sx={{
-                  width: "100%",
-                  mb: 2,
-                  padding: "0px",
-                  paddingTop: "10px",
-                }}
-                className={styles.maentebal2}
-              >
-                <Dashtablecomponent
-                  handleClickOpenTWO={handleClickOpenTWO}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  handleOpen_delete={handleOpen_delete}
-                  data={dataList}
-                  Header={Header}
-                  // tokenObj={tokenObj}
-                />
-                <TablePagination
-                  rowsPerPageOptions={[7, 10, 25, 100]}
-                  component="div"
-                  className={styles.bakgvcal}
-                  count={dataList.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </Paper>
-            </ThemeProvider>
-          </div>
-        </Grid>
-      </Grid> */}
-
         <Grid container>
           <Grid item xs={12} md={12}>
             <div>
@@ -278,13 +205,7 @@ const Usercount = (props) => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {(rowsPerPage > 0
-                          ? categoryList.slice(
-                              page * rowsPerPage,
-                              page * rowsPerPage + rowsPerPage
-                            )
-                          : categoryList
-                        ).map((item, index) => {
+                        { categoryList.map((item, index) => {
                           console.log(item, "item__");
 
                           return (
@@ -296,11 +217,11 @@ const Usercount = (props) => {
                                 {item.location_name}
                               </TableCell>
                               <TableCell className={Style.table_cell}>
-                                {item.location_head_staff}
+                                {item.auditorDetail.name}
                               </TableCell>
                               <TableCell className={Style.table_cell}>
-                                {moment(item.createdAt).format("DD/MM/YYYY")}
-                                {item.location_timing}
+                                {/* {moment(item.createdAt).format("DD/MM/YYYY")} */}
+                                {item.createdAt}
                               </TableCell>
                             </TableRow>
                           );
@@ -308,16 +229,6 @@ const Usercount = (props) => {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <TablePagination
-                    rowsPerPageOptions={[7, 10, 25, 100]}
-                    component="div"
-                    className={styles.bakgvcal}
-                    count={categoryList.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
                 </Paper>
               </Box>
             </div>

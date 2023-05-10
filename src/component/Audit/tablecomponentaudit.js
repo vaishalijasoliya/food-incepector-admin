@@ -24,20 +24,21 @@ export const TableComponent = ({
   handleOpen_delete,
   tokenObj
 }) => {
-  const onButtonClick = () => {
-    // using Java Script method to get PDF file
-    fetch("SamplePDF.pdf").then((response) => {
-      response.blob().then((blob) => {
-        // Creating new object of PDF file
-        const fileURL = window.URL.createObjectURL(blob);
-        // Setting various property values
-        let alink = document.createElement("a");
-        alink.href = fileURL;
-        alink.download = "SamplePDF.pdf";
-        alink.click();
-      });
-    });
-  };
+  // const onButtonClick = (url,id) => {
+  //   console.log(url ,id, 'usrrrr')
+  //   // using Java Script method to get PDF file
+  //   // fetch("SamplePDF.pdf").then((response) => {
+  //   //   response.blob().then((blob) => {
+  //   //     // Creating new object of PDF file
+  //   //     const fileURL = window.URL.createObjectURL(blob);
+  //   //     // Setting various property values
+  //   //     let alink = document.createElement("a");
+  //   //     alink.href = fileURL;
+  //   //     alink.download = "SamplePDF.pdf";
+  //   //     alink.click();
+  //   //   });
+  //   // });
+  // };
   const router = useRouter();
   var currentPath = router.pathname;
   const quspage = (item) => {
@@ -86,8 +87,7 @@ export const TableComponent = ({
                  onClick={() => {
                     quspage(item.id);
                   }} >
-                  {moment(item.createdAt).format("DD/MM/YYYY")}
-                  {item.location_timing}
+                  {moment(item.createdAt).format("DD/MM/YYYY h:mm A")}
                 </TableCell>
                 <TableCell 
                 className={Style.table_cell}
@@ -100,9 +100,10 @@ export const TableComponent = ({
                     quspage(item.id);
                   }}>{item.location_name}</TableCell>
                 <TableCell>
-                  <button onClick={onButtonClick}  className={Style.table_cell}>
-                    <DownloadIcon />
-                  </button>
+                  {/* <button  className={Style.table_cell}> */}
+                  <a target="_blank" rel="noopener noreferrer" href={item.pdfUrl} download>    <DownloadIcon /></a>
+                    {/* <DownloadIcon /> */}
+                  {/* </button> */}
                 </TableCell>
               </TableRow>
             );

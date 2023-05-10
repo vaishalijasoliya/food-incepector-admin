@@ -37,7 +37,7 @@ export default {
   AUDIT_VIEW: Constants.BASE_API_URL + "user/audit/view",
 
   //DASHBOARD
-DASH_BOARD: Constants.BASE_API_URL + "audit/list",
+  DASH_BOARD: Constants.BASE_API_URL + "admin/dashboard"
 
 };
 
