@@ -12,7 +12,6 @@ from "@mui/material";
 import React from "react";
 import Style from "../Auditor/auditor.module.css";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Grid from "@mui/material/Grid";
 import styles from "../../styles/user/paymenttable.module.css";
 import { useFormik } from "formik";
@@ -111,21 +110,21 @@ export const TableComponent = ({
         className={Style.dialog}
       >
         <Grid container justifyContent={"space-between"}>
-          <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
-            <Grid container justifyContent={"space-between"}>
+          {/* <Grid item xs={12} sm={12} lg={12} xl={12} md={12}> */}
+            {/* <Grid container justifyContent={"space-between"}> */}
               <Lightbox
                 open={open}
                 onClose={handleClose}
                 image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b00.jpg"
                 className={Style.lightbox_img}
                 title="Image Title"
-                maxWidth="67vw"
-                height="100px"
+                // maxWidth="67vw"
+                // height="100px"
                 alt="image"
               />
             </Grid>
-          </Grid>
-        </Grid>
+          {/* </Grid> */}
+        {/* </Grid> */}
       </Dialog>
       <Dialog
         fullWidth={true}
@@ -140,8 +139,8 @@ export const TableComponent = ({
             image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b02.jpg"
             onClose={handleClose}
             title="Image Title"
-            width="1120px"
-            height="1000px"
+            // width="1120px"
+            // height="1000px"
             alt="image"
           />
         </Grid>
@@ -195,19 +194,25 @@ export const TableComponent = ({
                       <TableCell>{quetion.name}</TableCell>
                       <TableCell>
                         <Box className={Style.last_td}>
+                        {
+                          quetion.itemList[0] && 
                           <img
                             onClick={handleClickOpen}
                             src={quetion.itemList[0]}
                             width={50}
                             height={45}
                           />
-
-                          <img
+                        }
+                          
+                          {
+                            quetion.itemList[1] && <img
                             onClick={handleClickOpen2}
                             src={quetion.itemList[1]}
                             width={50}
                             height={45}
                           />
+                          }
+                          
                         </Box>
                       </TableCell>
                       <TableCell>{quetion.compliance}</TableCell>

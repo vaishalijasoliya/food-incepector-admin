@@ -218,12 +218,15 @@ const EnhancedTable = (props) => {
       "x-access-token": props.props.profile.token,
     };
     var body = {};
+    
     props.props.loaderRef(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.CATEGORY_LIST,
       JSON.stringify(body),
-      headers
+      headers  
     );
+    console.log(data, "data____")
+  
     props.props.loaderRef(false);
 
     if (data) {

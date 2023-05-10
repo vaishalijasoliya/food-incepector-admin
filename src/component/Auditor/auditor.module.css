@@ -63,6 +63,6 @@
   max-width: 600px;
 }
 .lightbox_img{
-  max-height: none;
-  max-width: 65vw;
+  max-height: 65vw;
+  /* max-width: 65vw; */
 }

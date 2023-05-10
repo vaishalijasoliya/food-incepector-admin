@@ -168,7 +168,7 @@ const Audit_page = (props) => {
                       setActiveData(activeSearch);
                     } else {
                       var filteredData = activeSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
+                        let searchValue = item.location_location.toLowerCase();
                         return searchValue.includes(
                           value_.toString().toLowerCase()
                         );
