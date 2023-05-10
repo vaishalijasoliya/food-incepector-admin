@@ -1,7 +1,5 @@
 import {
   Box,
-  IconButton,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,20 +7,13 @@ import {
   TableHead,
   TableRow,
   Dialog,
-  DialogTitle,
-  TextField,
-  Zoom,
-} from "@mui/material";
+} 
+from "@mui/material";
 import React from "react";
 import Style from "../Auditor/auditor.module.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import image1 from "../../../public/image/imgsmall.png";
-import image2 from "../../../public/image/imgsmall2.png";
 import Grid from "@mui/material/Grid";
-import { InputLable } from "../../Layout/inputlable";
-import { Input_error } from "../Utils/string";
-import { Button_ } from "../../Layout/buttons";
 import styles from "../../styles/user/paymenttable.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -34,17 +25,12 @@ export const TableComponent = ({
   rowsPerPage,
   page,
   Header,
-  handleClickOpenTWO,
-  handleOpen_delete,
-  loaderref,
 }) => {
   console.log("data", data);
 
   const router = useRouter();
   var currentPath = router.pathname;
-  // const quspage = () => {
-  //   router.push("./audit");
-  // };
+
 
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
@@ -103,19 +89,16 @@ export const TableComponent = ({
       formik.resetForm();
     },
   });
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = () => {
     setOpen(false);
     formik.resetForm();
   };
 
-
-const popupimageurl = "/image/imgsmall.png"
-const popupimageurl2 = "/image/imgsmall2.png"
-
+  const [openlightbox, setOpenlightbox] = React.useState(false);
 
   return (
     <TableContainer>
@@ -127,25 +110,22 @@ const popupimageurl2 = "/image/imgsmall2.png"
         key={1}
         className={Style.dialog}
       >
+        <Grid container justifyContent={"space-between"}>
+          <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
             <Grid container justifyContent={"space-between"}>
-              <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
-           
-                  {/* <Image
-                    onClick={handleClickOpen}
-                    src={image1}
-                    // src={quetion.itemList}
-                    alt="picture"
-                    width={550}
-                    height={350}
-                  /> */}
-                <Grid container justifyContent={"space-between"}>
-                <Lightbox 
-                image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b00.jpg" className={Style.lightbox_img} onClose={null} title="Image Title" maxWidth="67vw" height="1000px" alt="image"/>            
-                </Grid>
-                   
-              </Grid>
+              <Lightbox
+                open={open}
+                onClose={handleClose}
+                image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b00.jpg"
+                className={Style.lightbox_img}
+                title="Image Title"
+                maxWidth="67vw"
+                height="100px"
+                alt="image"
+              />
             </Grid>
-
+          </Grid>
+        </Grid>
       </Dialog>
       <Dialog
         fullWidth={true}
@@ -155,13 +135,16 @@ const popupimageurl2 = "/image/imgsmall2.png"
         key={1}
         className={Style.dialog}
       >
-        
-            <Grid container justifyContent={"space-between"}>
-                <Lightbox 
-                image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b02.jpg" onClose={null} title="Image Title" width='1120px' height="1000px" alt="image"/>            
-            </Grid>
-
-    
+        <Grid container justifyContent={"space-between"}>
+          <Lightbox
+            image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b02.jpg"
+            onClose={handleClose}
+            title="Image Title"
+            width="1120px"
+            height="1000px"
+            alt="image"
+          />
+        </Grid>
       </Dialog>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
         <TableHead>
@@ -184,13 +167,25 @@ const popupimageurl2 = "/image/imgsmall2.png"
             return (
               <>
                 {item.questionList.map((quetion, index1) => {
-                  console.log(quetion.itemList[0],  "quetion");
-                  console.log(item,  "item___");
-
+                  console.log(quetion.itemList[0], "quetion");
+                  console.log(item, "item___");
+                  const handleClickOpen = () => {
+                    if(quetion.itemList[0] == null){
+                      setOpen(false);
+                    } else{
+                    setOpen(true);
+                  }
+                }
+                const handleClickOpen2 = () => {
+                    if(quetion.itemList[1]== null){
+                      setOpen(false);
+                    } else{
+                    setOpen(true);
+                  }
+                }
 
                   return (
                     <TableRow
-                      // onClick={quspage}
                       className={
                         currentPath == "/all_qus_list" ? Style.active : ""
                       }
@@ -203,7 +198,6 @@ const popupimageurl2 = "/image/imgsmall2.png"
                           <img
                             onClick={handleClickOpen}
                             src={quetion.itemList[0]}
-                            alt="picture"
                             width={50}
                             height={45}
                           />
@@ -211,11 +205,9 @@ const popupimageurl2 = "/image/imgsmall2.png"
                           <img
                             onClick={handleClickOpen2}
                             src={quetion.itemList[1]}
-                            alt="picture"
                             width={50}
                             height={45}
                           />
-
                         </Box>
                       </TableCell>
                       <TableCell>{quetion.compliance}</TableCell>

@@ -87,6 +87,7 @@ export const TableComponent = ({
                     quspage(item.id);
                   }} >
                   {moment(item.createdAt).format("DD/MM/YYYY")}
+                  {item.location_timing}
                 </TableCell>
                 <TableCell 
                 className={Style.table_cell}
