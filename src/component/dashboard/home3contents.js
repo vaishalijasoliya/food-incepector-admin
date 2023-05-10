@@ -220,8 +220,7 @@ const Usercount = (props) => {
                                 {item.auditorDetail.name}
                               </TableCell>
                               <TableCell className={Style.table_cell}>
-                                {/* {moment(item.createdAt).format("DD/MM/YYYY")} */}
-                                {item.createdAt}
+                              {moment(item.createdAt).format("DD/MM/YYYY h:mm A")}
                               </TableCell>
                             </TableRow>
                           );

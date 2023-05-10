@@ -33,68 +33,10 @@ export const TableComponent = ({
 
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const handleClickOpen2 = () => {
-    setOpen2(true);
-  };
-
-  const handleClose2 = () => {
-    setOpen2(false);
-    formik.resetForm();
-  };
-
-  const onAddCategory = async () => {
-    var headers = {
-      "Content-Type": "application/json",
-      "x-access-token": props.props.profile.token,
-    };
-    var body = {
-      name: formik.values.name,
-    };
-
-    props.props.loaderRef(true);
-    var data = await ApiServices.PostApiCall(
-      ApiEndpoint.ADD_CATEGORY,
-      JSON.stringify(body),
-      headers
-    );
-    props.props.loaderRef(false);
-
-    if (data) {
-      if (data.status) {
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
-    } else {
-      toast.error(Error_msg.NOT_RES);
-    }
-    getCategoryList();
-    setOpen(false);
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Name is required."),
-    }),
-    onSubmit: (values) => {
-      if (open == true) {
-        onAddCategory();
-      } else if (openEdit == true) {
-        onEditCategory();
-      }
-      formik.resetForm();
-    },
-  });
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
+  const [imageUrl, setImageUrl] = React.useState('');
 
   const handleClose = () => {
     setOpen(false);
-    formik.resetForm();
   };
 
   const [openlightbox, setOpenlightbox] = React.useState(false);
@@ -115,7 +57,7 @@ export const TableComponent = ({
               <Lightbox
                 open={open}
                 onClose={handleClose}
-                image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b00.jpg"
+                image={imageUrl}
                 className={Style.lightbox_img}
                 title="Image Title"
                 // maxWidth="67vw"
@@ -125,25 +67,6 @@ export const TableComponent = ({
             </Grid>
           {/* </Grid> */}
         {/* </Grid> */}
-      </Dialog>
-      <Dialog
-        fullWidth={true}
-        maxWidth={"sm"}
-        open={open2}
-        onClose={handleClose2}
-        key={1}
-        className={Style.dialog}
-      >
-        <Grid container justifyContent={"space-between"}>
-          <Lightbox
-            image="https://casablancahse.s3.me-central-1.amazonaws.com/7cc35c43e8ab2ad06d3aa2b02.jpg"
-            onClose={handleClose}
-            title="Image Title"
-            // width="1120px"
-            // height="1000px"
-            alt="image"
-          />
-        </Grid>
       </Dialog>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
         <TableHead>
@@ -166,23 +89,6 @@ export const TableComponent = ({
             return (
               <>
                 {item.questionList.map((quetion, index1) => {
-                  console.log(quetion.itemList[0], "quetion");
-                  console.log(item, "item___");
-                  const handleClickOpen = () => {
-                    if(quetion.itemList[0] == null){
-                      setOpen(false);
-                    } else{
-                    setOpen(true);
-                  }
-                }
-                const handleClickOpen2 = () => {
-                    if(quetion.itemList[1]== null){
-                      setOpen(false);
-                    } else{
-                    setOpen(true);
-                  }
-                }
-
                   return (
                     <TableRow
                       className={
@@ -197,7 +103,10 @@ export const TableComponent = ({
                         {
                           quetion.itemList[0] && 
                           <img
-                            onClick={handleClickOpen}
+                            onClick={() => {
+                              setImageUrl( quetion.itemList[0])
+                              setOpen(true)
+                            }}
                             src={quetion.itemList[0]}
                             width={50}
                             height={45}
@@ -206,7 +115,10 @@ export const TableComponent = ({
                           
                           {
                             quetion.itemList[1] && <img
-                            onClick={handleClickOpen2}
+                            onClick={() => {
+                              setImageUrl( quetion.itemList[1])
+                              setOpen(true)
+                            }}
                             src={quetion.itemList[1]}
                             width={50}
                             height={45}
