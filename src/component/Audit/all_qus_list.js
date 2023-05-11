@@ -81,7 +81,7 @@ const AUDIT_VIEW_PAGE = (props) => {
 
 
   const Header = [
-    { name: "Catogory" },
+    { name: "Category" },
     { name: "Questions" },
     { name: "Images" },
     { name: "Compliance" },
