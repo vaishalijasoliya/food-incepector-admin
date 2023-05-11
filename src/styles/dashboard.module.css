@@ -959,6 +959,11 @@
     font-family: Gilroy-600 !important;
     width: 100%;
 }
+.table_title{
+    font-size: 20px;
+    font-family: Gilroy-600;
+    padding: 8px;
+}
 
 .rightsend {
     display: flex;

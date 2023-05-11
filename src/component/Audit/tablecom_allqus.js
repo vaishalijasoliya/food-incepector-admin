@@ -52,21 +52,15 @@ export const TableComponent = ({
         className={Style.dialog}
       >
         <Grid container justifyContent={"space-between"}>
-          {/* <Grid item xs={12} sm={12} lg={12} xl={12} md={12}> */}
-            {/* <Grid container justifyContent={"space-between"}> */}
               <Lightbox
                 open={open}
                 onClose={handleClose}
                 image={imageUrl}
                 className={Style.lightbox_img}
                 title="Image Title"
-                // maxWidth="67vw"
-                // height="100px"
                 alt="image"
               />
             </Grid>
-          {/* </Grid> */}
-        {/* </Grid> */}
       </Dialog>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
         <TableHead>

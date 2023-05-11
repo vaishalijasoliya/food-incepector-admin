@@ -1,7 +1,4 @@
 import {
-  Box,
-  IconButton,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -101,7 +98,7 @@ export const TableComponent = ({
                   }}>{item.location_name}</TableCell>
                 <TableCell>
                   {/* <button  className={Style.table_cell}> */}
-                  <a target="_blank" rel="noopener noreferrer" href={item.pdfUrl} download>    <DownloadIcon /></a>
+                  <a target="_blank" rel="noopener noreferrer" href={item.pdfUrl} download><DownloadIcon /></a>
                     {/* <DownloadIcon /> */}
                   {/* </button> */}
                 </TableCell>

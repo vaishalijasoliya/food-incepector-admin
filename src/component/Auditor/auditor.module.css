@@ -31,7 +31,6 @@
   cursor: pointer;
 }
 .dialog{
-  /* max-width: 650px; */
   width: calc(100% - 0px);
   margin: 0 auto;
   background-color: none;
@@ -48,8 +47,6 @@
 }
 .imgmodifyer{
   width: 393px;
-  /* padding: 30px 0 0 30px; */
-  /* height: 307px; */
   text-align: center;
   margin: 0 auto;
   background-color: transparent;
@@ -64,5 +61,7 @@
 }
 .lightbox_img{
   max-height: 65vw;
-  /* max-width: 65vw; */
+}
+.table_main_container{
+  margin-top: 16px;
 }

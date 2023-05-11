@@ -1,6 +1,5 @@
 import { Grid, Box, LinearProgress } from "@mui/material";
 import style from "../../styles/dashboard.module.css";
-
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
 import React, { useContext } from "react";
@@ -16,7 +15,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-// import { Dashtablecomponent } from "../Dashtable/dashtablecomponent";
 import TablePagination from "@mui/material/TablePagination";
 import styles from "../../styles/user/paymenttable.module.css";
 import Style from "../Auditor/auditor.module.css";
@@ -40,11 +38,6 @@ const Usercount = (props) => {
   const [userRender, setUserRender] = React.useState(true);
   const [locationCount, setLocationCount] = React.useState(0);
   const [auditorCount, setAuditorCount] = React.useState(0);
-
-
-
-
-
 
   const { activeSupportId, setActiveSupportId, setActiveSupportObject } =
     useContext(SupportContext);
@@ -179,7 +172,10 @@ const Usercount = (props) => {
         </Grid>
       </Grid>
 
-      <Grid container>
+ 
+
+      <Grid container className={Style.table_main_container}>
+      <p className={style.table_title}>Latest Audit</p>
         <Grid container>
           <Grid item xs={12} md={12}>
             <div>
