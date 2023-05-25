@@ -65,6 +65,7 @@ export const TableComponent = ({
           ).map((item, index) => {
             console.log(item, "item__");
 
+
             return (
               <TableRow
                 className={currentPath == "./audit.js" ? Style.active : ""}
@@ -73,8 +74,7 @@ export const TableComponent = ({
                 <TableCell
                 className={Style.table_cell}
                   onClick={() => {
-                    quspage(item.id);
-                    
+                    quspage(item.id);                   
                   }}
                 >
                   {item.location_location}
@@ -86,25 +86,61 @@ export const TableComponent = ({
                   }} >
                   {moment(item.createdAt).format("DD/MM/YYYY h:mm A")}
                 </TableCell>
+
                 <TableCell 
                 className={Style.table_cell}
                  onClick={() => {
                     quspage(item.id);
-                  }}>{item.audit_score}</TableCell>
+                  }}>{item.audit_score}
+                  </TableCell>
+
                 <TableCell 
                 className={Style.table_cell}
                  onClick={() => {
                     quspage(item.id);
-                  }}>{item.location_name}</TableCell>
-                <TableCell>
+                  }}>{item.user.user_name}
+                  </TableCell>
+
+                           
+                <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }}>{item.gps_location}
+                  </TableCell>
+
+                  <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }}>{item.user.name}
+                  </TableCell>
+
+                  <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }}>{item.user.profile_url}
+                  </TableCell>
+                  
+
+                <TableCell 
+                className={Style.table_cell}
+                 onClick={() => {
+                    quspage(item.id);
+                  }}>{item.audit_start}
+                  </TableCell>
+
+                  
                   {/* <button  className={Style.table_cell}> */}
                   <a target="_blank" rel="noopener noreferrer" href={item.pdfUrl} download><DownloadIcon /></a>
                     {/* <DownloadIcon /> */}
                   {/* </button> */}
-                </TableCell>
+              
               </TableRow>
             );
           })}
+
         </TableBody>
       </Table>
     </TableContainer>
