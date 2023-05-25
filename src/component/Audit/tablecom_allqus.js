@@ -80,7 +80,9 @@ export const TableComponent = ({
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
           ).map((item, index) => {
+            console.log(item,'itemitem')
             return (
+
               <>
                 {item.questionList.map((quetion, index1) => {
                   return (

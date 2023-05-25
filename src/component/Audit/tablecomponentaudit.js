@@ -5,6 +5,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import Style from "../Auditor/auditor.module.css";
@@ -41,7 +42,7 @@ export const TableComponent = ({
   const quspage = (item) => {
     console.log(item, "item__");
     router.push({ pathname: "/all_qus_list", query: { id: item } });
-    
+
   };
 
   return (
@@ -63,7 +64,7 @@ export const TableComponent = ({
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
           ).map((item, index) => {
-            console.log(item, "item__");
+            console.log(item.user.user_name, "item__");
 
             return (
               <TableRow
@@ -71,35 +72,54 @@ export const TableComponent = ({
                 key={index}
               >
                 <TableCell
-                className={Style.table_cell}
+                  className={Style.table_cell}
                   onClick={() => {
                     quspage(item.id);
-                    
+
                   }}
                 >
-                  {item.location_location}
+                  {item.location_name}
                 </TableCell>
-                <TableCell 
-                className={Style.table_cell}
-                 onClick={() => {
+                <TableCell
+                  className={Style.table_cell}>
+                  {moment(item.audit_start).format("DD/MM/YYYY h:mm A")}
+                </TableCell>
+                <TableCell
+                  className={Style.table_cell}>
+                  {item.audit_time}
+                </TableCell>
+                <TableCell
+                  className={Style.table_cell}>
+                 <Typography> {item.gps_location}</Typography>
+                </TableCell>
+                <TableCell
+                  className={Style.table_cell}>
+                  {item.user.name}
+                </TableCell>
+                <TableCell className={Style.table_cell}>
+                  <img src={item.audit_selfi} width={99} height={99} />
+                </TableCell>
+                <TableCell
+                  className={Style.table_cell}
+                  onClick={() => {
                     quspage(item.id);
                   }} >
                   {moment(item.createdAt).format("DD/MM/YYYY h:mm A")}
                 </TableCell>
-                <TableCell 
-                className={Style.table_cell}
-                 onClick={() => {
+                <TableCell
+                  className={Style.table_cell}
+                  onClick={() => {
                     quspage(item.id);
                   }}>{item.audit_score}</TableCell>
-                <TableCell 
-                className={Style.table_cell}
-                 onClick={() => {
+                {/* <TableCell
+                  className={Style.table_cell}
+                  onClick={() => {
                     quspage(item.id);
-                  }}>{item.location_name}</TableCell>
+                  }}>{item.location_name}</TableCell> */}
                 <TableCell>
                   {/* <button  className={Style.table_cell}> */}
                   <a target="_blank" rel="noopener noreferrer" href={item.pdfUrl} download><DownloadIcon /></a>
-                    {/* <DownloadIcon /> */}
+                  {/* <DownloadIcon /> */}
                   {/* </button> */}
                 </TableCell>
               </TableRow>
