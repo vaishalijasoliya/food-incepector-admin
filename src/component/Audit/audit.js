@@ -97,14 +97,15 @@ const Audit_page = (props) => {
 
   const Header = [
     { id: 1, name: "Locations" },
-    { id: 2, name: "Date Time " },
-    { id: 3, name: "Score" },
-    { id: 4, name: "Review by" },
-    { id: 7, name: "GPS location" },
-    { id: 6, name: "inspector name" },
-    { id: 6, name: "profile" },
-    { id: 5, name: "start audit" },
-    { id: 8, name: "PDF " },
+    { id: 2, name: "time of starting audit" },
+    { id: 3, name: " duration for audit" },
+    { id: 4, name: "GPS location for audit" },
+    { id: 5, name: "Review By" },
+    { id: 6, name: 'inspector photo' },
+    { id: 7, name: "Date Time " },
+    { id: 8, name: "Score" },
+    // { id: 8, name: "Review by" },
+    { id: 9, name: "PDF " },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -222,7 +223,7 @@ const Audit_page = (props) => {
                   handleOpen_delete={handleOpen_delete}
                   data={dataList}
                   Header={Header}
-                  // tokenObj={tokenObj}
+                // tokenObj={tokenObj}
                 />
                 <TablePagination
                   rowsPerPageOptions={[7, 10, 25, 100]}
