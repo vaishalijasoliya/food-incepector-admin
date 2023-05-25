@@ -100,7 +100,11 @@ const Audit_page = (props) => {
     { id: 2, name: "Date Time " },
     { id: 3, name: "Score" },
     { id: 4, name: "Review by" },
-    { id: 5, name: "PDF " },
+    { id: 7, name: "GPS location" },
+    { id: 6, name: "inspector name" },
+    { id: 6, name: "profile" },
+    { id: 5, name: "start audit" },
+    { id: 8, name: "PDF " },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
