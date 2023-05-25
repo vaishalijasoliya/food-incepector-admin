@@ -2,6 +2,8 @@ import { Grid, Paper } from "@mui/material";
 import style from "../../styles/login.module.css";
 // import styled from "@emotion/styled";
 import { styled } from "@mui/material/styles";
+import Image from "next/image";
+// import logoimage from "/public/favicon.png";
 
 const Login_layout = ({ Content }) => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -20,9 +22,15 @@ const Login_layout = ({ Content }) => {
                 className={style.Main_logo_div}
               >
                 <div className={style.logodiiv1}>
-                  <img
-                    src="./image/favicon.png"
+                  {/* <img
+                    src="/favicon.png"
                     className={style.logoimglatest}
+                  /> */}
+                  <Image
+                    src="/favicon.png"
+                    width={250}
+                    height={250}
+                    alt="logo"
                   />
                 </div>
               </Item>
