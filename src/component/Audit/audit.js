@@ -6,6 +6,8 @@ import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 import {
   Avatar,
@@ -37,7 +39,25 @@ const Audit_page = (props) => {
   const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
-
+  const [dataList_two, setDatalist_two] = React.useState([]);
+  const [newrespons, setNewrespion] = React.useState([])
+  const [age, setAge] = React.useState('');
+  const [age_two, setAge_two] = React.useState('');
+const[arrlogg,setJSJHSJns]=React.useState([])
+  const [userRender, setUserRender] = React.useState(true);
+  const [hotelsData_, setHotelData] = React.useState([]);
+  const [auditorRender, setAuditorRender] = React.useState(true);
+  const [dataSearch, setDataSearch] = React.useState([]);
+  const [dataList_tree, setDatalist_tree] = React.useState([]);
+  console.log(age_two, 'age_twoage_two');
+  console.log(dataList_tree, dataList_two, 'hotelsData_');
+  console.log(dataList_two, age, 'dataList_two');
+  const handleChange_select = (event) => {
+    setAge(event.target.value);
+  };
+  const handleChange_select_two = (event) => {
+    setAge_two(event.target.value);
+  };
   // const tokenObj = {
   //   token: "is____token",
   // };
@@ -69,7 +89,35 @@ const Audit_page = (props) => {
   const handleOpen_delete = () => {
     setDeleteOpen(true);
   };
+  const getAuditorList = async () => {
+    console.log('is____called')
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.props.profile.token,
+    };
+    var body = {
+      type: 'active',
+    };
+    props.props.loaderRef(true);
+    console.log(props.props, "loaderrefauditor")
 
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.AUDITOR_LIST,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+
+        setDataSearch(data.data);
+        setDatalist_tree(data.data);
+      }
+    }
+
+    setAuditorRender(false);
+  };
   const getAuditList = async () => {
     // console.log("headers");
     var headers = {
@@ -90,17 +138,61 @@ const Audit_page = (props) => {
       if (data.status) {
         console.log("api_res", data.data);
         setDatalist(data.data);
+        setDatalist_two(data.data)
         setActiveData(data.data)
+        setNewrespion(data.data)
       }
     }
   };
+  React.useEffect(() => {
+    console.log(age, 'ageage');
+    var pendingarr = [];
+    for (let index = 0; index < dataList.length; index++) {
+      const element = dataList[index];
+      if (age == '') {
+        pendingarr.push(JSON.parse(JSON.stringify(element)))
+      }
+      // else if (element.location_name == age && element.user.id == age_two) {
+      //   console.log('adddd1');
+      //   pendingarr.push(JSON.parse(JSON.stringify(element)))
+      // }
+      else if (element.location_name == age) {
+        console.log('adddd2');
+        pendingarr.push(JSON.parse(JSON.stringify(element)))
+      }
+      console.log(element, 'elementelementelement');
+    }
+ 
+    setJSJHSJns(pendingarr)
+    
+    console.log(pendingarr, 'pendingarr');
 
+  }, [age, dataList]);
+
+  React.useEffect(() => {
+    console.log(age, 'ageage');
+    var pendingarr = [];
+    var  newArrr=[]
+    for (let index = 0; index < arrlogg.length; index++) {
+      const element = arrlogg[index];
+      if (age_two == '') {
+        pendingarr.push(JSON.parse(JSON.stringify(element)))
+      }
+      else if (element.user.id == age_two) {
+        console.log('adddd3');
+        pendingarr.push(JSON.parse(JSON.stringify(element)))
+      }
+    }
+    setDatalist_two(pendingarr)
+    console.log(pendingarr, 'fffffffff');
+
+  }, [arrlogg, age_two]);
   const Header = [
     { id: 1, name: "Locations" },
     { id: 2, name: "time of starting audit" },
     { id: 3, name: " duration for audit" },
     { id: 4, name: "GPS location for audit" },
-    { id: 5, name: "Review By" },
+    { id: 5, name: "Auditor name" },
     { id: 6, name: 'inspector photo' },
     { id: 7, name: "Date Time " },
     { id: 8, name: "Score" },
@@ -121,6 +213,7 @@ const Audit_page = (props) => {
       setCustomerList(props.userList);
       setCustomer(props.userList);
       getAuditList();
+      getAuditorList()
     }
   }, [props.userList]);
   const handleChangeRowsPerPage = (event = React.ChangeEvent) => {
@@ -152,7 +245,33 @@ const Audit_page = (props) => {
       },
     },
   });
+  const getLocationList = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.profile.token,
+    };
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.LOCATION_LIST,
+      null,
+      headers
+    );
+    props.props.loaderRef(false);
 
+    if (data) {
+      if (data.status) {
+        setHotelData(data.data);
+        // setHotelSearch(data.data);
+      }
+    }
+    setUserRender(false);
+  };
+  React.useEffect(() => {
+    if (props && props.profile && userRender) {
+      getLocationList();
+      setUserRender(false);
+    }
+  }, [props, userRender]);
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
@@ -201,6 +320,42 @@ const Audit_page = (props) => {
             />
           </Box>
         </Grid>
+        <Grid item md={9} display={'flex'} justifyContent={'end'}>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age}
+            label="Age"
+            onChange={handleChange_select}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {/* <MenuItem value="">none</MenuItem> */}
+            {hotelsData_.map((item, index) => {
+              return (
+                <MenuItem value={item.name}> {item.name}</MenuItem>
+              )
+            })}
+          </Select>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age_two}
+            label="Age"
+            onChange={handleChange_select_two}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {/* <MenuItem value="">none</MenuItem> */}
+            {dataSearch.map((item, index) => {
+              return (
+                <MenuItem value={item.id}> {item.name}</MenuItem>
+              )
+            })}
+          </Select>
+        </Grid>
       </Grid>
 
       <Grid container>
@@ -221,7 +376,7 @@ const Audit_page = (props) => {
                   rowsPerPage={rowsPerPage}
                   page={page}
                   handleOpen_delete={handleOpen_delete}
-                  data={dataList}
+                  data={dataList_two}
                   Header={Header}
                 // tokenObj={tokenObj}
                 />
@@ -229,7 +384,7 @@ const Audit_page = (props) => {
                   rowsPerPageOptions={[7, 10, 25, 100]}
                   component="div"
                   className={styles.bakgvcal}
-                  count={dataList.length}
+                  count={dataList_two.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}

@@ -90,7 +90,7 @@ export const TableComponent = ({
                 </TableCell>
                 <TableCell
                   className={Style.table_cell}>
-                 <Typography> {item.gps_location}</Typography>
+                  <Typography> {item.gps_location}</Typography>
                 </TableCell>
                 <TableCell
                   className={Style.table_cell}>
@@ -110,7 +110,17 @@ export const TableComponent = ({
                   className={Style.table_cell}
                   onClick={() => {
                     quspage(item.id);
-                  }}>{item.audit_score}</TableCell>
+                  }}>
+                  {item.audit_score >= 4.5 ?
+                    `${item.audit_score}/5  (${item.audit_score*100/5}%) (Very Good)`
+                    : item.audit_score < 4.5 && item.audit_score > 3.9 ?
+                    `${item.audit_score}/5 (${item.audit_score*100/5}%) (Good)`
+                      : item.audit_score < 4 && item.audit_score > 3.4 ?
+                      `${item.audit_score}/5 (${item.audit_score*100/5}%) (Average)`
+                       : `${item.audit_score}/5  (${item.audit_score*100/5}%) (Below Average)`
+                  }
+
+                </TableCell>
                 {/* <TableCell
                   className={Style.table_cell}
                   onClick={() => {
