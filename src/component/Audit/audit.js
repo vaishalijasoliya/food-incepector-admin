@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 import {
   Avatar,
@@ -321,15 +323,18 @@ const[arrlogg,setJSJHSJns]=React.useState([])
           </Box>
         </Grid>
         <Grid item md={9} display={'flex'} justifyContent={'end'}>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-helper-label">Locations</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+          className={styles.select_box_main_contenar}
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
             value={age}
             label="Age"
             onChange={handleChange_select}
           >
             <MenuItem value="">
-              <em>None</em>
+              None
             </MenuItem>
             {/* <MenuItem value="">none</MenuItem> */}
             {hotelsData_.map((item, index) => {
@@ -338,15 +343,19 @@ const[arrlogg,setJSJHSJns]=React.useState([])
               )
             })}
           </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-helper-label">Auditor Name</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
+            className={styles.select_box_main_contenar}
             value={age_two}
             label="Age"
             onChange={handleChange_select_two}
           >
             <MenuItem value="">
-              <em>None</em>
+            None
             </MenuItem>
             {/* <MenuItem value="">none</MenuItem> */}
             {dataSearch.map((item, index) => {
@@ -355,6 +364,7 @@ const[arrlogg,setJSJHSJns]=React.useState([])
               )
             })}
           </Select>
+          </FormControl>
         </Grid>
       </Grid>
 

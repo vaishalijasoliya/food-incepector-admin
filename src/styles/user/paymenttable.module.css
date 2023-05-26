@@ -572,7 +572,13 @@
   /* max-width: 500px;
   max-height: 500px; */
 }
+.select_box_main_contenar{
+  /* width: 130px; */
+}
+.select_box_main_contenar fieldset{
 
+  border: 1px solid !important;
+}
 
 
 
