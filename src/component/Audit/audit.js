@@ -26,6 +26,8 @@ import { auditData } from "../Utils/data";
 import { TableComponent } from "../Audit/tablecomponentaudit";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
+import moment from "moment";
+import DatePickerll from "react-datepicker";
 
 const Audit_page = (props) => {
   const [page, setPage] = React.useState(0);
@@ -51,7 +53,13 @@ const[arrlogg,setJSJHSJns]=React.useState([])
   const [auditorRender, setAuditorRender] = React.useState(true);
   const [dataSearch, setDataSearch] = React.useState([]);
   const [dataList_tree, setDatalist_tree] = React.useState([]);
-  console.log(age_two, 'age_twoage_two');
+  const sm = moment().subtract(1, 'M').format("YYYY-MM-DD HH:mm:ss");
+  const [startDate, setStartDate] = React.useState();
+  const fm = moment(sm).add(1, 'M').format("YYYY-MM-DD HH:mm:ss");
+  const [endDate, setEndDate] = React.useState();
+  const today = new Date();
+
+  console.log(activeSearch, 'activeSearchactiveSearch');
   console.log(dataList_tree, dataList_two, 'hotelsData_');
   console.log(dataList_two, age, 'dataList_two');
   const handleChange_select = (event) => {
@@ -277,52 +285,49 @@ const[arrlogg,setJSJHSJns]=React.useState([])
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
-        <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
-          <Box className={styles.boxreting} display={"flex"}>
-            <input
-              type="text"
-              id="myserchbtn"
-              name="search"
-              placeholder="Search"
-              className={styles.searchbtn}
-              autoComplete="off"
-              onChange={(e) => {
-                if (value == 0) {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setActiveData(activeSearch);
-                    } else {
-                      var filteredData = activeSearch.filter((item) => {
-                        let searchValue = item.location_location.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setActiveData(filteredData);
-                    }
-                  }
-                } else {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setDeleteddata(deletedSearch);
-                    } else {
-                      var filteredData = deletedSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setDeleteddata(filteredData);
-                    }
-                  }
-                }
-              }}
-            />
-          </Box>
+        <Grid item sm={12} md={3} xs={12}>
+       
         </Grid>
         <Grid item md={9} display={'flex'} justifyContent={'end'}>
+        <DatePickerll
+                  placeholderText="Start Date"
+                  dateFormat="dd MMMM yyyy"
+                  className="dashboard-container__datepicker"
+                  selected={startDate}
+                  onChange={
+                    (date) => {
+                      //@ts-ignore
+                      setStartDate(date);
+                      console.log(date, 'clicked start');
+                      // handleSearch(search, date, endDate);
+
+                      //console.log(data.GET_DASHBOARD_CHART_SUCCESS.data.total_deposits, 'Object.keys(data.GET_DASHBOARD_CHART_SUCCESS.data.total_deposits)')
+
+                    }}
+                  // onChange={(date: any) => setStartDate(date)}
+                  selectsStart
+                  startDate={startDate}
+                  endDate={endDate}
+                  maxDate={today}
+                />
+                <DatePickerll
+                  placeholderText="End Date"
+                  dateFormat="dd MMMM yyyy"
+                  className="dashboard-container__datepicker"
+                  selected={endDate}
+                  onChange={
+                    (date) => {
+                      //@ts-ignore
+                      setEndDate(date);
+                      // handleSearch(search, startDate, date);
+                      console.log('clicked end');
+                    }}
+                  selectsEnd
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={startDate}
+                  maxDate={today}
+                />
         <FormControl sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-helper-label">Locations</InputLabel>
           <Select
