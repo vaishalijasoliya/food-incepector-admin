@@ -26,6 +26,8 @@ import { auditData } from "../Utils/data";
 import { TableComponent } from "../Audit/tablecomponentaudit";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
+import moment from "moment";
+import DatePickerll from "react-datepicker";
 
 const Audit_page = (props) => {
   const [page, setPage] = React.useState(0);
@@ -42,16 +44,24 @@ const Audit_page = (props) => {
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
   const [dataList_two, setDatalist_two] = React.useState([]);
+  const [dataList_two_tree, setDatalist_two_tree] = React.useState([]);
+
   const [newrespons, setNewrespion] = React.useState([])
   const [age, setAge] = React.useState('');
   const [age_two, setAge_two] = React.useState('');
-const[arrlogg,setJSJHSJns]=React.useState([])
+  const [arrlogg, setJSJHSJns] = React.useState([])
   const [userRender, setUserRender] = React.useState(true);
   const [hotelsData_, setHotelData] = React.useState([]);
   const [auditorRender, setAuditorRender] = React.useState(true);
   const [dataSearch, setDataSearch] = React.useState([]);
   const [dataList_tree, setDatalist_tree] = React.useState([]);
-  console.log(age_two, 'age_twoage_two');
+  const sm = moment().subtract(1, 'M').format("YYYY-MM-DD HH:mm:ss");
+  const [startDate, setStartDate] = React.useState();
+  const fm = moment(sm).add(1, 'M').format("YYYY-MM-DD HH:mm:ss");
+  const [endDate, setEndDate] = React.useState();
+  const today = new Date();
+
+  console.log(activeSearch, 'activeSearchactiveSearch');
   console.log(dataList_tree, dataList_two, 'hotelsData_');
   console.log(dataList_two, age, 'dataList_two');
   const handleChange_select = (event) => {
@@ -141,6 +151,7 @@ const[arrlogg,setJSJHSJns]=React.useState([])
         console.log("api_res", data.data);
         setDatalist(data.data);
         setDatalist_two(data.data)
+        setDatalist_two_tree(data.data)
         setActiveData(data.data)
         setNewrespion(data.data)
       }
@@ -149,8 +160,8 @@ const[arrlogg,setJSJHSJns]=React.useState([])
   React.useEffect(() => {
     console.log(age, 'ageage');
     var pendingarr = [];
-    for (let index = 0; index < dataList.length; index++) {
-      const element = dataList[index];
+    for (let index = 0; index < dataList_two.length; index++) {
+      const element = dataList_two[index];
       if (age == '') {
         pendingarr.push(JSON.parse(JSON.stringify(element)))
       }
@@ -164,9 +175,9 @@ const[arrlogg,setJSJHSJns]=React.useState([])
       }
       console.log(element, 'elementelementelement');
     }
- 
+
     setJSJHSJns(pendingarr)
-    
+    // setDatalist_two(pendingarr)
     console.log(pendingarr, 'pendingarr');
 
   }, [age, dataList]);
@@ -174,7 +185,7 @@ const[arrlogg,setJSJHSJns]=React.useState([])
   React.useEffect(() => {
     console.log(age, 'ageage');
     var pendingarr = [];
-    var  newArrr=[]
+    var newArrr = []
     for (let index = 0; index < arrlogg.length; index++) {
       const element = arrlogg[index];
       if (age_two == '') {
@@ -185,6 +196,7 @@ const[arrlogg,setJSJHSJns]=React.useState([])
         pendingarr.push(JSON.parse(JSON.stringify(element)))
       }
     }
+    setDatalist_two_tree(pendingarr)
     setDatalist_two(pendingarr)
     console.log(pendingarr, 'fffffffff');
 
@@ -205,7 +217,25 @@ const[arrlogg,setJSJHSJns]=React.useState([])
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
+  const Hgfsffsgsgs = ( startDate, endDate) => {
+    var searchdata = dataList_two;
+    var startDateFormate = moment(startDate, "DD/MM/YYYY");
+    var endDateFormate = moment(endDate, "DD/MM/YYYY");
+    searchdata = dataList_two.filter((item) => {
+      var compareDate = moment(new Date(item.createdAt), "DD/MM/YYYY");
+      if (!!startDate && endDate == null) {
+        return compareDate.isAfter(startDateFormate)
+      } else if (!!startDate && !!endDate) {
+        return compareDate.isBetween(startDateFormate, endDateFormate)
 
+      } else if (!!endDate && startDate == null) {
+        return compareDate.isBefore(endDateFormate)
+      } else {
+        return item;
+      }
+    })
+    setDatalist_two(searchdata)
+  }
   // console.log(props, "props_____");
 
 
@@ -277,93 +307,92 @@ const[arrlogg,setJSJHSJns]=React.useState([])
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
-        <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
-          <Box className={styles.boxreting} display={"flex"}>
-            <input
-              type="text"
-              id="myserchbtn"
-              name="search"
-              placeholder="Search"
-              className={styles.searchbtn}
-              autoComplete="off"
-              onChange={(e) => {
-                if (value == 0) {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setActiveData(activeSearch);
-                    } else {
-                      var filteredData = activeSearch.filter((item) => {
-                        let searchValue = item.location_location.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setActiveData(filteredData);
-                    }
-                  }
-                } else {
-                  var value_ = e.target.value;
-                  if (typeof value_ !== "object") {
-                    if (!value_ || value_ == "") {
-                      setDeleteddata(deletedSearch);
-                    } else {
-                      var filteredData = deletedSearch.filter((item) => {
-                        let searchValue = item.name.toLowerCase();
-                        return searchValue.includes(
-                          value_.toString().toLowerCase()
-                        );
-                      });
-                      setDeleteddata(filteredData);
-                    }
-                  }
-                }
-              }}
-            />
-          </Box>
+        <Grid item sm={12} md={3} xs={12}>
+
         </Grid>
-        <Grid item md={9} display={'flex'} justifyContent={'end'}>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Locations</InputLabel>
-          <Select
-          className={styles.select_box_main_contenar}
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-            value={age}
-            label="Age"
-            onChange={handleChange_select}
-          >
-            <MenuItem value="">
-              None
-            </MenuItem>
-            {/* <MenuItem value="">none</MenuItem> */}
-            {hotelsData_.map((item, index) => {
-              return (
-                <MenuItem value={item.name}> {item.name}</MenuItem>
-              )
-            })}
-          </Select>
+        <Grid item md={9} display={'flex'} justifyContent={'end'} alignItems={'center'}>
+          <DatePickerll
+            placeholderText="Start Date"
+            dateFormat="dd MMMM yyyy"
+            className={styles.addfast_datepickerll}
+            selected={startDate}
+            onChange={
+              (date) => {
+                //@ts-ignore
+                setStartDate(date);
+                Hgfsffsgsgs(date,endDate)
+                console.log(date, 'clicked start');
+                // handleSearch(search, date, endDate);
+
+                //console.log(data.GET_DASHBOARD_CHART_SUCCESS.data.total_deposits, 'Object.keys(data.GET_DASHBOARD_CHART_SUCCESS.data.total_deposits)')
+
+              }}
+            // onChange={(date: any) => setStartDate(date)}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            maxDate={today}
+          />
+          <DatePickerll
+            placeholderText="End Date"
+            dateFormat="dd MMMM yyyy"
+            className={styles.addfast_datepickerll}
+            selected={endDate}
+            onChange={
+              (date) => {
+                //@ts-ignore
+                setEndDate(date);
+                Hgfsffsgsgs(startDate,date)
+                // handleSearch(search, startDate, date);
+                console.log('clicked end');
+              }}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            maxDate={today}
+          />
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-helper-label">Locations</InputLabel>
+            <Select
+              className={styles.select_box_main_contenar}
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              value={age}
+              label="Age"
+              onChange={handleChange_select}
+            >
+              <MenuItem value="">
+                None
+              </MenuItem>
+              {/* <MenuItem value="">none</MenuItem> */}
+              {hotelsData_.map((item, index) => {
+                return (
+                  <MenuItem value={item.name}> {item.name}</MenuItem>
+                )
+              })}
+            </Select>
           </FormControl>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Auditor Name</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            className={styles.select_box_main_contenar}
-            value={age_two}
-            label="Age"
-            onChange={handleChange_select_two}
-          >
-            <MenuItem value="">
-            None
-            </MenuItem>
-            {/* <MenuItem value="">none</MenuItem> */}
-            {dataSearch.map((item, index) => {
-              return (
-                <MenuItem value={item.id}> {item.name}</MenuItem>
-              )
-            })}
-          </Select>
+            <InputLabel id="demo-simple-select-helper-label">Auditor Name</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              className={styles.select_box_main_contenar}
+              value={age_two}
+              label="Age"
+              onChange={handleChange_select_two}
+            >
+              <MenuItem value="">
+                None
+              </MenuItem>
+              {/* <MenuItem value="">none</MenuItem> */}
+              {dataSearch.map((item, index) => {
+                return (
+                  <MenuItem value={item.id}> {item.name}</MenuItem>
+                )
+              })}
+            </Select>
           </FormControl>
         </Grid>
       </Grid>

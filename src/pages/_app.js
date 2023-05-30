@@ -10,6 +10,9 @@ import { CircularProgress, Box, StyledEngineProvider } from "@mui/material";
 import { connect } from "react-redux";
 import { Types } from "/src/constants/actionTypes";
 import { useRouter } from "next/router";
+import "react-datepicker/dist/react-datepicker.css";
+
+// import 'bootstrap/dist/css/bootstrap.css';
 
 const store = configureStore();
 const MyApp = (props) => {

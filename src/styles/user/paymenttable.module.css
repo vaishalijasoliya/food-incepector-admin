@@ -589,6 +589,15 @@
 .select_box_main_contenar fieldset {
   border: 1px solid !important;
 }
+.addfast_datepickerll{
+  height: 56px;
+  border-radius: 5px;
+  padding: 7px;
+  border: 1px solid;
+}
+
+
+
 
 @media only screen and (max-width: 1000px) {
   .boxreting2 {
