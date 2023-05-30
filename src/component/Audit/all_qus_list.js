@@ -6,11 +6,7 @@ import Paper from "@mui/material/Paper";
 import { Types } from "../../constants/actionTypes";
 import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
-import {
-  ThemeProvider,
-  Typography,
-  createTheme,
-} from "@mui/material";
+import { ThemeProvider, Typography, createTheme } from "@mui/material";
 import { qustionlist } from "../Utils/data";
 import { TableComponent } from "../Audit/tablecom_allqus";
 import ApiServices from "../../config/ApiServices";
@@ -25,13 +21,11 @@ const AUDIT_VIEW_PAGE = (props) => {
   const [value, setValue] = React.useState(0);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
-  
 
   // const loaderRef = {
   //     token: "is____token",
   //    }
-// console.log(loaderRef, "loaderrefff__")
-
+  // console.log(loaderRef, "loaderrefff__")
   const router = useRouter();
   console.log(router.query.id, "router");
   const handleChange = (event, newValue) => {
@@ -46,7 +40,6 @@ const AUDIT_VIEW_PAGE = (props) => {
   const handleClickOpenTWO = () => {
     setOpenTWO(true);
   };
-
 
   const handleOpen_delete = () => {
     setDeleteOpen(true);
@@ -73,12 +66,44 @@ const AUDIT_VIEW_PAGE = (props) => {
     // console.log(data.data[0].qustionlist, data, "api_res_qus");
     if (data) {
       if (data.status) {
-        setDatalist(data.data);
+        // const Arr = [];
+        // for (let outerIndex = 0; outerIndex < data.data.length; outerIndex++) {
+        //   const element = data.data[outerIndex];
+        //   for (
+        //     let innerIndex = 0;
+        //     innerIndex < element.questionList.length;
+        //     innerIndex++
+        //   ) {
+        //     const element_ = element.questionList[innerIndex];
+        //     let obj = {
+        //       category: element.name,
+        //       id: element_.id,
+        //       name: element_.name,
+        //       itemList: element_.itemList,
+        //       compliance: element_.compliance,
+        //       observation: element_.observation,
+        //     };
+        //     Arr.push(obj);
+        //     console.log(Arr, "is________new___arr", obj);
+        //   }
+        // }
+        const Arr = data.data.flatMap((element) => {
+          return element.questionList.map((question) => {
+            return {
+              category: element.name,
+              id: question.id,
+              name: question.name,
+              itemList: question.itemList,
+              compliance: question.compliance,
+              observation: question.observation,
+            };
+          });
+        });
+        setDatalist(Arr);
         setDataSearch(data.data);
       }
     }
   };
-
 
   const Header = [
     { name: "Category" },
@@ -87,7 +112,6 @@ const AUDIT_VIEW_PAGE = (props) => {
     { name: "Compliance" },
     { name: "Observation" },
   ];
-
 
   const onSearch = (e) => {
     var value_ = e.target.value;
@@ -104,20 +128,15 @@ const AUDIT_VIEW_PAGE = (props) => {
     }
   };
 
-
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
   // console.log(props, "propscheck_____");
   React.useEffect(() => {
-    console.log(router.query.id,"___function")
-    
     if (router.query.id && props.profile.token) {
-      console.log(router.query.id, "id_______")
       getAuditorList();
     }
-    
-  }, [router.query.id] );
+  }, [router.query.id]);
   const handleChangeRowsPerPage = (event = React.ChangeEvent) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
@@ -134,10 +153,6 @@ const AUDIT_VIEW_PAGE = (props) => {
       }
       console.log(element);
     }
-    // setActiveSearch(ActiveArr);
-    // setActiveData(ActiveArr);
-    // setDeletedSearch(DeletedArr);
-    // setDeleteddata(DeletedArr);
   }, []);
 
   const theme = createTheme({
@@ -147,15 +162,26 @@ const AUDIT_VIEW_PAGE = (props) => {
       },
     },
   });
-
-  console.log(dataList, 'dataList')
+  const List_object = {
+    name: "01 Cafe",
+    datetime: "29/05/2023 11:41 AM",
+    total_score: "2",
+    Grade: "Below Average (0%)",
+    Compliant: "0",
+    na: "151",
+    Applicable: "1",
+    minor: "2",
+    major: "1",
+    Critical: "2",
+    auditor: "mirav jasoliya",
+  };
 
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
-        <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
+        {/* <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
           <Box className={styles.boxreting} display={"flex"}>
-          <input
+            <input
               type="text"
               id="myserchbtn"
               name="search"
@@ -163,11 +189,48 @@ const AUDIT_VIEW_PAGE = (props) => {
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
-              onSearch(e);
+                onSearch(e);
               }}
             />
-            
           </Box>
+        </Grid> */}
+        <Grid md={12}>
+          <Grid container className={styles.top_box_}>
+            <Grid md={6}>
+              <Typography>Location:{List_object.name}</Typography>
+              <Typography>Total Score:{List_object.total_score}</Typography>
+            </Grid>
+            <Grid md={6}>
+              <Typography>Date Time:{List_object.datetime}</Typography>
+              <Typography>Grade:{List_object.name}</Typography>
+            </Grid>
+            <Grid md={4}>
+              <Typography>Compliant:{List_object.Compliant}</Typography>
+              <Typography>N/C Minor:{List_object.minor}</Typography>
+            </Grid>
+            <Grid md={4}>
+              <Typography>N/A:{List_object.na}</Typography>
+              <Typography>N/C Major:{List_object.major}</Typography>
+            </Grid>
+            <Grid md={4}>
+              <Typography>Applicable:{List_object.Applicable}</Typography>
+              <Typography>N/C Critical:{List_object.Critical}</Typography>
+            </Grid>
+            {/*  */}
+            <Grid md={4}>
+              <Typography>Auditor:{List_object.auditor}</Typography>
+            </Grid>
+            <Grid md={4}>
+              <Box className={styles.image_box_top}>
+                <img src="https://fastly.picsum.photos/id/970/200/300.jpg?hmac=8mPwdPFtAKcn0NQrEIClW3IlOWsKgskAikm_8YQj-qM" />
+              </Box>
+            </Grid>
+            <Grid md={4}>
+              <Box className={styles.image_box_top}>
+                <img src="https://fastly.picsum.photos/id/1053/200/300.jpg?hmac=g-MecQlcjGrVSsQX4Odc3D1ORJuzKsofZ6BIVb1Y4ok" />
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
 
@@ -193,7 +256,7 @@ const AUDIT_VIEW_PAGE = (props) => {
                 // loaderref={loaderRef}
               />
               <TablePagination
-                rowsPerPageOptions={[7, 10, 25, 100] }
+                rowsPerPageOptions={[7, 10, 25, 100]}
                 component="div"
                 className={styles.bakgvcal}
                 count={dataList.length}

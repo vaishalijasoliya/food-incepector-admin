@@ -129,6 +129,7 @@ const Auditor_page = (props) => {
       userName: "",
       name: "",
       company: "",
+      password: "",
     },
     validationSchema: Yup.object({
       userName: Yup.string().required("Username is required."),
@@ -143,7 +144,7 @@ const Auditor_page = (props) => {
   });
 
   const getAuditorList = async () => {
-    console.log('is____called')
+    console.log("is____called");
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.props.profile.token,
@@ -152,7 +153,7 @@ const Auditor_page = (props) => {
       type: userType,
     };
     props.props.loaderRef(true);
-    console.log(props.props, "loaderrefauditor")
+    console.log(props.props, "loaderrefauditor");
 
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.AUDITOR_LIST,
@@ -163,7 +164,6 @@ const Auditor_page = (props) => {
 
     if (data) {
       if (data.status) {
-        
         setDataSearch(data.data);
         setDatalist(data.data);
       }
@@ -221,6 +221,7 @@ const Auditor_page = (props) => {
       name: formikEdit.values.name,
       company_name: formikEdit.values.company,
       user_name: formikEdit.values.userName,
+      password: formikEdit.values.password,
     };
 
     props.props.loaderRef(true);
@@ -266,6 +267,7 @@ const Auditor_page = (props) => {
         formikEdit.setFieldValue("userName", data.data.user_name);
         formikEdit.setFieldValue("name", data.data.name);
         formikEdit.setFieldValue("company", data.data.company_name);
+        console.log(data, "is_______data");
         setAuditorDetails(data.data.id);
         setUserProfileImage(data.data.profile_url);
       } else {
@@ -614,6 +616,24 @@ const Auditor_page = (props) => {
                         {formikEdit.errors.company &&
                           formikEdit.touched.company && (
                             <Input_error text={formikEdit.errors.company} />
+                          )}
+                      </Box>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                    <Box className={"Input_box"}>
+                      <InputLable text={"Password"} fs={"12px"} />
+                      <TextField
+                        className={"Input_field"}
+                        name="password"
+                        onBlur={formikEdit.handleBlur}
+                        onChange={formikEdit.handleChange}
+                        value={formikEdit.values.password}
+                      />
+                      <Box className={"error_text_view"}>
+                        {formikEdit.errors.password &&
+                          formikEdit.touched.password && (
+                            <Input_error text={formikEdit.errors.password} />
                           )}
                       </Box>
                     </Box>

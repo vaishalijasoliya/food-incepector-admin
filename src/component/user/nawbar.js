@@ -53,7 +53,7 @@ const Home = (props) => {
       key={2}
       className={currentPath == "/inspectorList" ? styles.active : ""}
     >
-      <span>Auditor </span>
+      <span>Auditors list </span>
     </Button>,
     <Button
       onClick={() => {
@@ -101,7 +101,19 @@ const Home = (props) => {
       variant="outlined"
       id={styles.butgri}
     >
-      <span>Audit</span>
+      <span>Audit list</span>
+    </Button>,
+    <Button
+      onClick={() => {
+        router.push("./setting");
+      }}
+      key={6}
+      className={currentPath == "/setting" ? styles.active : ""}
+      // key="one"
+      variant="outlined"
+      id={styles.butgri}
+    >
+      <span>Setting</span>
     </Button>,
 
     <Button

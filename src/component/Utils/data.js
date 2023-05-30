@@ -1,232 +1,261 @@
 export const qustionlist = [
   {
     id: 1,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What platform should I develop it on?",
-    Compliance:"Complied",
+    Compliance: "Complied",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall2.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 2,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What is the ideal refrigerator/food warming tray temperature? ",
-    Compliance:"Complied",
+    Compliance: "Complied",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
-  }, 
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
+  },
   {
     id: 3,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "Do you need to clean your food thermometers?",
-    Compliance:" Not Complied",
+    Compliance: " Not Complied",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
-  }, 
-  
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
+  },
+
   {
     id: 4,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "How often should you wash your hands?",
-    Compliance:"N/A",
+    Compliance: "N/A",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall2.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
-   {
+  {
     id: 5,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "How do you get a food handlers permit?",
-    Compliance:" Not Complied",
+    Compliance: " Not Complied",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
-   {
+  {
     id: 6,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What information would you collect as a food inspector?",
-    Compliance:"N/A",
+    Compliance: "N/A",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 7,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What are the 3 safety questions?",
-    Compliance:"N/A",
+    Compliance: "N/A",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall2.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 8,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "Why is the food inspector important?",
-    Compliance:" Not Complied",
+    Compliance: " Not Complied",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 9,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "Do you need to clean your food thermometers?",
-    Compliance:" Not Complied",
+    Compliance: " Not Complied",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 10,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "How often should you wash your hands?",
-    Compliance:" Not Complied",
+    Compliance: " Not Complied",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 11,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "How do you get a food handlers permit?",
-    Compliance:"Complied",
+    Compliance: "Complied",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall2.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 12,
-    catogory:"The Burning Brownie",
-    qustion: "What song was or do you want to be the your first dance at your wedding?",
-    Compliance:"Complied",
+    catogory: "The Burning Brownie",
+    qustion:
+      "What song was or do you want to be the your first dance at your wedding?",
+    Compliance: "Complied",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 13,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What is the weirdest food combination you enjoy?",
-    Compliance:"Complied",
+    Compliance: "Complied",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 14,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What is the stupidest thing you ever did on a dare?",
-    Compliance:"Complied",
+    Compliance: "Complied",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 15,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What is your proudest accomplishment?",
-    Compliance:"Complied",
+    Compliance: "Complied",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall2.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 16,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "If money were no object, how would you spend your time?",
-    Compliance:" Not Complied",
+    Compliance: " Not Complied",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 17,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "Where do you see yourself in five years?",
-    Compliance:" Not Complied",
+    Compliance: " Not Complied",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 18,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "How do you like to spend your free time?",
-    Compliance:"Complied",
+    Compliance: "Complied",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 19,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What is your dream job?",
-    Compliance:"N/A",
+    Compliance: "N/A",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 20,
-    catogory:"The Burning Brownie",
+    catogory: "The Burning Brownie",
     qustion: "What platform should I develop it on?",
-    Compliance:"N/A",
+    Compliance: "N/A",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 21,
-    catogory:"The Burning Brownie",
-    qustion: "If you could be any type of dog, what breed would you be and why?",
-    Compliance:"N/A",
+    catogory: "The Burning Brownie",
+    qustion:
+      "If you could be any type of dog, what breed would you be and why?",
+    Compliance: "N/A",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 24,
-    catogory:"The Burning Brownie",
-    qustion: "If you could be any type of dog, what breed would you be and why?",
-    Compliance:"N/A",
+    catogory: "The Burning Brownie",
+    qustion:
+      "If you could be any type of dog, what breed would you be and why?",
+    Compliance: "N/A",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall2.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 25,
-    qustion: "If you could be any type of dog, what breed would you be and why?",
-    Compliance:"N/A",
+    qustion:
+      "If you could be any type of dog, what breed would you be and why?",
+    Compliance: "N/A",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall2.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 26,
-    catogory:"The Burning Brownie",
-    qustion: "If you could be any type of dog, what breed would you be and why?",
-    Compliance:"N/A",
+    catogory: "The Burning Brownie",
+    qustion:
+      "If you could be any type of dog, what breed would you be and why?",
+    Compliance: "N/A",
     image: "/image/imgsmall.png",
     image2: "/image/imgsmall2.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
   {
     id: 27,
-    catogory:"The Burning Brownie",
-    qustion: "If you could be any type of dog, what breed would you be and why?",
-    Compliance:"N/A",
+    catogory: "The Burning Brownie",
+    qustion:
+      "If you could be any type of dog, what breed would you be and why?",
+    Compliance: "N/A",
     image: "/image/imgsmall2.png",
     image2: "/image/imgsmall.png",
-    observation:"Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature"
+    observation:
+      "Do you need to clean your food thermometersWhat is the ideal refrigerator/food warming tray temperature",
   },
-
-]
-
+];
 
 export const auditData = [
   {
@@ -448,7 +477,6 @@ export const auditorData = [
     status: "deleted",
     userName: "Burton",
     company: "STEELTAB",
-
   },
   {
     id: 1,
@@ -659,7 +687,6 @@ export const questionData = [
     id: 0,
     name: "Tammi Taylor",
     company: "SUPPORTAL",
-
   },
   {
     id: 1,
@@ -1231,5 +1258,188 @@ export const categoryData = [
   {
     id: 29,
     category: "Mercer",
+  },
+];
+
+export const Subadmin_data = [
+  {
+    id: 0,
+    name: "Susana Noble",
+    userName: "Osborn",
+    password: "20Melissa28",
+  },
+  {
+    id: 1,
+    name: "Olson Slater",
+    userName: "Tisha",
+    password: "29Beasley34",
+  },
+  {
+    id: 2,
+    name: "Dixie Everett",
+    userName: "Isabelle",
+    password: "26Sonia35",
+  },
+  {
+    id: 3,
+    name: "Daniels Dixon",
+    userName: "Edna",
+    password: "32Daphne24",
+  },
+  {
+    id: 4,
+    name: "Blevins Morse",
+    userName: "Kristina",
+    password: "38Byrd30",
+  },
+  {
+    id: 5,
+    name: "Frye Booth",
+    userName: "Serena",
+    password: "39Queen38",
+  },
+  {
+    id: 6,
+    name: "Nichole Franks",
+    userName: "Clay",
+    password: "25Maryellen36",
+  },
+  {
+    id: 7,
+    name: "Armstrong Rivera",
+    userName: "Bowman",
+    password: "30Parrish29",
+  },
+  {
+    id: 8,
+    name: "Fitzgerald Scott",
+    userName: "Eliza",
+    password: "20Greer35",
+  },
+  {
+    id: 9,
+    name: "Spencer Nixon",
+    userName: "Elisa",
+    password: "36Evangelina35",
+  },
+  {
+    id: 10,
+    name: "Jeannette Hughes",
+    userName: "Kline",
+    password: "32Irwin30",
+  },
+  {
+    id: 11,
+    name: "Josephine Parsons",
+    userName: "Marva",
+    password: "29Kennedy33",
+  },
+  {
+    id: 12,
+    name: "James Mendoza",
+    userName: "Welch",
+    password: "25May38",
+  },
+  {
+    id: 13,
+    name: "Holmes Sanford",
+    userName: "Drake",
+    password: "33Ava30",
+  },
+  {
+    id: 14,
+    name: "Janie Velasquez",
+    userName: "Copeland",
+    password: "20Deena32",
+  },
+  {
+    id: 15,
+    name: "Wiley Conley",
+    userName: "Molly",
+    password: "31Ballard22",
+  },
+  {
+    id: 16,
+    name: "Reyna Bruce",
+    userName: "Noelle",
+    password: "38Macdonald29",
+  },
+  {
+    id: 17,
+    name: "Colleen Ware",
+    userName: "Samantha",
+    password: "34Allyson25",
+  },
+  {
+    id: 18,
+    name: "Brewer Drake",
+    userName: "Amie",
+    password: "30Lakisha31",
+  },
+  {
+    id: 19,
+    name: "Janice Byers",
+    userName: "Mckinney",
+    password: "26Susan28",
+  },
+  {
+    id: 20,
+    name: "Leann Cleveland",
+    userName: "Berg",
+    password: "23Catherine20",
+  },
+  {
+    id: 21,
+    name: "Glenda Gibson",
+    userName: "Ramona",
+    password: "35Robbins33",
+  },
+  {
+    id: 22,
+    name: "Ferrell Oneil",
+    userName: "Elaine",
+    password: "37Tyler30",
+  },
+  {
+    id: 23,
+    name: "Montgomery Morgan",
+    userName: "Solomon",
+    password: "35Haley37",
+  },
+  {
+    id: 24,
+    name: "Luella Schroeder",
+    userName: "Lelia",
+    password: "37Conley24",
+  },
+  {
+    id: 25,
+    name: "Stacie Pena",
+    userName: "Elsie",
+    password: "27Wall36",
+  },
+  {
+    id: 26,
+    name: "Julianne Miller",
+    userName: "Gordon",
+    password: "25Wilder29",
+  },
+  {
+    id: 27,
+    name: "Lena Odonnell",
+    userName: "Victoria",
+    password: "36Strong39",
+  },
+  {
+    id: 28,
+    name: "Lydia Sweet",
+    userName: "Pate",
+    password: "38Lucinda23",
+  },
+  {
+    id: 29,
+    name: "Hurst Woodward",
+    userName: "Middleton",
+    password: "36Juliet25",
   },
 ];

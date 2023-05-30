@@ -22,8 +22,6 @@ export const Dashtablecomponent = ({
   handleOpen_delete,
   tokenObj,
 }) => {
-
-
   return (
     <TableContainer>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
@@ -40,7 +38,10 @@ export const Dashtablecomponent = ({
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? categoryList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            ? categoryList.slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
             : categoryList
           ).map((item, index) => {
             console.log(item, "item__");
@@ -50,7 +51,10 @@ export const Dashtablecomponent = ({
                 className={currentPath == "./dashboard" ? Style.active : ""}
                 key={index}
               >
-                <TableCell className={Style.table_cell}>
+                <TableCell
+                  className={Style.table_cell}
+                 
+                >
                   {item.location_name}
                 </TableCell>
                 <TableCell className={Style.table_cell}>

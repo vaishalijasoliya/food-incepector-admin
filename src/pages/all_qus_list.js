@@ -1,7 +1,5 @@
 import Nevbar from "../component/user/newbarlist";
 import Header from "../component/user/header";
-import Paymenttable from "../component/user/paymenttable";
-import styles from "../styles/user/index.module.css";
 import Grid from "@mui/material/Grid";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
@@ -9,7 +7,7 @@ import Audit_qus_page from "../component/Audit/all_qus_list";
 
 const index = (props) => {
   const data = {
-    title: "Audit List ",
+    title: "Audit Details",
   };
   return (
     <>
@@ -20,7 +18,7 @@ const index = (props) => {
         <Grid xs={12} sm={8} md={9} className="maenedit">
           <Header data={data} props={props} />
           {/* <Paymenttable props={props} /> */}
-          <Audit_qus_page props={props}/>
+          <Audit_qus_page props={props} />
         </Grid>
       </Grid>
     </>

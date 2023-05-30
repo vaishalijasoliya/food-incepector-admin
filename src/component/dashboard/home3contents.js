@@ -21,15 +21,9 @@ import Style from "../Auditor/auditor.module.css";
 import moment from "moment";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { useRouter } from "next/router";
 
 const Usercount = (props) => {
-  const [signupCount, setSignupCount] = React.useState(0);
-  const [activeCount, setActiveCount] = React.useState(0);
-  const [inactiveCount, setInactiveCount] = React.useState(0);
-
-
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   // const [aciveData, setActiveData] = React.useState([]);
@@ -68,8 +62,8 @@ const Usercount = (props) => {
     if (data) {
       if (!!data.status && data.status == true) {
         setCategorySearch(data.data);
-        setAuditorCount(data.data.locationCount)
-        setLocationCount(data.data.auditorCount)
+        setAuditorCount(data.data.locationCount);
+        setLocationCount(data.data.auditorCount);
         setCategoryList(data.data.latestAudit);
       }
     }
@@ -131,6 +125,8 @@ const Usercount = (props) => {
     },
   });
 
+  const router = useRouter();
+
   return (
     <>
       <Grid container spacing={4} style={{ flexWrap: "wrap" }}>
@@ -172,10 +168,8 @@ const Usercount = (props) => {
         </Grid>
       </Grid>
 
- 
-
       <Grid container className={Style.table_main_container}>
-      <p className={style.table_title}>Latest Audit</p>
+        <p className={style.table_title}>Latest Audit</p>
         <Grid container>
           <Grid item xs={12} md={12}>
             <div>
@@ -201,13 +195,19 @@ const Usercount = (props) => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        { categoryList.map((item, index) => {
+                        {categoryList.map((item, index) => {
                           console.log(item, "item__");
 
                           return (
                             <TableRow
                               // className={currentPath == "./dashboard" ? Style.active : ""}
                               key={index}
+                              onClick={() => {
+                                router.push({
+                                  pathname: "/all_qus_list",
+                                  query: { id: item.id },
+                                });
+                              }}
                             >
                               <TableCell className={Style.table_cell}>
                                 {item.location_name}
@@ -216,7 +216,9 @@ const Usercount = (props) => {
                                 {item.auditorDetail.name}
                               </TableCell>
                               <TableCell className={Style.table_cell}>
-                              {moment(item.createdAt).format("DD/MM/YYYY h:mm A")}
+                                {moment(item.createdAt).format(
+                                  "DD/MM/YYYY h:mm A"
+                                )}
                               </TableCell>
                             </TableRow>
                           );
