@@ -579,7 +579,12 @@
 
   border: 1px solid !important;
 }
-
+.addfast_datepickerll{
+  height: 56px;
+  border-radius: 5px;
+  padding: 7px;
+  border: 1px solid;
+}
 
 
 
