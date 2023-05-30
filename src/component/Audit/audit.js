@@ -368,7 +368,7 @@ const Audit_page = (props) => {
               {/* <MenuItem value="">none</MenuItem> */}
               {hotelsData_.map((item, index) => {
                 return (
-                  <MenuItem value={item.name}> {item.name}</MenuItem>
+                  <MenuItem value={item.name} key={index}> {item.name}</MenuItem>
                 )
               })}
             </Select>
@@ -389,7 +389,7 @@ const Audit_page = (props) => {
               {/* <MenuItem value="">none</MenuItem> */}
               {dataSearch.map((item, index) => {
                 return (
-                  <MenuItem value={item.id}> {item.name}</MenuItem>
+                  <MenuItem value={item.id} key={index}> {item.name}</MenuItem>
                 )
               })}
             </Select>
