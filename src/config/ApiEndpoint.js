@@ -29,6 +29,10 @@ export default {
   VIEW_AUDITOR: Constants.BASE_API_URL + "user/auditor/view",
   DELETE_AUDITOR: Constants.BASE_API_URL + "user/auditor/delete",
   AUDITOR_LIST: Constants.BASE_API_URL + "user/auditor/list",
+  //ADMIN
+  ADMIN_LIST: Constants.BASE_API_URL + "admin/admin/list",
+  ADD_ADMIN: Constants.BASE_API_URL + "user/register",
+
   // UPLOAD
   UPLOAD_FILE: Constants.BASE_API_URL + "user/upload",
 

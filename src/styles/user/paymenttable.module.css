@@ -280,10 +280,23 @@
   color: #333333 !important;
   font-size: 22px !important;
 }
+.addadmintitle {
+  font-family: Gilroy-400 !important;
+  color: #333333 !important;
+  font-size: 22px !important;
+  text-align: center;
+}
 
 .cesalbtncss {
   padding-top: 30px;
   text-align: end;
+}
+
+.adminbtncss {
+
+  text-align: center;
+  margin: 20px;
+ 
 }
 
 .ceselbtfffaa {

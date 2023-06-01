@@ -13,7 +13,7 @@ const Setting = (props) => {
       Content={() => {
         return (
           <>
-            <Subadmin />
+            <Subadmin props={props} />
           </>
         );
       }}
