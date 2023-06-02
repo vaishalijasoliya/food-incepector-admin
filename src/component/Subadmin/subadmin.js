@@ -166,8 +166,15 @@ const Subadmin = (prop) => {
     setIsLoading(false);
     if (data) {
       if (data.status) {
-        setDataSearch(data.data);
-        setDatalist(data.data);
+        const Arr = [];
+        for (let index = 0; index < data.data.length; index++) {
+          const element = data.data[index];
+          if (element.id !== profile.data.id) {
+            Arr.push(element);
+          }
+        }
+        setDataSearch(Arr);
+        setDatalist(Arr);
       }
     }
   };
@@ -269,7 +276,7 @@ const Subadmin = (prop) => {
         // setAuditorDetails(data.data.id);
         setUserProfileImage(data.data.profile_url);
       } else {
-        toast.error(data.message);
+        // toast.error(data.message);
       }
     } else {
       toast.error(Error_msg.NOT_RES);
