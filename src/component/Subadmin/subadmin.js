@@ -421,10 +421,9 @@ const Subadmin = (prop) => {
           </Button>
           <Dialog
             fullWidth={false}
-            maxWidth={"sm"}
+            maxWidth={"xs"}
             open={open}
             onClose={handleClose}
-            key={1}
           >
             <DialogTitle className={styles.addadmintitle}>
               Add Admin
@@ -432,16 +431,7 @@ const Subadmin = (prop) => {
             <form onSubmit={formik.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
                 <Grid container justifyContent={"center"}>
-                  <Grid
-                    item
-                    xs={12}
-                    sm={12}
-                    md={12}
-                    xl={12}
-                    lg={12}
-                    className={styles.Image_user_item}
-                  ></Grid>
-                  <Grid item md={15}>
+                  <Grid item md={12}>
                     <Box className={"Input_box"}>
                       <InputLable text={"Enter name"} fs={"12px"} />
                       <TextField
@@ -498,40 +488,16 @@ const Subadmin = (prop) => {
             </form>
           </Dialog>
           <Dialog
-            fullWidth={true}
-            maxWidth={"sm"}
+            fullWidth={false}
+            maxWidth={"xs"}
             open={openTWO}
             onClose={handleCloseTWO}
           >
-            <DialogTitle className={styles.addtitalaja}>Edit Admin</DialogTitle>
+            <DialogTitle className={styles.addadmintitle}>Edit Admin</DialogTitle>
             <form onSubmit={formikEdit.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
                 <Grid container justifyContent={"space-between"}>
-                  <Grid
-                    item
-                    xs={12}
-                    sm={12}
-                    md={12}
-                    xl={12}
-                    lg={12}
-                    className={styles.Image_user_item}
-                  >
-                    <Box className={styles.Image_user_item_div}>
-                      <Box className={styles.Profile_photo_div}>
-                        <Avatar
-                          className={styles.Profile_photo_avtar}
-                          alt="user profile photo"
-                          // src={userProfileImage}
-                        />
-                      </Box>
-
-                      <IconButton className={styles.Change_profile_icon_btn}>
-                        <input type="file" name="myImage" />
-                        <AddRoundedIcon />
-                      </IconButton>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                     <Box className={"Input_box"}>
                       <InputLable text={"Enter name"} fs={"12px"} />
                       <TextField
@@ -548,7 +514,7 @@ const Subadmin = (prop) => {
                       </Box>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                     <Box className={"Input_box"}>
                       <InputLable text={"Username"} fs={"12px"} />
                       <TextField
@@ -567,7 +533,7 @@ const Subadmin = (prop) => {
                     </Box>
                   </Grid>
 
-                  <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
+                  <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                     <Box className={"Input_box"}>
                       <InputLable text={"Password"} fs={"12px"} />
                       <TextField
@@ -586,7 +552,7 @@ const Subadmin = (prop) => {
                     </Box>
                   </Grid>
                 </Grid>
-                <div className={styles.cesalbtncss}>
+                <div className={styles.adminbtncss}>
                   <Button_ handleClick={handleCloseTWO} text={"Cancel"} />
                   <Button_ type={"submit"} text={"Edit"} />{" "}
                 </div>

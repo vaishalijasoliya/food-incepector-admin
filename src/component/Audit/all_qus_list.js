@@ -23,6 +23,7 @@ const AUDIT_VIEW_PAGE = (props) => {
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
   const [details, setDetails] = React.useState("");
+  const [statatics, setStatatics] = React.useState("");
 
   // const loaderRef = {
   //     token: "is____token",
@@ -88,7 +89,9 @@ const AUDIT_VIEW_PAGE = (props) => {
         //     console.log(Arr, "is________new___arr", obj);
         //   }
         // }
+        console.log(data, "API_RES");
         setDetails(data.details);
+        setStatatics(data.statatics);
         const Arr = data.data.flatMap((element) => {
           return element.questionList.map((question) => {
             return {
@@ -177,6 +180,8 @@ const AUDIT_VIEW_PAGE = (props) => {
     auditor: "mirav jasoliya",
   };
 
+  console.log(details, "is_________details");
+
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
@@ -210,19 +215,29 @@ const AUDIT_VIEW_PAGE = (props) => {
                   {`${moment(details.createdAt).format("DD/MM/YYYY")} 
                   ${moment(details.createdAt).format("LT")}`}
                 </Typography>
-                <Typography>Grade: {details.audit_grade}</Typography>
+                <Typography>Grade: {statatics.grade}</Typography>
               </Grid>
               <Grid md={4}>
-                <Typography>Compliant:{List_object.Compliant}</Typography>
-                <Typography>N/C Minor:{List_object.minor}</Typography>
+                <Typography>
+                  Compliant:{statatics.compliantCount}
+                </Typography>
+                <Typography>
+                  N/C Minor:{statatics.minorCount}
+                </Typography>
               </Grid>
               <Grid md={4}>
-                <Typography>N/A:{List_object.na}</Typography>
-                <Typography>N/C Major:{List_object.major}</Typography>
+                <Typography>N/A:{statatics.naCount}</Typography>
+                <Typography>
+                  N/C Major:{statatics.majorCount}
+                </Typography>
               </Grid>
               <Grid md={4}>
-                <Typography>Applicable:{List_object.Applicable}</Typography>
-                <Typography>N/C Critical:{List_object.Critical}</Typography>
+                <Typography>
+                  Applicable:{statatics.applicableCount}
+                </Typography>
+                <Typography>
+                  N/C Critical:{statatics.criticalCount}
+                </Typography>
               </Grid>
               <Grid md={4}>
                 <Typography>Auditor: {details.auditUser.name}</Typography>
