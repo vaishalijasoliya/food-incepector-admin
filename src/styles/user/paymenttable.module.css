@@ -330,6 +330,8 @@
   margin-top: 20px;
 }
 .image_box_top img {
+  width: 100%;
+  height: 100%;
 }
 .datatrgaffa {
   text-align: end !important;

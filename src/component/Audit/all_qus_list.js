@@ -12,6 +12,7 @@ import { TableComponent } from "../Audit/tablecom_allqus";
 import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
 import { useRouter } from "next/router";
+import moment from "moment";
 
 const AUDIT_VIEW_PAGE = (props) => {
   console.log(props, "props");
@@ -21,11 +22,12 @@ const AUDIT_VIEW_PAGE = (props) => {
   const [value, setValue] = React.useState(0);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [dataList, setDatalist] = React.useState([]);
+  const [details, setDetails] = React.useState("");
 
   // const loaderRef = {
   //     token: "is____token",
   //    }
-  // console.log(loaderRef, "loaderrefff__")
+  console.log(details, "loaderrefff__");
   const router = useRouter();
   console.log(router.query.id, "router");
   const handleChange = (event, newValue) => {
@@ -56,7 +58,6 @@ const AUDIT_VIEW_PAGE = (props) => {
       id_audit: router.query.id,
     };
     props.props.loaderRef(true);
-    // console.log(props, "propsssss_____")
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.AUDIT_VIEW,
       JSON.stringify(body),
@@ -87,6 +88,7 @@ const AUDIT_VIEW_PAGE = (props) => {
         //     console.log(Arr, "is________new___arr", obj);
         //   }
         // }
+        setDetails(data.details);
         const Arr = data.data.flatMap((element) => {
           return element.questionList.map((question) => {
             return {
@@ -151,7 +153,6 @@ const AUDIT_VIEW_PAGE = (props) => {
         ActiveArr.push(element);
         DeletedArr.push(element);
       }
-      console.log(element);
     }
   }, []);
 
@@ -194,44 +195,53 @@ const AUDIT_VIEW_PAGE = (props) => {
             />
           </Box>
         </Grid> */}
-        <Grid md={12}>
-          <Grid container className={styles.top_box_}>
-            <Grid md={6}>
-              <Typography>Location:{List_object.name}</Typography>
-              <Typography>Total Score:{List_object.total_score}</Typography>
-            </Grid>
-            <Grid md={6}>
-              <Typography>Date Time:{List_object.datetime}</Typography>
-              <Typography>Grade:{List_object.name}</Typography>
-            </Grid>
-            <Grid md={4}>
-              <Typography>Compliant:{List_object.Compliant}</Typography>
-              <Typography>N/C Minor:{List_object.minor}</Typography>
-            </Grid>
-            <Grid md={4}>
-              <Typography>N/A:{List_object.na}</Typography>
-              <Typography>N/C Major:{List_object.major}</Typography>
-            </Grid>
-            <Grid md={4}>
-              <Typography>Applicable:{List_object.Applicable}</Typography>
-              <Typography>N/C Critical:{List_object.Critical}</Typography>
-            </Grid>
-            {/*  */}
-            <Grid md={4}>
-              <Typography>Auditor:{List_object.auditor}</Typography>
-            </Grid>
-            <Grid md={4}>
-              <Box className={styles.image_box_top}>
-                <img src="https://fastly.picsum.photos/id/970/200/300.jpg?hmac=8mPwdPFtAKcn0NQrEIClW3IlOWsKgskAikm_8YQj-qM" />
-              </Box>
-            </Grid>
-            <Grid md={4}>
-              <Box className={styles.image_box_top}>
-                <img src="https://fastly.picsum.photos/id/1053/200/300.jpg?hmac=g-MecQlcjGrVSsQX4Odc3D1ORJuzKsofZ6BIVb1Y4ok" />
-              </Box>
+        {typeof details == "object" ? (
+          <Grid md={12}>
+            <Grid container className={styles.top_box_}>
+              <Grid md={6}>
+                <Typography>Location: {details.auditLocation.name}</Typography>
+                <Typography>
+                  Total Score: {details.audit_score_total}
+                </Typography>
+              </Grid>
+              <Grid md={6}>
+                <Typography>
+                  Date Time:
+                  {`${moment(details.createdAt).format("DD/MM/YYYY")} 
+                  ${moment(details.createdAt).format("LT")}`}
+                </Typography>
+                <Typography>Grade: {details.audit_grade}</Typography>
+              </Grid>
+              <Grid md={4}>
+                <Typography>Compliant:{List_object.Compliant}</Typography>
+                <Typography>N/C Minor:{List_object.minor}</Typography>
+              </Grid>
+              <Grid md={4}>
+                <Typography>N/A:{List_object.na}</Typography>
+                <Typography>N/C Major:{List_object.major}</Typography>
+              </Grid>
+              <Grid md={4}>
+                <Typography>Applicable:{List_object.Applicable}</Typography>
+                <Typography>N/C Critical:{List_object.Critical}</Typography>
+              </Grid>
+              <Grid md={4}>
+                <Typography>Auditor: {details.auditUser.name}</Typography>
+              </Grid>
+              <Grid md={4}>
+                <Box className={styles.image_box_top}>
+                  <img src={details.audit_selfi} />
+                </Box>
+              </Grid>
+              <Grid md={4}>
+                <Box className={styles.image_box_top}>
+                  <img src={details.audit_sign} />
+                </Box>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        ) : (
+          ""
+        )}
       </Grid>
 
       <Grid item xs={12} md={12}>

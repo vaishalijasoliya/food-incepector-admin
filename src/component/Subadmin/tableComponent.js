@@ -21,6 +21,8 @@ export const TableComponent = ({
   handleOpen_delete,
   setAuditorDetails,
   onViewEditor,
+  formikEdit,
+  formik,
 }) => {
   return (
     <TableContainer>
@@ -48,19 +50,20 @@ export const TableComponent = ({
             return (
               <TableRow className={Style.table_row} key={index}>
                 <TableCell>{item.name}</TableCell>
-                
+
                 <TableCell>{item.user_name}</TableCell>
                 <TableCell>
                   <Box className={Style.last_td}>
                     <IconButton
                       className={Style.icon_btn}
                       onClick={() => {
+                        formikEdit.setFieldValue("name", item.name);
+                        formikEdit.setFieldValue("userName", item.user_name);
                         handleClickOpenTWO();
                         onViewEditor({ id_user: item.id });
                         setAuditorDetails(item);
                       }}
                     >
-                      
                       <Editicon height={15} width={15} />
                     </IconButton>
                     {item.status == "active" ? (

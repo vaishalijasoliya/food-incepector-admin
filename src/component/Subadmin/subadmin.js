@@ -32,24 +32,28 @@ import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
 import { toast } from "react-toastify";
 import { Error_msg } from "../Utils/message";
+import { Loading } from "../../Layout/Loader";
 
-const Subadmin = (props) => {
-  console.log("props",props);
+const Subadmin = (prop) => {
+  const { props, profile } = prop;
+  console.log("props___________", props, profile);
+  const Loader = props.loaderRef;
+  const token = profile.token;
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
   const [open, setOpen] = React.useState(false);
   const [openTWO, setOpenTWO] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [dataList, setDatalist] = React.useState([]);
-  const [deletedData, setDeleteddata] = React.useState([]);
   const [dataSearch, setDataSearch] = React.useState([]);
-  const [deletedSearch, setDeletedSearch] = React.useState([]);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [auditorRender, setAuditorRender] = React.useState(true);
   const [auditorDetails, setAuditorDetails] = React.useState("");
   const [userType, setUsertype] = React.useState("active");
   const [imageId, setImageId] = React.useState("");
   const [userProfileImage, setUserProfileImage] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,7 +67,7 @@ const Subadmin = (props) => {
     }
   };
 
-  console.log(auditorDetails, "auditorDetails___________");
+  console.log("auditorDetails___________", auditorDetails);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -93,7 +97,7 @@ const Subadmin = (props) => {
   const Header = [
     // { id: 1, name: "Index" },
     { id: 2, name: "Full name" },
-    
+
     { id: 4, name: "username" },
     { id: 5, name: "action" },
   ];
@@ -112,13 +116,11 @@ const Subadmin = (props) => {
       userName: "",
       name: "",
       password: "",
-      
     },
     validationSchema: Yup.object({
       userName: Yup.string().required("Username is required."),
       password: Yup.string().required("Password is required."),
       name: Yup.string().required("Name is required"),
-      
     }),
     onSubmit: () => {
       onAddAdmin();
@@ -129,13 +131,11 @@ const Subadmin = (props) => {
     initialValues: {
       userName: "",
       name: "",
-  
       password: "",
     },
     validationSchema: Yup.object({
       userName: Yup.string().required("Username is required."),
       name: Yup.string().required("Name is required"),
-     
     }),
     onSubmit: () => {
       onEditAuditor();
@@ -145,16 +145,16 @@ const Subadmin = (props) => {
   });
 
   const getAuditorList = async () => {
-    console.log("is____called");
     var headers = {
       "Content-Type": "application/json",
-      "x-access-token": props.profile.token,
-      //props.props.profile.token,
+      "x-access-token": token,
+      //props.token,
     };
     var body = {
       type: userType,
     };
-    props.props.loaderRef(true);
+    setIsLoading(true);
+    // props.loaderRef(true);
     console.log(props, "loaderrefauditor");
 
     var data = await ApiServices.PostApiCall(
@@ -162,21 +162,19 @@ const Subadmin = (props) => {
       JSON.stringify(body),
       headers
     );
-    props.props.loaderRef(false);
-
+    // props.loaderRef(false);
+    setIsLoading(false);
     if (data) {
       if (data.status) {
         setDataSearch(data.data);
         setDatalist(data.data);
       }
     }
-
-    setAuditorRender(false);
   };
   const onAddAdmin = async () => {
     var headers = {
       "Content-Type": "application/json",
-      "x-access-token": props.profile.token,
+      "x-access-token": token,
     };
 
     var body = {
@@ -184,21 +182,20 @@ const Subadmin = (props) => {
       user_name: formik.values.userName,
       password: formik.values.password,
       role: "admin",
-      company_name : "jio",
-     
+      company_name: "jio",
     };
 
     if (imageId) {
       body.id_item_profile = imageId;
     }
+    setIsLoading(true);
 
-    props.props.loaderRef(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.ADD_ADMIN,
       JSON.stringify(body),
       headers
     );
-    props.props.loaderRef(false);
+    setIsLoading(false);
 
     if (data) {
       if (data.status) {
@@ -217,23 +214,23 @@ const Subadmin = (props) => {
   const onEditAuditor = async () => {
     var headers = {
       "Content-Type": "application/json",
-      "x-access-token": props.profile.token,
+      "x-access-token": token,
     };
     var body = {
-      id_auditor: auditorDetails,
+      id_auditor: auditorDetails.id,
       name: formikEdit.values.name,
-    
+
       user_name: formikEdit.values.userName,
       password: formikEdit.values.password,
     };
 
-    props.props.loaderRef(true);
+    setIsLoading(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.EDIT_AUDITOR,
       JSON.stringify(body),
       headers
     );
-    props.props.loaderRef(false);
+    setIsLoading(false);
 
     if (data) {
       if (data.status) {
@@ -251,27 +248,25 @@ const Subadmin = (props) => {
   const onViewEditor = async ({ id_user }) => {
     var headers = {
       "Content-Type": "application/json",
-      "x-access-token": props.profile.token,
+      "x-access-token": token,
     };
     var body = {
       id_auditor: id_user,
     };
 
-    props.props.loaderRef(true);
+    setIsLoading(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.VIEW_AUDITOR,
       JSON.stringify(body),
       headers
     );
-    props.props.loaderRef(false);
+    setIsLoading(false);
 
     if (data) {
       if (data.status) {
         formikEdit.setFieldValue("userName", data.data.user_name);
         formikEdit.setFieldValue("name", data.data.name);
-       
-        console.log(data, "is_______data");
-        setAuditorDetails(data.data.id);
+        // setAuditorDetails(data.data.id);
         setUserProfileImage(data.data.profile_url);
       } else {
         toast.error(data.message);
@@ -283,19 +278,19 @@ const Subadmin = (props) => {
   const onDelete = async () => {
     var headers = {
       "Content-Type": "application/json",
-      "x-access-token": props.profile.token,
+      "x-access-token": token,
     };
     var body = {
       id_auditor: auditorDetails.id,
     };
 
-    props.props.loaderRef(true);
+    setIsLoading(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.DELETE_AUDITOR,
       JSON.stringify(body),
       headers
     );
-    props.props.loaderRef(false);
+    setIsLoading(false);
 
     if (data) {
       if (data.status) {
@@ -322,7 +317,7 @@ const Subadmin = (props) => {
       formData.append("type", "image");
 
       var header = {
-        "x-access-token": props.profile.token,
+        "x-access-token": token,
       };
 
       var requestOptions = {
@@ -350,12 +345,11 @@ const Subadmin = (props) => {
       }
     }
   };
-
   React.useEffect(() => {
-    if (auditorRender && props && props.profile && props.profile.token) {
+    if (profile && profile.token) {
       getAuditorList();
     }
-  }, [props, auditorRender, userType]);
+  }, [userType, profile]);
 
   const theme = createTheme({
     palette: {
@@ -367,6 +361,8 @@ const Subadmin = (props) => {
 
   return (
     <Grid container>
+      {isLoading && <Loading />}
+
       <Grid container display={"flex"} className={styles.hadpeg}>
         <Grid className={styles.inputbox} item sm={12} md={3} xs={12}>
           <Box className={styles.boxreting} display={"flex"}>
@@ -417,7 +413,6 @@ const Subadmin = (props) => {
             Add Admin
           </Button>
           <Dialog
-          
             fullWidth={false}
             maxWidth={"sm"}
             open={open}
@@ -438,10 +433,8 @@ const Subadmin = (props) => {
                     xl={12}
                     lg={12}
                     className={styles.Image_user_item}
-                  >
-                    
-                  </Grid>
-                  <Grid item  md={15}>
+                  ></Grid>
+                  <Grid item md={15}>
                     <Box className={"Input_box"}>
                       <InputLable text={"Enter name"} fs={"12px"} />
                       <TextField
@@ -488,9 +481,7 @@ const Subadmin = (props) => {
                         )}
                       </Box>
                     </Box>
-
                   </Grid>
-               
                 </Grid>
                 <div className={styles.adminbtncss}>
                   <Button_ handleClick={handleClose} text={"Cancel"} />
@@ -498,16 +489,14 @@ const Subadmin = (props) => {
                 </div>
               </Box>
             </form>
-          </Dialog>  
+          </Dialog>
           <Dialog
             fullWidth={true}
             maxWidth={"sm"}
             open={openTWO}
             onClose={handleCloseTWO}
           >
-            <DialogTitle className={styles.addtitalaja}>
-              Edit Admin
-            </DialogTitle>
+            <DialogTitle className={styles.addtitalaja}>Edit Admin</DialogTitle>
             <form onSubmit={formikEdit.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
                 <Grid container justifyContent={"space-between"}>
@@ -570,7 +559,7 @@ const Subadmin = (props) => {
                       </Box>
                     </Box>
                   </Grid>
-                  
+
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
                       <InputLable text={"Password"} fs={"12px"} />
@@ -607,9 +596,7 @@ const Subadmin = (props) => {
               Delete Admin
             </DialogTitle>
             <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-              <Typography>
-                Are you sure you want to delete Admin?
-              </Typography>
+              <Typography>Are you sure you want to delete Admin?</Typography>
               <div className={styles.cesalbtncss}>
                 <Button_ handleClick={handleClose_delete} text={"Cancel"} />
                 <Button_ handleClick={onDelete} text={"Delete"} />{" "}
@@ -664,6 +651,8 @@ const Subadmin = (props) => {
                     onViewEditor={onViewEditor}
                     setAuditorDetails={setAuditorDetails}
                     Header={Header}
+                    formik={formik}
+                    formikEdit={formikEdit}
                   />
                   <TablePagination
                     rowsPerPageOptions={[7, 10, 25, 100]}
@@ -686,6 +675,7 @@ const Subadmin = (props) => {
                     data={dataList}
                     Header={Header}
                     setAuditorDetails={setAuditorDetails}
+                    formikEdit={formikEdit}
                   />
                   <TablePagination
                     rowsPerPageOptions={[7, 10, 25, 100]}

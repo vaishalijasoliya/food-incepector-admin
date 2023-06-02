@@ -49,6 +49,7 @@ const Auditor_page = (props) => {
   const [userType, setUsertype] = React.useState("active");
   const [imageId, setImageId] = React.useState("");
   const [userProfileImage, setUserProfileImage] = React.useState("");
+  const [isResetPassword, setIsresetPassword] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -144,7 +145,6 @@ const Auditor_page = (props) => {
   });
 
   const getAuditorList = async () => {
-    console.log("is____called");
     var headers = {
       "Content-Type": "application/json",
       "x-access-token": props.props.profile.token,
@@ -268,6 +268,7 @@ const Auditor_page = (props) => {
         formikEdit.setFieldValue("name", data.data.name);
         formikEdit.setFieldValue("company", data.data.company_name);
         console.log(data, "is_______data");
+        setIsresetPassword(data.data.password_reset);
         setAuditorDetails(data.data.id);
         setUserProfileImage(data.data.profile_url);
       } else {
@@ -620,6 +621,7 @@ const Auditor_page = (props) => {
                       </Box>
                     </Box>
                   </Grid>
+
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
                       <InputLable text={"Password"} fs={"12px"} />
