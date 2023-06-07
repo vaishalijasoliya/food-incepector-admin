@@ -82,6 +82,7 @@ export const TableComponent = ({
                 </TableCell>
                 <TableCell
                   className={Style.table_cell}>
+                  {/* {moment(item.audit_start).zone('+0100').format('DD/MM/YYYY h:mm A')} */}
                   {moment(item.audit_start).format("DD/MM/YYYY h:mm A")}
                 </TableCell>
                 <TableCell
@@ -99,13 +100,13 @@ export const TableComponent = ({
                 <TableCell className={Style.table_cell}>
                   <img src={item.audit_selfi} width={99} height={99} />
                 </TableCell>
-                <TableCell
+                {/* <TableCell
                   className={Style.table_cell}
                   onClick={() => {
                     quspage(item.id);
                   }} >
                   {moment(item.createdAt).format("DD/MM/YYYY h:mm A")}
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   className={Style.table_cell}
                   onClick={() => {

@@ -13,6 +13,7 @@ import FormControl from '@mui/material/FormControl';
 
 import {
   Avatar,
+  Button,
   Dialog,
   IconButton,
   Tab,
@@ -208,16 +209,16 @@ const Audit_page = (props) => {
     { id: 4, name: "GPS location for audit" },
     { id: 5, name: "Auditor name" },
     { id: 6, name: 'inspector photo' },
-    { id: 7, name: "Date Time " },
-    { id: 8, name: "Score" },
+    // { id: 7, name: "Date Time " },
+    { id: 7, name: "Score" },
     // { id: 8, name: "Review by" },
-    { id: 9, name: "PDF " },
+    { id: 8, name: "PDF " },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
     setPage(newPage);
   };
-  const Hgfsffsgsgs = ( startDate, endDate) => {
+  const Hgfsffsgsgs = (startDate, endDate) => {
     var searchdata = dataList_two;
     var startDateFormate = moment(startDate, "DD/MM/YYYY");
     var endDateFormate = moment(endDate, "DD/MM/YYYY");
@@ -311,6 +312,16 @@ const Audit_page = (props) => {
 
         </Grid>
         <Grid item md={9} display={'flex'} justifyContent={'end'} alignItems={'center'}>
+          <Button className={styles.butt_sjjshhsgs} onClick={() => {
+             Hgfsffsgsgs('', ''),
+           setStartDate('');
+           setEndDate('')
+           setDatalist_two(dataList)
+           setAge('')
+           setAge_two('')
+            }}>
+            Reset
+          </Button>
           <DatePickerll
             placeholderText="Start Date"
             dateFormat="dd MMMM yyyy"
@@ -320,14 +331,10 @@ const Audit_page = (props) => {
               (date) => {
                 //@ts-ignore
                 setStartDate(date);
-                Hgfsffsgsgs(date,endDate)
-                console.log(date, 'clicked start');
-                // handleSearch(search, date, endDate);
+                Hgfsffsgsgs(date, endDate)
 
-                //console.log(data.GET_DASHBOARD_CHART_SUCCESS.data.total_deposits, 'Object.keys(data.GET_DASHBOARD_CHART_SUCCESS.data.total_deposits)')
 
               }}
-            // onChange={(date: any) => setStartDate(date)}
             selectsStart
             startDate={startDate}
             endDate={endDate}
@@ -342,7 +349,7 @@ const Audit_page = (props) => {
               (date) => {
                 //@ts-ignore
                 setEndDate(date);
-                Hgfsffsgsgs(startDate,date)
+                Hgfsffsgsgs(startDate, date)
                 // handleSearch(search, startDate, date);
                 console.log('clicked end');
               }}

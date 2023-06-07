@@ -181,7 +181,10 @@ const AUDIT_VIEW_PAGE = (props) => {
   };
 
   console.log(details, "is_________details");
-
+  function convertUTCToTimezone(utcDt, utcDtFormat = null, timezone =  'Asia/Riyadh') {
+    console.log('called');
+    return moment.utc(utcDt, utcDtFormat).tz(timezone).format('DD/MM/YYYY hh:mm A');
+}
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
@@ -206,16 +209,26 @@ const AUDIT_VIEW_PAGE = (props) => {
               <Grid md={6}>
                 <Typography>Location: {details.auditLocation.name}</Typography>
                 <Typography>
-                  Total Score: {details.audit_score_total}
+                  Total Score: {details.audit_score_data}
+                </Typography>
+                <Typography>
+                Audit Start:   {moment(details.audit_start).format("DD/MM/YYYY h:mm A")}
+                </Typography>
+                <Typography>
+                Audit End:{moment(details.audit_end).format("DD/MM/YYYY h:mm A")}
                 </Typography>
               </Grid>
               <Grid md={6}>
                 <Typography>
                   Date Time:
+                  {/* {moment.utc(details.createdAt,null).tz('Asia/Riyadh').format('DD/MM/YYYY hh:mm A')} */}
+                  {/* {convertUTCToTimezone(details.createdAt)} */}
                   {`${moment(details.createdAt).format("DD/MM/YYYY")} 
                   ${moment(details.createdAt).format("LT")}`}
                 </Typography>
                 <Typography>Grade: {statatics.grade}</Typography>
+                <Typography>Audit Time: {statatics.audit_time}</Typography>
+                <Typography>Gps Location: {statatics.gps_location}</Typography>
               </Grid>
               <Grid md={4}>
                 <Typography>

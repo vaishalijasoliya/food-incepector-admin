@@ -72,13 +72,13 @@ const MyApp = (props) => {
             <CircularProgress color={"primary"} />
           </Box>
         )}
-        {/* <StyledEngineProvider injectFirst> */}
+        <StyledEngineProvider injectFirst>
         {isLoaded ? (
           <Component loaderRef={setIsProgress} {...pageProps} />
         ) : null}
 
         <ToastContainer />
-        {/* </StyledEngineProvider> */}
+        </StyledEngineProvider>
       </Provider>
     </>
   );
