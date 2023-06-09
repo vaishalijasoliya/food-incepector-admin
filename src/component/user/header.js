@@ -4,13 +4,32 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/router";
-import { ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { Button, ListItemIcon, Menu } from "@mui/material";
 import { PersonAdd } from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { removeData } from "../Utils/func";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { Link, useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { Types } from "../../../src/constants/actionTypes";
 const Nevbar = (props) => {
+  const router = useRouter();
+  // let navigate = useNavigate();
+
   const [userCount, setUserCount] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [age, setAge] = React.useState('en_US');
+  var currentPath = router.pathname;
+  const [listlegveg, setLegvg] = React.useState('')
+  
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
+  console.log(props, 'propspropsprops');
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,13 +37,12 @@ const Nevbar = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const router = useRouter();
 
   const logOut = () => {
     router.push("/");
     handleClose();
   };
-
+  console.log(age, 'ageageage');
   return (
     <>
       <Grid
@@ -39,6 +57,42 @@ const Nevbar = (props) => {
           </Typography>
         </Grid>
         <Grid item xs={12} className={styles.img2} md={6}>
+          {listlegveg == 'pl_PL' ?
+            <Button onClick={() => {
+              localStorage.setItem('language', 'en_US')
+              window.location.href = currentPath
+            }}>
+              en_US
+            </Button> : <Button disabled>
+              en_US
+            </Button>}
+          {listlegveg == 'en_US' ?
+            <Button onClick={() => {
+              localStorage.setItem('language', 'pl_PL')
+              window.location.href = currentPath
+            }}>
+              pl_PL
+            </Button>
+            : <Button disabled>
+              pl_PL
+            </Button>}
+          {/* <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+
+          {/* <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              // value={age}
+              // key={age}
+              // defaultValue={'pl_}
+              value={age}
+              onChange={handleChange}
+              className={styles.selece_data_menu_item}
+            >
+             <MenuItem value={'en_US'}>en_US</MenuItem>
+              <MenuItem value={'pl_PL'}>pl_PL</MenuItem>
+            </Select>  */}
+          {/* </FormControl> */}
           <button className={styles.pohotloho1} onClick={handleClick}>
             <Avatar
               alt="Profile Picture"
@@ -104,4 +158,12 @@ const Nevbar = (props) => {
 // const mapDispatchToProps = (dispatch) => ({
 //   save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
 // });
-export default Nevbar;
+const mapStateToProps = (state) => ({
+  profile: state.user.profile,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nevbar);

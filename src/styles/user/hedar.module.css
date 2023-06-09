@@ -92,7 +92,10 @@
   margin-bottom: 30px;
   width: 100%;
 }
-
+.selece_data_menu_item{
+  width: 100px;
+  border: 1px solid;
+}
 @media only screen and (max-width: 500px) {
   .hedingh3 {
     text-align: center;

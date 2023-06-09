@@ -6,10 +6,16 @@ import Grid from "@mui/material/Grid";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
 import { MainLayout } from "../Layout/Pages_layout/mainLayout";
-
+import React from "react";
 const index = (props) => {
+  const [listlegveg, setLegvg] = React.useState('')
+
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   const data = {
-    title: "Auditor ",
+    title: listlegveg=="pl_PL"?"Rewident księgowy":"Auditor ",
   };
 
   return (

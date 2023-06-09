@@ -6,10 +6,16 @@ import Grid from "@mui/material/Grid";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
 import { MainLayout } from "../Layout/Pages_layout/mainLayout";
-
+import React from "react";
 const index = (props) => {
+  const [listlegveg, setLegvg] = React.useState('')
+
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   const data = {
-    title: "Category",
+    title: listlegveg=='pl_PL'?"Kategoria":"Category",
     // desc: "Morning James, Welcome to Clever Gifts Dashboard ",
   };
   return (

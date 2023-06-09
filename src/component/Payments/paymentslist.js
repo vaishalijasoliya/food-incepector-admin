@@ -42,7 +42,12 @@ const EnhancedTable = (props) => {
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [userRender, setUserRender] = React.useState(true);
   const [categoryDetails, setCategoryDetails] = React.useState("");
+  const [listlegveg, setLegvg] = React.useState('')
 
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   console.log(props);
 
   const formik = useFormik({
@@ -50,7 +55,7 @@ const EnhancedTable = (props) => {
       name: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required."),
+      name: Yup.string().required(listlegveg=="pl_PL"?"Imie jest wymagane.":"Name is required."),
     }),
     onSubmit: (values) => {
       if (open == true) {
@@ -257,13 +262,14 @@ const EnhancedTable = (props) => {
         onClose={handleClose_delete}
       >
         <DialogTitle className={styles.addtitalaja}>
-          Delete Category
+        {listlegveg=="pl_PL"?"Usuń kategorię":
+          "Delete Category"}
         </DialogTitle>
         <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-          <Typography>Are you sure you want to delete Category?</Typography>
+          <Typography>{listlegveg=="pl_PL"?"Czy na pewno chcesz usunąć kategorię?":"Are you sure you want to delete Category?"}</Typography>
           <div className={styles.cesalbtncss}>
-            <Button_ handleClick={handleClose_delete} text={"Cancel"} />
-            <Button_ handleClick={onDelete} text={"Delete"} />{" "}
+            <Button_ handleClick={handleClose_delete} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
+            <Button_ handleClick={onDelete} text={listlegveg=="pl_PL"?"Usuwać":"Delete"} />{" "}
           </div>
         </Box>
       </Dialog>
@@ -300,7 +306,8 @@ const EnhancedTable = (props) => {
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9}>
           <Button className={styles.megobtn} onClick={handleClickOpen}>
-            Add Category
+          {listlegveg=="pl_PL"?"Dodaj kategorię"
+            :"Add Category"}
           </Button>
           <Dialog
             fullWidth={true}
@@ -310,14 +317,14 @@ const EnhancedTable = (props) => {
             key={1}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Add Category
+              {listlegveg=="pl_PL"?"Dodaj kategorię":"Add Category"}
             </DialogTitle>
             <form onSubmit={formik.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
                 <Grid container justifyContent={"space-between"}>
                   <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Name"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"Nazwa":"Name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="name"
@@ -334,12 +341,12 @@ const EnhancedTable = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleClose} text={"Cancel"} />
+                  <Button_ handleClick={handleClose} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
                   {/* <Button type="submit">Add</Button> */}
                   <Button_
                     type={"submit"}
                     // handleClick=s{() => formik.handleSubmit()}
-                    text={"Add"}
+                    text={listlegveg=="pl_PL"?"Dodać":"Add"}
                   />
                 </div>
               </Box>
@@ -355,13 +362,13 @@ const EnhancedTable = (props) => {
         onClose={handleCloseEdit}
         key={1}
       >
-        <DialogTitle className={styles.addtitalaja}>Edit Category</DialogTitle>
+        <DialogTitle className={styles.addtitalaja}>{listlegveg=="pl_PL"?"Edytuj kategorię":"Edit Category"}</DialogTitle>
         <form onSubmit={formik.handleSubmit}>
           <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
             <Grid container justifyContent={"space-between"}>
               <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                 <Box className={"Input_box"}>
-                  <InputLable text={"Name"} fs={"12px"} />
+                  <InputLable text={listlegveg=="pl_PL"?"Nazwa":"Name"} fs={"12px"} />
                   <TextField
                     className={"Input_field"}
                     name="name"
@@ -378,8 +385,8 @@ const EnhancedTable = (props) => {
               </Grid>
             </Grid>
             <div className={styles.cesalbtncss}>
-              <Button_ handleClick={handleCloseEdit} text={"Cancel"} />
-              <Button_ type={"submit"} text={"Edit"} />
+              <Button_ handleClick={handleCloseEdit} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
+              <Button_ type={"submit"} text={listlegveg=="pl_PL"?"Edytować":"Edit"} />
             </div>
           </Box>
         </form>
@@ -403,14 +410,14 @@ const EnhancedTable = (props) => {
                     <TableHead>
                       <TableRow>
                         <TableCell className={styles.addnmejdhd}>
-                          Name
+                          {listlegveg=="pl_PL"?"Nazwa":"Name"}
                         </TableCell>
                         <TableCell
                           style={{
                             textAlign: "right",
                           }}
                         >
-                          Actions
+                          {listlegveg=="pl_PL"?"działania":"Actions"}
                         </TableCell>
                       </TableRow>
                     </TableHead>

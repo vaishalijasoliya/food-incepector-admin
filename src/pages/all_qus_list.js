@@ -4,10 +4,16 @@ import Grid from "@mui/material/Grid";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
 import Audit_qus_page from "../component/Audit/all_qus_list";
-
+import React from "react";
 const index = (props) => {
+  const [listlegveg, setLegvg] = React.useState('')
+
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   const data = {
-    title: "Audit Details",
+    title:listlegveg=="pl_PL"? "Szczegóły audytu":"Audit Details",
   };
   return (
     <>

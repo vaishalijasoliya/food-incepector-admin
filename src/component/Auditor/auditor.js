@@ -50,7 +50,12 @@ const Auditor_page = (props) => {
   const [imageId, setImageId] = React.useState("");
   const [userProfileImage, setUserProfileImage] = React.useState("");
   const [isResetPassword, setIsresetPassword] = React.useState(false);
+  const [listlegveg, setLegvg] = React.useState('')
 
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setDataSearch([]);
@@ -92,10 +97,10 @@ const Auditor_page = (props) => {
   };
   const Header = [
     // { id: 1, name: "Index" },
-    { id: 2, name: "Full name" },
-    { id: 3, name: "company name" },
-    { id: 4, name: "username" },
-    { id: 5, name: "action" },
+    { id: 2, name: listlegveg=='pl_PL'?"Pełne imię i nazwisko":"Full name" },
+    { id: 3, name:listlegveg=='pl_PL'? "Nazwa firmy":"company name" },
+    { id: 4, name:listlegveg=='pl_PL'? "nazwa użytkownika":"username" },
+    { id: 5, name: listlegveg=='pl_PL'?"działanie":"action" },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -115,11 +120,10 @@ const Auditor_page = (props) => {
       company: "",
     },
     validationSchema: Yup.object({
-      userName: Yup.string().required("Username is required."),
-      password: Yup.string().required("Password is required."),
-      name: Yup.string().required("Name is required"),
-      company: Yup.string().required("Company name is required"),
-    }),
+      userName: Yup.string().required(listlegveg=='pl_PL'?"Wymagana jest nazwa użytkownika.":"Username is required."),
+      password: Yup.string().required(listlegveg=='pl_PL'?"Wymagane jest hasło.":"Password is required."),
+      name: Yup.string().required(listlegveg=='pl_PL'?"imie jest wymagane":"Name is required"),
+      company: Yup.string().required(listlegveg=='pl_PL'?"Nazwa firmy jest wymagana":"Company name is required"),    }),
     onSubmit: () => {
       onAddAuditor();
     },
@@ -133,9 +137,9 @@ const Auditor_page = (props) => {
       password: "",
     },
     validationSchema: Yup.object({
-      userName: Yup.string().required("Username is required."),
-      name: Yup.string().required("Name is required"),
-      company: Yup.string().required("Company name is required"),
+      userName: Yup.string().required(listlegveg=='pl_PL'?"Wymagana jest nazwa użytkownika.":"Username is required."),
+      name: Yup.string().required(listlegveg=='pl_PL'?"imie jest wymagane":"Name is required"),
+      company: Yup.string().required(listlegveg=='pl_PL'?"Nazwa firmy jest wymagana":"Company name is required"),
     }),
     onSubmit: () => {
       onEditAuditor();
@@ -412,7 +416,8 @@ const Auditor_page = (props) => {
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9} sm={12}>
           <Button className={styles.megobtn} onClick={handleClickOpen}>
-            Add Auditor
+        
+          {listlegveg=='pl_PL'?"Dodaj Audytora":"Add Auditor"}
           </Button>
           <Dialog
             fullWidth={true}
@@ -422,7 +427,7 @@ const Auditor_page = (props) => {
             key={1}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Add Auditor
+            {listlegveg=='pl_PL'?"Dodaj Audytora":"Add Auditor"}
             </DialogTitle>
             <form onSubmit={formik.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
@@ -457,7 +462,7 @@ const Auditor_page = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Enter name"} fs={"12px"} />
+                      <InputLable text={listlegveg=='pl_PL'?"Wprowadź imię":"Enter name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="name"
@@ -474,7 +479,7 @@ const Auditor_page = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Username"} fs={"12px"} />
+                      <InputLable text={listlegveg=='pl_PL'?"Nazwa użytkownika":"Username"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="userName"
@@ -491,7 +496,7 @@ const Auditor_page = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Company name"} fs={"12px"} />
+                      <InputLable text={listlegveg=='pl_PL'?"Nazwa firmy":"Company name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="company"
@@ -508,7 +513,7 @@ const Auditor_page = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Password"} fs={"12px"} />
+                      <InputLable text={listlegveg=='pl_PL'?"Hasło":"Password"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         type="password"
@@ -526,8 +531,8 @@ const Auditor_page = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleClose} text={"Cancel"} />
-                  <Button_ type="submit" text={"Add"} />{" "}
+                  <Button_ handleClick={handleClose} text={listlegveg=='pl_PL'?"Anulować":"Cancel"} />
+                  <Button_ type="submit" text={listlegveg=='pl_PL'?"Dodać":"Add"} />{" "}
                 </div>
               </Box>
             </form>
@@ -539,7 +544,8 @@ const Auditor_page = (props) => {
             onClose={handleCloseTWO}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Edit Auditor
+            {listlegveg=='pl_PL'?"Edytuj Audytora":
+              "Edit Auditor"}
             </DialogTitle>
             <form onSubmit={formikEdit.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
@@ -570,7 +576,7 @@ const Auditor_page = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Enter name"} fs={"12px"} />
+                      <InputLable text={listlegveg=='pl_PL'?"Wprowadź imię":"Enter name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="name"
@@ -587,7 +593,7 @@ const Auditor_page = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Username"} fs={"12px"} />
+                      <InputLable text={listlegveg=='pl_PL'?"Nazwa użytkownika":"Username"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="userName"
@@ -605,7 +611,7 @@ const Auditor_page = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Company name"} fs={"12px"} />
+                      <InputLable text={listlegveg=='pl_PL'?"Nazwa firmy":"Company name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="company"
@@ -624,7 +630,7 @@ const Auditor_page = (props) => {
 
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Password"} fs={"12px"} />
+                      <InputLable text={listlegveg=='pl_PL'?"Hasło":"Password"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="password"
@@ -642,8 +648,8 @@ const Auditor_page = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleCloseTWO} text={"Cancel"} />
-                  <Button_ type={"submit"} text={"Edit"} />{" "}
+                  <Button_ handleClick={handleCloseTWO} text={listlegveg=='pl_PL'?"Anulować":"Cancel"} />
+                  <Button_ type={"submit"} text={listlegveg=='pl_PL'?"Edytować":"Edit"} />{" "}
                 </div>
               </Box>
             </form>
@@ -655,15 +661,17 @@ const Auditor_page = (props) => {
             onClose={handleClose_delete}
           >
             <DialogTitle className={styles.addtitalaja}>
-              Delete Auditor
+            {listlegveg=='pl_PL'?"Usuń audytora":
+              "Delete Auditor"}
             </DialogTitle>
             <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
               <Typography>
-                Are you sure you want to delete Inspector?
+              {listlegveg=='pl_PL'?"Czy na pewno chcesz usunąć profil Inspektor?":
+                "Are you sure you want to delete Inspector?"}
               </Typography>
               <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose_delete} text={"Cancel"} />
-                <Button_ handleClick={onDelete} text={"Delete"} />{" "}
+                <Button_ handleClick={handleClose_delete} text={listlegveg=='pl_PL'?"Anulować":"Cancel"} />
+                <Button_ handleClick={onDelete} text={listlegveg=='pl_PL'?"Usuwać":"Delete"} />{" "}
               </div>
             </Box>
           </Dialog>
@@ -696,12 +704,12 @@ const Auditor_page = (props) => {
                 >
                   <Tab
                     className={Tabbar_style.tab_btns}
-                    label="Active"
+                    label={listlegveg=='pl_PL'?"Aktywny":"Active"}
                     {...a11yProps(0)}
                   />
                   <Tab
                     className={Tabbar_style.tab_btns}
-                    label="Deleted"
+                    label={listlegveg=='pl_PL'?"Usunięto":"Deleted"}
                     {...a11yProps(1)}
                   />
                 </Tabs>

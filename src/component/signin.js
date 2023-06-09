@@ -33,7 +33,7 @@ const Signin = (props) => {
     );
     props.props.loaderRef(false);
     if (!!data) {
-      if (data.status == true &&data.data.role=='admin'){
+      if (data.status == true && data.data.role == 'admin') {
         props.save_user_data({ user: data });
         router.push("/dashboard");
         toast.success("Logged In Succesfully");

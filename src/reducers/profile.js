@@ -1,12 +1,13 @@
 import { Types } from '../constants/actionTypes';
 
 const initialState = {
+lan:'',
   profile: {
     name: '',
     username: '',
     account: [],
     currentAccount: {},
-    email: ''
+    
   },
 }
 

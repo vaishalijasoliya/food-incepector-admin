@@ -60,6 +60,12 @@ const Audit_page = (props) => {
   const [startDate, setStartDate] = React.useState();
   const fm = moment(sm).add(1, 'M').format("YYYY-MM-DD HH:mm:ss");
   const [endDate, setEndDate] = React.useState();
+  const [listlegveg, setLegvg] = React.useState('')
+
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   const today = new Date();
 
   console.log(activeSearch, 'activeSearchactiveSearch');
@@ -203,16 +209,16 @@ const Audit_page = (props) => {
 
   }, [arrlogg, age_two]);
   const Header = [
-    { id: 1, name: "Locations" },
-    { id: 2, name: "time of starting audit" },
-    { id: 3, name: " duration for audit" },
-    { id: 4, name: "GPS location for audit" },
-    { id: 5, name: "Auditor name" },
-    { id: 6, name: 'inspector photo' },
+    { id: 1, name: listlegveg=="pl_PL"?"Lokalizacje":"Locations" },
+    { id: 2, name: listlegveg=="pl_PL"?"czas rozpoczęcia audytu":"time of starting audit" },
+    { id: 3, name: listlegveg=="pl_PL"?"czas trwania audytu":"duration for audit" },
+    { id: 4, name: listlegveg=="pl_PL"?"Lokalizacja GPS do audytu":"GPS location for audit" },
+    { id: 5, name: listlegveg=="pl_PL"?"Nazwa audytora":"Auditor name" },
+    { id: 6, name: listlegveg=="pl_PL"?"zdjęcie inspektora":'inspector photo' },
     // { id: 7, name: "Date Time " },
-    { id: 7, name: "Score" },
+    { id: 7, name:listlegveg=="pl_PL"? "Wynik":"Score" },
     // { id: 8, name: "Review by" },
-    { id: 8, name: "PDF " },
+    { id: 8, name: listlegveg=="pl_PL"?"PDF":"PDF " },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -308,10 +314,10 @@ const Audit_page = (props) => {
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
-        <Grid item sm={12} md={3} xs={12}>
+        <Grid item sm={12} md={1} xs={12}>
 
         </Grid>
-        <Grid item md={9} display={'flex'} justifyContent={'end'} alignItems={'center'}>
+        <Grid item md={11} display={'flex'} justifyContent={'end'} alignItems={'center'}>
           <Button className={styles.butt_sjjshhsgs} onClick={() => {
              Hgfsffsgsgs('', ''),
            setStartDate('');
@@ -320,7 +326,8 @@ const Audit_page = (props) => {
            setAge('')
            setAge_two('')
             }}>
-            Reset
+            {listlegveg=="pl_PL"?"Resetowanie":
+            "Reset"}
           </Button>
           <DatePickerll
             placeholderText="Start Date"
@@ -370,7 +377,8 @@ const Audit_page = (props) => {
               onChange={handleChange_select}
             >
               <MenuItem value="">
-                None
+               {listlegveg=="pl_PL"?"Nic":
+                "None"}
               </MenuItem>
               {/* <MenuItem value="">none</MenuItem> */}
               {hotelsData_.map((item, index) => {
@@ -391,7 +399,7 @@ const Audit_page = (props) => {
               onChange={handleChange_select_two}
             >
               <MenuItem value="">
-                None
+                {listlegveg=="pl_PL"?"Nic":"None"}
               </MenuItem>
               {/* <MenuItem value="">none</MenuItem> */}
               {dataSearch.map((item, index) => {

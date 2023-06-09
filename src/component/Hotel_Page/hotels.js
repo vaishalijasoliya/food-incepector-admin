@@ -63,6 +63,12 @@ const Hotels_list = (props) => {
   const [isOpen, setIsOpen] = useState("");
   const [endTime, setEndTime] = useState("");
   const [idLocation, setIdlocation] = React.useState("");
+  const [listlegveg, setLegvg] = React.useState('')
+
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   // const [userRe]
 
   const handleStartTimeChange = (event) => {
@@ -199,11 +205,11 @@ const Hotels_list = (props) => {
       size: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required."),
-      category: Yup.string().required("Category is required"),
-      hos: Yup.string().required("Head of staff in required."),
-      location: Yup.string().required("Location is required."),
-      size: Yup.string().required("Size is required"),
+      name: Yup.string().required(listlegveg=="pl_PL"?"Imie jest wymagane.":"Name is required."),
+      category: Yup.string().required(listlegveg=="pl_PL"?"Kategoria jest wymagana":"Category is required"),
+      hos: Yup.string().required(listlegveg=="pl_PL"?"Potrzebny szef sztabu.":"Head of staff in required."),
+      location: Yup.string().required(listlegveg=="pl_PL"?"Lokalizacja jest wymagana.":"Location is required."),
+      size: Yup.string().required(listlegveg=="pl_PL"?"Rozmiar jest wymagany":"Size is required"),
     }),
     onSubmit: () => {
       setSubmitted(true);
@@ -220,35 +226,35 @@ const Hotels_list = (props) => {
   });
   const Header = [
     {
-      name: "Name",
+      name: listlegveg=="pl_PL"?"Nazwa":"Name",
       id: 1,
     },
     {
-      name: "category",
+      name: listlegveg=="pl_PL"?"Kategoria":"category",
       id: 6,
     },
     {
-      name: "supervisior",
+      name: listlegveg=="pl_PL"?"przełożony":"supervisior",
       id: 7,
     },
     {
-      name: "Location",
+      name: listlegveg=="pl_PL"?"Lokalizacja":"Location",
       id: 4,
     },
     {
-      name: "Size",
+      name: listlegveg=="pl_PL"?"Rozmiar":"Size",
       id: 7,
     },
     {
-      name: "Timing",
+      name: listlegveg=="pl_PL"?"wyczucie czasu":"Timing",
       id: 3,
     },
     {
-      name: "Head of staff",
+      name: listlegveg=="pl_PL"?"Szef sztabu":"Head of staff",
       id: 5,
     },
     {
-      name: "Actions",
+      name: listlegveg=="pl_PL"?"działania":"Actions",
       id: 8,
     },
   ];
@@ -393,13 +399,13 @@ const Hotels_list = (props) => {
         onClose={handleClose_delete}
       >
         <DialogTitle className={styles.addtitalaja}>
-          Delete Locations
+          {listlegveg=="pl_PL"?"Usuń lokalizacje":"Delete Locations"}
         </DialogTitle>
         <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-          <Typography>Are you sure you want to delete Location?</Typography>
+          <Typography>{listlegveg=="pl_PL"?"Czy na pewno chcesz usunąć lokalizację?":"Are you sure you want to delete Location?"}</Typography>
           <div className={styles.cesalbtncss}>
-            <Button_ handleClick={handleClose_delete} text={"Cancel"} />
-            <Button_ handleClick={onDelete} text={"Delete"} />{" "}
+            <Button_ handleClick={handleClose_delete} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
+            <Button_ handleClick={onDelete} text={listlegveg=="pl_PL"?"Usuwać":"Delete"} />{" "}
           </div>
         </Box>
       </Dialog>
@@ -444,7 +450,7 @@ const Hotels_list = (props) => {
               handleClickOpen(), setIsOpen("Add");
             }}
           >
-            Add Location
+            {listlegveg=="pl_PL"?"Dodaj miejsce":"Add Location"}
           </Button>
           <Dialog
             fullWidth={true}
@@ -461,7 +467,7 @@ const Hotels_list = (props) => {
                 <Grid container justifyContent={"space-between"}>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Name"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"Nazwa":"Name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="name"
@@ -478,7 +484,7 @@ const Hotels_list = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Auditor"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"Rewident księgowy":"Auditor"} fs={"12px"} />
                       <Select
                         value={selectedOption}
                         sx={{
@@ -495,7 +501,7 @@ const Hotels_list = (props) => {
                         onChange={handleChange}
                       >
                         <MenuItem value={"select_category"}>
-                          Select Auditor
+                          {listlegveg=="pl_PL"?"Wybierz audytora":"Select Auditor"}
                         </MenuItem>
 
                         {auditorList.map((option) => (
@@ -506,7 +512,7 @@ const Hotels_list = (props) => {
                       </Select>
                       <Box className={"error_text_view"}>
                         {submitted && selectedOption == "select_category" ? (
-                          <Input_error text={"Select a category"} />
+                          <Input_error text={listlegveg=="pl_PL"?"Wybierz kategorię":"Select a category"} />
                         ) : (
                           ""
                         )}
@@ -515,10 +521,10 @@ const Hotels_list = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Timing"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"wyczucie czasu":"Timing"} fs={"12px"} />
                       <div className={styles.timing_div}>
                         <div className={styles.time_input_box}>
-                          <InputLable text={"Start :"} fs={"12px"} />
+                          <InputLable text={listlegveg=="pl_PL"?"Początek :":"Start :"} fs={"12px"} />
                           <input
                             type="time"
                             value={startTime}
@@ -526,7 +532,7 @@ const Hotels_list = (props) => {
                           />
                         </div>
                         <div className={styles.time_input_box}>
-                          <InputLable text={"End :"} fs={"12px"} />
+                          <InputLable text={listlegveg=="pl_PL"?"Koniec :":"End :"} fs={"12px"} />
                           <input
                             type="time"
                             value={endTime}
@@ -540,7 +546,7 @@ const Hotels_list = (props) => {
                                 <div style={{ color: "red" }}>
                                   <Input_error
                                     text={
-                                      "End time should be after start time."
+                                      listlegveg=="pl_PL"?"Godzina zakończenia powinna być późniejsza niż godzina rozpoczęcia.":"End time should be after start time."
                                     }
                                   />
                                 </div>
@@ -548,7 +554,7 @@ const Hotels_list = (props) => {
                                 ""
                               )
                             ) : (
-                              <Input_error text={"Select Timing."} />
+                              <Input_error text={listlegveg=="pl_PL"?"Wybierz Czas.":"Select Timing."} />
                             )
                           ) : (
                             ""
@@ -559,7 +565,7 @@ const Hotels_list = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Size"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"Rozmiar":"Size"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="size"
@@ -577,7 +583,7 @@ const Hotels_list = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Location"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"Lokalizacja":"Location"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="location"
@@ -594,7 +600,7 @@ const Hotels_list = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Category"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"Kategoria":"Category"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="category"
@@ -611,7 +617,7 @@ const Hotels_list = (props) => {
                   </Grid>
                   <Grid item xs={12} sm={5.6} lg={5.6} xl={5.6} md={5.6}>
                     <Box className={"Input_box"}>
-                      <InputLable text={"Head of staff"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"Szef sztabu":"Head of staff"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="hos"
@@ -631,7 +637,7 @@ const Hotels_list = (props) => {
                   <Button_ handleClick={handleClose} text={"Cancel"} />
                   <Button_
                     type={"submit"}
-                    text={isOpen == "edit" ? "Edit" : "Add"}
+                    text={isOpen == "edit" ? listlegveg=="pl_PL"?"Edytować":"Edit" : listlegveg=="pl_PL"?"Dodać":"Add"}
                   />{" "}
                 </div>
               </Box>

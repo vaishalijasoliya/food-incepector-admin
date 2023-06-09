@@ -24,7 +24,12 @@ const AUDIT_VIEW_PAGE = (props) => {
   const [dataList, setDatalist] = React.useState([]);
   const [details, setDetails] = React.useState("");
   const [statatics, setStatatics] = React.useState("");
+  const [listlegveg, setLegvg] = React.useState('')
 
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   // const loaderRef = {
   //     token: "is____token",
   //    }
@@ -111,11 +116,11 @@ const AUDIT_VIEW_PAGE = (props) => {
   };
 
   const Header = [
-    { name: "Category" },
-    { name: "Questions" },
-    { name: "Images" },
-    { name: "Compliance" },
-    { name: "Observation" },
+    { name:listlegveg=="pl_PL"? "Kategoria":"Category" },
+    { name: listlegveg=="pl_PL"?"pytania":"Questions" },
+    { name: listlegveg=="pl_PL"?"Obrazy":"Images" },
+    { name: listlegveg=="pl_PL"?"Zgodność":"Compliance" },
+    { name: listlegveg=="pl_PL"?"Obserwacja":"Observation" },
   ];
 
   const onSearch = (e) => {
@@ -207,53 +212,53 @@ const AUDIT_VIEW_PAGE = (props) => {
           <Grid md={12}>
             <Grid container className={styles.top_box_}>
               <Grid md={6}>
-                <Typography>Location: {details.auditLocation.name}</Typography>
+                <Typography>{listlegveg=="pl_PL"?"Lokalizacja:":"Location:"} {details.auditLocation.name}</Typography>
                 <Typography>
-                  Total Score: {details.audit_score_data}
+                {listlegveg=="pl_PL"?"Całkowity wynik:":"Total Score:"} {details.audit_score_data}
                 </Typography>
                 <Typography>
-                Audit Start:   {moment(details.audit_start).format("DD/MM/YYYY h:mm A")}
+                {listlegveg=="pl_PL"?"Rozpoczęcie audytu:":"Audit Start:"}   {moment(details.audit_start).format("DD/MM/YYYY h:mm A")}
                 </Typography>
                 <Typography>
-                Audit End:{moment(details.audit_end).format("DD/MM/YYYY h:mm A")}
+                {listlegveg=="pl_PL"?"Koniec audytu:":"Audit End:"}{moment(details.audit_end).format("DD/MM/YYYY h:mm A")}
                 </Typography>
               </Grid>
               <Grid md={6}>
                 <Typography>
-                  Date Time:
+                {listlegveg=="pl_PL"?"Data i godzina:":"Date Time:"}
                   {/* {moment.utc(details.createdAt,null).tz('Asia/Riyadh').format('DD/MM/YYYY hh:mm A')} */}
                   {/* {convertUTCToTimezone(details.createdAt)} */}
                   {`${moment(details.createdAt).format("DD/MM/YYYY")} 
                   ${moment(details.createdAt).format("LT")}`}
                 </Typography>
-                <Typography>Grade: {statatics.grade}</Typography>
-                <Typography>Audit Time: {statatics.audit_time}</Typography>
-                <Typography>Gps Location: {statatics.gps_location}</Typography>
+                <Typography>{listlegveg=="pl_PL"?"Stopień:":"Grade:"} {statatics.grade}</Typography>
+                <Typography>{listlegveg=="pl_PL"?"Czas audytu:":"Audit Time:"} {statatics.audit_time}</Typography>
+                <Typography>{listlegveg=="pl_PL"?"Lokalizacja GPS:":"Gps Location:"} {statatics.gps_location}</Typography>
               </Grid>
               <Grid md={4}>
                 <Typography>
-                  Compliant:{statatics.compliantCount}
+                {listlegveg=="pl_PL"?"Zgodny:":"Compliant:"}{statatics.compliantCount}
                 </Typography>
                 <Typography>
-                  N/C Minor:{statatics.minorCount}
+                {listlegveg=="pl_PL"?"Niepełnoletni:":"N/C Minor:"}{statatics.minorCount}
                 </Typography>
               </Grid>
               <Grid md={4}>
-                <Typography>N/A:{statatics.naCount}</Typography>
+                <Typography>{listlegveg=="pl_PL"?"nie dotyczy:":"N/A:"}{statatics.naCount}</Typography>
                 <Typography>
-                  N/C Major:{statatics.majorCount}
+                {listlegveg=="pl_PL"?"Major N/C:":"N/C Major:"}{statatics.majorCount}
                 </Typography>
               </Grid>
               <Grid md={4}>
                 <Typography>
-                  Applicable:{statatics.applicableCount}
+                {listlegveg=="pl_PL"?"Odpowiedni:":"Applicable:"}{statatics.applicableCount}
                 </Typography>
                 <Typography>
-                  N/C Critical:{statatics.criticalCount}
+                {listlegveg=="pl_PL"?"Krytyczny N/C:":"N/C Critical:"}{statatics.criticalCount}
                 </Typography>
               </Grid>
               <Grid md={4}>
-                <Typography>Auditor: {details.auditUser.name}</Typography>
+                <Typography>{listlegveg=="pl_PL"?"Rewident księgowy:":"Auditor:"} {details.auditUser.name}</Typography>
               </Grid>
               <Grid md={4}>
                 <Box className={styles.image_box_top}>
