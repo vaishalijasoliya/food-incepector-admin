@@ -13,7 +13,7 @@ const All_qus_list = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title:listlegveg=="pl_PL"? "Szczegóły audytu":"Audit Details",
+    title:listlegveg=="pl_PL"? "تفاصيل المراجعة":"Audit Details",
   };
   return (
     <>

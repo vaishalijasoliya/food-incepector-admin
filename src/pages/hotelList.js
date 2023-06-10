@@ -10,7 +10,7 @@ const Hotel_list = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title: listlegveg=="pl_PL"?"Lokalizacje":"Locations",
+    title: listlegveg=="pl_PL"?"المواقع":"Locations",
   };
   return (
     <MainLayout

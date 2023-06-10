@@ -15,7 +15,7 @@ const Index = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title: listlegveg=="pl_PL"?"Rewizja":"Audit ",
+    title: listlegveg=="pl_PL"?"مراجعة":"Audit ",
   };
   console.log(props, 'props')
   return (

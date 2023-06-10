@@ -101,10 +101,10 @@ const Subadmin = (prop) => {
   };
   const Header = [
     // { id: 1, name: "Index" },
-    { id: 2, name: listlegveg=="pl_PL"?"Pełne imię i nazwisko":"Full name" },
+    { id: 2, name: listlegveg=="pl_PL"?"الاسم الكامل":"Full name" },
 
-    { id: 4, name: listlegveg=="pl_PL"?"nazwa użytkownika":"username" },
-    { id: 5, name: listlegveg=="pl_PL"?"działanie":"action" },
+    { id: 4, name: listlegveg=="pl_PL"?"اسم المستخدم":"username" },
+    { id: 5, name: listlegveg=="pl_PL"?"فعل":"action" },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -123,9 +123,9 @@ const Subadmin = (prop) => {
       password: "",
     },
     validationSchema: Yup.object({
-      userName: Yup.string().required(listlegveg=="pl_PL"?"akcja Nazwa użytkownika jest wymagana.":"Username is required."),
-      password: Yup.string().required(listlegveg=="pl_PL"?"Wymagane jest hasło.":"Password is required."),
-      name: Yup.string().required(listlegveg=="pl_PL"?"imie jest wymagane":"Name is required"),
+      userName: Yup.string().required(listlegveg=="pl_PL"?"اسم المستخدم مطلوب.":"Username is required."),
+      password: Yup.string().required(listlegveg=="pl_PL"?"كلمة المرور مطلوبة.":"Password is required."),
+      name: Yup.string().required(listlegveg=="pl_PL"?"مطلوب اسم":"Name is required"),
     }),
     onSubmit: () => {
       onAddAdmin();
@@ -139,8 +139,8 @@ const Subadmin = (prop) => {
       password: "",
     },
     validationSchema: Yup.object({
-      userName: Yup.string().required(listlegveg=="pl_PL"?"akcja Nazwa użytkownika jest wymagana.":"Username is required."),
-      name: Yup.string().required(listlegveg=="pl_PL"?"imie jest wymagane":"Name is required"),
+      userName: Yup.string().required(listlegveg=="pl_PL"?"اسم المستخدم مطلوب.":"Username is required."),
+      name: Yup.string().required(listlegveg=="pl_PL"?"مطلوب اسم":"Name is required"),
     }),
     onSubmit: () => {
       onEditAuditor();
@@ -382,7 +382,7 @@ const Subadmin = (prop) => {
               type="text"
               id="myserchbtn"
               name="search"
-              placeholder="Search"
+              placeholder={listlegveg=='pl_PL'?"يبحث":"search"}
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
@@ -422,7 +422,7 @@ const Subadmin = (prop) => {
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9} sm={12}>
           <Button className={styles.megobtn} onClick={handleClickOpen}>
-           {listlegveg=="pl_PL"? "Dodaj administratora":"Add Admin"}
+           {listlegveg=="pl_PL"? "إضافة المسؤول":"Add Admin"}
           </Button>
           <Dialog
             fullWidth={false}
@@ -431,14 +431,14 @@ const Subadmin = (prop) => {
             onClose={handleClose}
           >
             <DialogTitle className={styles.addadmintitle}>
-            {listlegveg=="pl_PL"? "Dodaj administratora":"Add Admin"}
+            {listlegveg=="pl_PL"? "إضافة المسؤول":"Add Admin"}
             </DialogTitle>
             <form onSubmit={formik.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
                 <Grid container justifyContent={"center"}>
                   <Grid item md={12}>
                     <Box className={"Input_box"}>
-                      <InputLable text={listlegveg=="pl_PL"?"Wprowadź imię":"Enter name"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"أدخل الاسم":"Enter name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="name"
@@ -453,7 +453,7 @@ const Subadmin = (prop) => {
                       </Box>
                     </Box>
                     <Box className={"Input_box"}>
-                      <InputLable text={listlegveg=="pl_PL"?"Nazwa użytkownika":"Username"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"اسم المستخدم":"Username"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="userName"
@@ -468,7 +468,7 @@ const Subadmin = (prop) => {
                       </Box>
                     </Box>
                     <Box className={"Input_box"}>
-                      <InputLable text={listlegveg=="pl_PL"?"Hasło":"Password"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"كلمة المرور":"Password"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         type="password"
@@ -486,8 +486,8 @@ const Subadmin = (prop) => {
                   </Grid>
                 </Grid>
                 <div className={styles.adminbtncss}>
-                  <Button_ handleClick={handleClose} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
-                  <Button_ type="submit" text={listlegveg=="pl_PL"?"Dodać":"Add"} />{" "}
+                  <Button_ handleClick={handleClose} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
+                  <Button_ type="submit" text={listlegveg=="pl_PL"?"يضيف":"Add"} />{" "}
                 </div>
               </Box>
             </form>
@@ -498,13 +498,13 @@ const Subadmin = (prop) => {
             open={openTWO}
             onClose={handleCloseTWO}
           >
-            <DialogTitle className={styles.addadmintitle}>{listlegveg=="pl_PL"?"Edytuj administratora":"Edit Admin"}</DialogTitle>
+            <DialogTitle className={styles.addadmintitle}>{listlegveg=="pl_PL"?"تحرير المسؤول":"Edit Admin"}</DialogTitle>
             <form onSubmit={formikEdit.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
                 <Grid container justifyContent={"space-between"}>
                   <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                     <Box className={"Input_box"}>
-                      <InputLable text={listlegveg=="pl_PL"?"Wprowadź imię":"Enter name"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"أدخل الاسم":"Enter name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="name"
@@ -521,7 +521,7 @@ const Subadmin = (prop) => {
                   </Grid>
                   <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                     <Box className={"Input_box"}>
-                      <InputLable text={listlegveg=="pl_PL"?"Nazwa użytkownika":"Username"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"اسم المستخدم":"Username"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="userName"
@@ -540,7 +540,7 @@ const Subadmin = (prop) => {
 
                   <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                     <Box className={"Input_box"}>
-                      <InputLable text={listlegveg=="pl_PL"?"Hasło":"Password"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"كلمة المرور":"Password"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="password"
@@ -558,8 +558,8 @@ const Subadmin = (prop) => {
                   </Grid>
                 </Grid>
                 <div className={styles.adminbtncss}>
-                  <Button_ handleClick={handleCloseTWO} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
-                  <Button_ type={"submit"} text={listlegveg=="pl_PL"?"Edytować":"Edit"} />{" "}
+                  <Button_ handleClick={handleCloseTWO} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
+                  <Button_ type={"submit"} text={listlegveg=="pl_PL"?"يحرر":"Edit"} />{" "}
                 </div>
               </Box>
             </form>
@@ -571,13 +571,13 @@ const Subadmin = (prop) => {
             onClose={handleClose_delete}
           >
             <DialogTitle className={styles.addtitalaja}>
-              {listlegveg=="pl_PL"?"Usuń administratora":"Delete Admin"}
+              {listlegveg=="pl_PL"?"حذف المسؤول":"Delete Admin"}
             </DialogTitle>
             <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-              <Typography> {listlegveg=="pl_PL"?"Czy na pewno chcesz usunąć administratora?":"Are you sure you want to delete Admin?"}</Typography>
+              <Typography> {listlegveg=="pl_PL"?"هل أنت متأكد أنك تريد حذف المسؤول؟":"Are you sure you want to delete Admin?"}</Typography>
               <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose_delete} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
-                <Button_ handleClick={onDelete} text={listlegveg=="pl_PL"?"Usuwać":"Delete"} />{" "}
+                <Button_ handleClick={handleClose_delete} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
+                <Button_ handleClick={onDelete} text={listlegveg=="pl_PL"?"يمسح":"Delete"} />{" "}
               </div>
             </Box>
           </Dialog>
@@ -610,12 +610,12 @@ const Subadmin = (prop) => {
                 >
                   <Tab
                     className={Tabbar_style.tab_btns}
-                    label={listlegveg=="pl_PL"?"Aktywny":"Active"}
+                    label={listlegveg=="pl_PL"?"نشيط":"Active"}
                     {...a11yProps(0)}
                   />
                   <Tab
                     className={Tabbar_style.tab_btns}
-                    label={listlegveg=="pl_PL"?"Usunięto":"Deleted"}
+                    label={listlegveg=="pl_PL"?"تم الحذف":"Deleted"}
                     {...a11yProps(1)}
                   />
                 </Tabs>

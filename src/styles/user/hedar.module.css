@@ -87,7 +87,18 @@
   justify-content: space-between !important;
   column-gap: 20px;
 }
+.adfjadjjadjdd{
+  background: #AE802C !important;
+  color: white !important;
+  height: 40px;
+  /* margin-right: 10px; */
+  text-transform: capitalize;
+}
+.jsahfsahfhf{
+  border: 1px solid;
+  text-transform: capitalize;
 
+}
 .maencontainer {
   margin-bottom: 30px;
   width: 100%;

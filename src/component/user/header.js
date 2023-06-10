@@ -58,23 +58,23 @@ const Nevbar = (props) => {
         </Grid>
         <Grid item xs={12} className={styles.img2} md={6}>
           {listlegveg == 'pl_PL' ?
-            <Button onClick={() => {
+            <Button style={{marginRight:'10px'}}  className={styles.adfjadjjadjdd} onClick={() => {
               localStorage.setItem('language', 'en_US')
               window.location.href = currentPath
             }}>
-              en_US
-            </Button> : <Button disabled>
-              en_US
+              English
+            </Button> : <Button className={styles.jsahfsahfhf} disabled>
+            English
             </Button>}
           {listlegveg == 'en_US' ?
-            <Button onClick={() => {
+            <Button style={{marginLeft:'10px'}} className={styles.adfjadjjadjdd}  onClick={() => {
               localStorage.setItem('language', 'pl_PL')
               window.location.href = currentPath
             }}>
-              pl_PL
+              Arabic
             </Button>
-            : <Button disabled>
-              pl_PL
+            : <Button className={styles.jsahfsahfhf}  disabled>
+            Arabic
             </Button>}
           {/* <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
@@ -143,7 +143,9 @@ const Nevbar = (props) => {
                 removeData({ logout: logOut });
               }}
             >
-              <LogoutIcon color="action" /> Logout
+              <LogoutIcon color="action" />
+              {listlegveg=='pl_PL'?' تسجيل خروج':'Logout'}
+              
             </MenuItem>
           </Menu>
         </Grid>

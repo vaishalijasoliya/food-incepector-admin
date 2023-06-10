@@ -15,7 +15,7 @@ const Dashdata = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title: listlegveg=='pl_PL'?'Panel':"Dashboard",
+    title: listlegveg=='pl_PL'?'لوحة القيادة':"Dashboard",
     // desc: istlegveg=='pl_PL'?'Panel':"Morning James, Welcome to Clever Gifts Dashboard ",
   };
 

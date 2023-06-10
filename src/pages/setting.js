@@ -10,7 +10,7 @@ const Setting = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title:listlegveg=="pl_PL"?"subadmin":"Subadmin",
+    title:listlegveg=="pl_PL"?"Subadmin":"Subadmin",
   };
 
   return (

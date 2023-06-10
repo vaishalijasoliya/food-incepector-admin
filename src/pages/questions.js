@@ -11,7 +11,7 @@ const Questions = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title: listlegveg=="pl_PL"?"Pytanie":"Question",
+    title: listlegveg=="pl_PL"?"سؤال":"Question",
   };
 
   return (

@@ -209,16 +209,16 @@ const Audit_page = (props) => {
 
   }, [arrlogg, age_two]);
   const Header = [
-    { id: 1, name: listlegveg=="pl_PL"?"Lokalizacje":"Locations" },
-    { id: 2, name: listlegveg=="pl_PL"?"czas rozpoczęcia audytu":"time of starting audit" },
-    { id: 3, name: listlegveg=="pl_PL"?"czas trwania audytu":"duration for audit" },
-    { id: 4, name: listlegveg=="pl_PL"?"Lokalizacja GPS do audytu":"GPS location for audit" },
-    { id: 5, name: listlegveg=="pl_PL"?"Nazwa audytora":"Auditor name" },
-    { id: 6, name: listlegveg=="pl_PL"?"zdjęcie inspektora":'inspector photo' },
+    { id: 1, name: listlegveg=="pl_PL"?"المواقع":"Locations" },
+    { id: 2, name: listlegveg=="pl_PL"?"وقت بدء التدقيق":"time of starting audit" },
+    { id: 3, name: listlegveg=="pl_PL"?"مدة التدقيق":"duration for audit" },
+    { id: 4, name: listlegveg=="pl_PL"?"موقع GPS للتدقيق":"GPS location for audit" },
+    { id: 5, name: listlegveg=="pl_PL"?"اسم المدقق":"Auditor name" },
+    { id: 6, name: listlegveg=="pl_PL"?"صور":'inspector photo' },
     // { id: 7, name: "Date Time " },
-    { id: 7, name:listlegveg=="pl_PL"? "Wynik":"Score" },
+    { id: 7, name:listlegveg=="pl_PL"? "نتيجة":"Score" },
     // { id: 8, name: "Review by" },
-    { id: 8, name: listlegveg=="pl_PL"?"PDF":"PDF " },
+    { id: 8, name: listlegveg=="pl_PL"?"بي دي إف":"PDF " },
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -326,11 +326,11 @@ const Audit_page = (props) => {
            setAge('')
            setAge_two('')
             }}>
-            {listlegveg=="pl_PL"?"Resetowanie":
+            {listlegveg=="pl_PL"?"ريسيتوياني":
             "Reset"}
           </Button>
           <DatePickerll
-            placeholderText="Start Date"
+            placeholderText={listlegveg=="pl_PL"?"تاريخ البدء":"Start Date"}
             dateFormat="dd MMMM yyyy"
             className={styles.addfast_datepickerll}
             selected={startDate}
@@ -348,7 +348,7 @@ const Audit_page = (props) => {
             maxDate={today}
           />
           <DatePickerll
-            placeholderText="End Date"
+            placeholderText={listlegveg=="pl_PL"?"تاريخ الانتهاء":"End Date"}
             dateFormat="dd MMMM yyyy"
             className={styles.addfast_datepickerll}
             selected={endDate}
@@ -367,7 +367,7 @@ const Audit_page = (props) => {
             maxDate={today}
           />
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-helper-label">Locations</InputLabel>
+            <InputLabel id="demo-simple-select-helper-label">{listlegveg=="pl_PL"?"المواقع":"Locations"}</InputLabel>
             <Select
               className={styles.select_box_main_contenar}
               labelId="demo-simple-select-helper-label"
@@ -377,7 +377,7 @@ const Audit_page = (props) => {
               onChange={handleChange_select}
             >
               <MenuItem value="">
-               {listlegveg=="pl_PL"?"Nic":
+               {listlegveg=="pl_PL"?"لا أحد":
                 "None"}
               </MenuItem>
               {/* <MenuItem value="">none</MenuItem> */}
@@ -389,7 +389,7 @@ const Audit_page = (props) => {
             </Select>
           </FormControl>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-helper-label">Auditor Name</InputLabel>
+            <InputLabel id="demo-simple-select-helper-label">{listlegveg=="pl_PL"?"اسم المدقق":"Auditor Name"}</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -399,7 +399,7 @@ const Audit_page = (props) => {
               onChange={handleChange_select_two}
             >
               <MenuItem value="">
-                {listlegveg=="pl_PL"?"Nic":"None"}
+                {listlegveg=="pl_PL"?"لا أحد":"None"}
               </MenuItem>
               {/* <MenuItem value="">none</MenuItem> */}
               {dataSearch.map((item, index) => {

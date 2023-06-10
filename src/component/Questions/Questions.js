@@ -143,7 +143,7 @@ const Questions_page = (props) => {
       name: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required(listlegveg=="pl_PL"?"Imie jest wymagane.":"Name is required."),
+      name: Yup.string().required(listlegveg=="pl_PL"?"مطلوب اسم.":"Name is required."),
     }),
     onSubmit: () => {
       setSubmitted(true);
@@ -258,9 +258,9 @@ const Questions_page = (props) => {
   };
 
   const Head = [
-    { id: 1, name: listlegveg=="pl_PL"?"Nazwa":"Name" },
-    { id: 2, name: listlegveg=="pl_PL"?"Kategoria":"category" },
-    { id: 3, name: listlegveg=="pl_PL"?"działania":"Actions" },
+    { id: 1, name: listlegveg=="pl_PL"?"اسم":"Name" },
+    { id: 2, name: listlegveg=="pl_PL"?"فئة":"category" },
+    { id: 3, name: listlegveg=="pl_PL"?"أجراءات":"Actions" },
   ];
 
   const onSearch = (e) => {
@@ -345,13 +345,13 @@ const Questions_page = (props) => {
         onClose={handleCloseEdit}
         key={1}
       >
-        <DialogTitle className={styles.addtitalaja}>{listlegveg=="pl_PL"?"Edytuj pytania":"Edit Questions"}</DialogTitle>
+        <DialogTitle className={styles.addtitalaja}>{listlegveg=="pl_PL"?"تحرير الأسئلة":"Edit Questions"}</DialogTitle>
         <form onSubmit={formik.handleSubmit}>
           <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
             <Grid container justifyContent={"space-between"}>
               <Grid item xs={12} sm={8} lg={8} xl={8} md={8}>
                 <Box className={"Input_box"}>
-                  <InputLable text={listlegveg=="pl_PL"?"Nazwa":"Name"} fs={"12px"} />
+                  <InputLable text={listlegveg=="pl_PL"?"اسم":"Name"} fs={"12px"} />
                   <TextField
                     className={"Input_field"}
                     name="name"
@@ -368,7 +368,7 @@ const Questions_page = (props) => {
               </Grid>
               <Grid item xs={12} sm={3} lg={3} xl={3} md={3}>
                 <Box className={"Input_box"}>
-                  <InputLable text={listlegveg=="pl_PL"?"Kategoria":"Category"} fs={"12px"} />
+                  <InputLable text={listlegveg=="pl_PL"?"فئة":"Category"} fs={"12px"} />
 
                   <Select
                     value={selectedOption}
@@ -386,7 +386,7 @@ const Questions_page = (props) => {
                     onChange={handleChange}
                   >
                     <MenuItem value={"select_category"}>
-                    {listlegveg=="pl_PL"?"Wybierz kategorię":"Select Category"}
+                    {listlegveg=="pl_PL"?"اختر الفئة":"Select Category"}
                     </MenuItem>
                     {categoryList.map((option) => (
                       <MenuItem key={option.value} value={option.id}>
@@ -396,15 +396,15 @@ const Questions_page = (props) => {
                   </Select>
                   <Box className={"error_text_view"}>
                     {selectedOption == "selectedOption" && (
-                      <Input_error text={listlegveg=="pl_PL"?"Wybierz kategorię":"Select a category"} />
+                      <Input_error text={listlegveg=="pl_PL"?"اختر تصنيف":"Select a category"} />
                     )}
                   </Box>
                 </Box>
               </Grid>
             </Grid>
             <div className={styles.cesalbtncss}>
-              <Button_ handleClick={handleCloseEdit} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
-              <Button_ type={"submit"} text={listlegveg=="pl_PL"?"Dodać":"Add"} />{" "}
+              <Button_ handleClick={handleCloseEdit} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
+              <Button_ type={"submit"} text={listlegveg=="pl_PL"?"يضيف":"Add"} />{" "}
             </div>
           </Box>
         </form>
@@ -417,14 +417,14 @@ const Questions_page = (props) => {
         onClose={handleClose_delete}
       >
         <DialogTitle className={styles.addtitalaja}>
-        {listlegveg=="pl_PL"?"Usuń pytania":
+        {listlegveg=="pl_PL"?"حذف الأسئلة":
           "Delete Questions"}
         </DialogTitle>
         <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-          <Typography>{listlegveg=="pl_PL"?"Czy na pewno chcesz usunąć pytania?":"Are you sure you want to delete Questions?"}</Typography>
+          <Typography>{listlegveg=="pl_PL"?"هل أنت متأكد أنك تريد حذف الأسئلة؟":"Are you sure you want to delete Questions?"}</Typography>
           <div className={styles.cesalbtncss}>
-            <Button_ handleClick={handleClose_delete} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
-            <Button_ handleClick={onDelete} text={listlegveg=="pl_PL"?"Usuwać":"Delete"} />{" "}
+            <Button_ handleClick={handleClose_delete} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
+            <Button_ handleClick={onDelete} text={listlegveg=="pl_PL"?"يمسح":"Delete"} />{" "}
           </div>
         </Box>
       </Dialog>
@@ -436,7 +436,7 @@ const Questions_page = (props) => {
               type="text"
               id="myserchbtn"
               name="search"
-              placeholder="Search"
+              placeholder={listlegveg=='pl_PL'?"يبحث":"search"}
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
@@ -453,7 +453,7 @@ const Questions_page = (props) => {
               handleClickOpen();
             }}
           >
-          {listlegveg=="pl_PL"?"Dodaj pytania":
+          {listlegveg=="pl_PL"?"أضف أسئلة":
             "Add Questions"}
           </Button>
         </Grid>
@@ -465,7 +465,7 @@ const Questions_page = (props) => {
           key={1}
         >
           <DialogTitle className={styles.addtitalaja}>
-          {listlegveg=="pl_PL"?"Dodaj pytania":
+          {listlegveg=="pl_PL"?"أضف أسئلة":
             "Add Questions"}
           </DialogTitle>
           <form onSubmit={formik.handleSubmit}>
@@ -473,7 +473,7 @@ const Questions_page = (props) => {
               <Grid container justifyContent={"space-between"}>
                 <Grid item xs={12} sm={8} lg={8} xl={8} md={8}>
                   <Box className={"Input_box"}>
-                    <InputLable text={listlegveg=="pl_PL"?"Nazwa":"Name"} fs={"12px"} />
+                    <InputLable text={listlegveg=="pl_PL"?"اسم":"Name"} fs={"12px"} />
                     <TextField
                       className={"Input_field"}
                       name="name"
@@ -490,7 +490,7 @@ const Questions_page = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={3} lg={3} xl={3} md={3}>
                   <Box className={"Input_box"}>
-                    <InputLable text={listlegveg=="pl_PL"?"Kategoria":"Category"} fs={"12px"} />
+                    <InputLable text={listlegveg=="pl_PL"?"فئة":"Category"} fs={"12px"} />
 
                     <Select
                       value={selectedOption}
@@ -508,7 +508,7 @@ const Questions_page = (props) => {
                       onChange={handleChange}
                     >
                       <MenuItem value={"select_category"}>
-                        {listlegveg=="pl_PL"?"Wybierz kategorię":"Select Category"}
+                        {listlegveg=="pl_PL"?"اختر الفئة":"Select Category"}
                       </MenuItem>
 
                       {categoryList.map((option) => (
@@ -519,7 +519,7 @@ const Questions_page = (props) => {
                     </Select>
                     <Box className={"error_text_view"}>
                       {submitted && selectedOption == "select_category" ? (
-                        <Input_error text={"Select a category"} />
+                        <Input_error text={listlegveg=="pl_PL"?"اختر تصنيف":"Select a category"} />
                       ) : (
                         ""
                       )}
@@ -528,8 +528,8 @@ const Questions_page = (props) => {
                 </Grid>
               </Grid>
               <div className={styles.cesalbtncss}>
-                <Button_ handleClick={handleClose} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
-                <Button_ type={"submit"} text={listlegveg=="pl_PL"?"Dodać":"Add"} />{" "}
+                <Button_ handleClick={handleClose} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
+                <Button_ type={"submit"} text={listlegveg=="pl_PL"?"يضيف":"Add"} />{" "}
               </div>
             </Box>
           </form>

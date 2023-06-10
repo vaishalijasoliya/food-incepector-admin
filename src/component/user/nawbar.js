@@ -49,7 +49,7 @@ const Home = (props) => {
       }}
     >
       <span>
-      {listlegveg=='pl_PL'?'Panel':'Dashboard'}
+      {listlegveg=='pl_PL'?'لوحة القيادة':'Dashboard'}
       
       </span>
     </Button>,
@@ -63,7 +63,7 @@ const Home = (props) => {
       className={currentPath == "/inspectorList" ? styles.active : ""}
     >
       <span>
-      {listlegveg=='pl_PL'?'Lista audytorów':'Auditors list'}
+      {listlegveg=='pl_PL'?'قائمة المراجعين':'Auditors list'}
       </span>
     </Button>,
     <Button
@@ -77,7 +77,7 @@ const Home = (props) => {
       id={styles.butgri}
     >
       <span>
-      {listlegveg=='pl_PL'?'Kategoria':'Category'}
+      {listlegveg=='pl_PL'?'فئة':'Category'}
       </span>
     </Button>,
     <Button
@@ -90,7 +90,7 @@ const Home = (props) => {
       id={styles.butgri}
     >
       <span>
-      {listlegveg=='pl_PL'?'pytania':'Questions'}
+      {listlegveg=='pl_PL'?'أسئلة':'Questions'}
       </span>
     </Button>,
     <Button
@@ -104,7 +104,7 @@ const Home = (props) => {
       id={styles.butgri}
     >
       <span>
-      {listlegveg=='pl_PL'?'Lokalizacje':'Locations'}
+      {listlegveg=='pl_PL'?'المواقع':'Locations'}
       </span>
     </Button>,
 
@@ -119,7 +119,7 @@ const Home = (props) => {
       id={styles.butgri}
     >
       <span>
-      {listlegveg=='pl_PL'?'Lista audytów':'Audit list'}
+      {listlegveg=='pl_PL'?'قائمة المراجعة':'Audit list'}
       </span>
     </Button>,
     <Button
@@ -133,7 +133,7 @@ const Home = (props) => {
       id={styles.butgri}
     >
       <span>
-      {listlegveg=='pl_PL'?'Ustawienie':'Setting'}
+      {listlegveg=='pl_PL'?'جلسة':'Setting'}
 
       </span>
     </Button>,
@@ -147,7 +147,7 @@ const Home = (props) => {
     >
       {/* <CameraFrontIcon className={styles.iconside} /> */}
       <span>
-      {listlegveg=='pl_PL'?'Wyloguj':'Logout'}
+      {listlegveg=='pl_PL'?'تسجيل خروج':'Logout'}
         </span>
     </Button>,
   ];
@@ -187,18 +187,18 @@ const Home = (props) => {
                   <DialogContent className={styles.popupcasdfntenar}>
                     <div className={styles.lgtextout}>
                       <Typography>
-                      {listlegveg=='pl_PL'?'Wyloguj':'Logout'}
+                      {listlegveg=='pl_PL'?'تسجيل خروج':'Logout'}
                       </Typography>
                     </div>
                     <div className={styles.areypulisfg}>
                       <Typography>
-                      {listlegveg=='pl_PL'?'Czy na pewno chcesz się wylogować?':'Are you sure you want to logout'}
+                      {listlegveg=='pl_PL'?'هل أنت متأكد أنك تريد تسجيل الخروج':'Are you sure you want to logout'}
                       </Typography>
                     </div>
                     <div className={styles.btn2yesno}>
-                      <Button_ text={listlegveg=='pl_PL'?'NIE':'No'} handleClick={handleCloseCom} />
+                      <Button_ text={listlegveg=='pl_PL'?'لا':'No'} handleClick={handleCloseCom} />
                       <Button_
-                        text={listlegveg=='pl_PL'?'Tak':'Yes'}
+                        text={listlegveg=='pl_PL'?'نعم':'Yes'}
                         handleClick={() => {
                           removeData({ logout: logout });
                           // var profile = "";

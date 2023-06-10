@@ -15,7 +15,7 @@ const InspectorList = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title: listlegveg=="pl_PL"?"Rewident księgowy":"Auditor ",
+    title: listlegveg=="pl_PL"?"مدقق حسابات":"Auditor ",
   };
 
   return (

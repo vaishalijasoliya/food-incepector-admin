@@ -85,9 +85,9 @@ const Usercount = (props) => {
     setUserRender(false);
   };
   const Header = [
-    { id: 1, name: listlegveg=='pl_PL'?"Nazwa lokalizacji":"Location Name" },
-    { id: 2, name: listlegveg=='pl_PL'?"Rewident księgowy":"Auditor" },
-    { id: 3, name: listlegveg=='pl_PL'?"Data Czas":"Date Time " },
+    { id: 1, name: listlegveg=='pl_PL'?"اسم الموقع":"Location Name" },
+    { id: 2, name: listlegveg=='pl_PL'?"مدقق حسابات":"Auditor" },
+    { id: 3, name: listlegveg=='pl_PL'?"تاريخ الوقت":"Date Time " },
   ];
 
   const theme = createTheme({
@@ -128,7 +128,7 @@ const Usercount = (props) => {
       name: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required."),
+      name: Yup.string().required(listlegveg=='pl_PL'?"مطلوب اسم.":"Name is required."),
     }),
     onSubmit: (values) => {
       if (open == true) {
@@ -152,7 +152,7 @@ const Usercount = (props) => {
                 <img src="./image/3 User.svg" />
               </div>
               <p className={style.signnum}>{locationCount} </p>
-              <p className={style.signtxt}>{listlegveg=='pl_PL'?"Liczba lokalizacji":"Number Of Locations"}</p>
+              <p className={style.signtxt}>{listlegveg=='pl_PL'?"عدد من المواقع":"Number Of Locations"}</p>
             </Box>
 
           </Box>
@@ -166,7 +166,7 @@ const Usercount = (props) => {
                 </div>
               </Box>
               <p className={style.signnum}> {auditorCount} </p>
-              <p className={style.signtxt}>{listlegveg=='pl_PL'?"Liczba audytorów":"Number Of Auditors"}</p>
+              <p className={style.signtxt}>{listlegveg=='pl_PL'?"عدد المراجعين":"Number Of Auditors"}</p>
             </Box>
           </Box>
         </Grid>
@@ -179,13 +179,13 @@ const Usercount = (props) => {
                 </div>
               </Box>
               <p className={style.signnum}> {therdata} </p>
-              <p className={style.signtxt}>{listlegveg=='pl_PL'?"Ogólna ocena":"Overall Score"} </p>
+              <p className={style.signtxt}>{listlegveg=='pl_PL'?"المجموع النهائي":"Overall Score"} </p>
             </Box>
           </Box>
         </Grid>
       </Grid>
       <Grid container className={Style.table_main_container}>
-        <p className={style.table_title}>{listlegveg=='pl_PL'?"Ocena według kategorii":"Score by category"}</p>
+        <p className={style.table_title}>{listlegveg=='pl_PL'?"يسجل حسب الفئة":"Score by category"}</p>
         <Grid container>
           <Grid item xs={12} md={12}>
             <div>
@@ -202,12 +202,12 @@ const Usercount = (props) => {
                           <TableCell
                             className={Style.table_cell}
                           >
-                            {listlegveg=='pl_PL'?"Kategoria":"Category"}
+                            {listlegveg=='pl_PL'?"فئة":"Category"}
                           </TableCell>
                           <TableCell
                             className={Style.table_cell}
                           >
-                           {listlegveg=='pl_PL'?"wynik":"score"}
+                           {listlegveg=='pl_PL'?"نتيجة":"score"}
                             
                           </TableCell>
                         </TableRow>
@@ -247,7 +247,7 @@ const Usercount = (props) => {
         </Grid>
       </Grid>
       <Grid container className={Style.table_main_container}>
-        <p className={style.table_title}> {listlegveg=='pl_PL'?"Najnowszy audyt":"Latest Audit"}</p>
+        <p className={style.table_title}> {listlegveg=='pl_PL'?"أحدث تدقيق":"Latest Audit"}</p>
         <Grid container>
           <Grid item xs={12} md={12}>
             <div>

@@ -98,7 +98,7 @@ const EnhancedTable = (props) => {
   const onAddCategory = async () => {
     var headers = {
       "Content-Type": "application/json",
-      "x-access-token": props.props.profile.token,
+      "x-access-token": props.profile.token,
     };
     var body = {
       name: formik.values.name,
@@ -220,7 +220,7 @@ const EnhancedTable = (props) => {
   const getCategoryList = async () => {
     var headers = {
       "Content-Type": "application/json",
-      "x-access-token": props.props.profile.token,
+      "x-access-token": props.profile.token,
     };
     var body = {};
     
@@ -242,12 +242,13 @@ const EnhancedTable = (props) => {
     }
     setUserRender(false);
   };
+  console.log(props,'propsprops22');
   React.useEffect(() => {
     if (
       userRender &&
-      props.props &&
-      props.props.profile &&
-      props.props.profile.token
+      props &&
+      props.profile &&
+      props.profile.token
     ) {
       getCategoryList();
     }
@@ -262,14 +263,14 @@ const EnhancedTable = (props) => {
         onClose={handleClose_delete}
       >
         <DialogTitle className={styles.addtitalaja}>
-        {listlegveg=="pl_PL"?"Usuń kategorię":
+        {listlegveg=="pl_PL"?"حذف الفئة":
           "Delete Category"}
         </DialogTitle>
         <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
-          <Typography>{listlegveg=="pl_PL"?"Czy na pewno chcesz usunąć kategorię?":"Are you sure you want to delete Category?"}</Typography>
+          <Typography>{listlegveg=="pl_PL"?"هل أنت متأكد أنك تريد حذف الفئة؟":"Are you sure you want to delete Category?"}</Typography>
           <div className={styles.cesalbtncss}>
-            <Button_ handleClick={handleClose_delete} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
-            <Button_ handleClick={onDelete} text={listlegveg=="pl_PL"?"Usuwać":"Delete"} />{" "}
+            <Button_ handleClick={handleClose_delete} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
+            <Button_ handleClick={onDelete} text={listlegveg=="pl_PL"?"يمسح":"Delete"} />{" "}
           </div>
         </Box>
       </Dialog>
@@ -280,7 +281,7 @@ const EnhancedTable = (props) => {
               type="text"
               id="myserchbtn"
               name="search"
-              placeholder="Search"
+              placeholder={listlegveg=='pl_PL'?"يبحث":"search"}
               className={styles.searchbtn}
               autoComplete="off"
               onChange={(e) => {
@@ -306,7 +307,7 @@ const EnhancedTable = (props) => {
         </Grid>
         <Grid className={styles.maxbox} item xs={12} md={9}>
           <Button className={styles.megobtn} onClick={handleClickOpen}>
-          {listlegveg=="pl_PL"?"Dodaj kategorię"
+          {listlegveg=="pl_PL"?"إضافة فئة"
             :"Add Category"}
           </Button>
           <Dialog
@@ -317,14 +318,14 @@ const EnhancedTable = (props) => {
             key={1}
           >
             <DialogTitle className={styles.addtitalaja}>
-              {listlegveg=="pl_PL"?"Dodaj kategorię":"Add Category"}
+              {listlegveg=="pl_PL"?"إضافة فئة":"Add Category"}
             </DialogTitle>
             <form onSubmit={formik.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
                 <Grid container justifyContent={"space-between"}>
                   <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                     <Box className={"Input_box"}>
-                      <InputLable text={listlegveg=="pl_PL"?"Nazwa":"Name"} fs={"12px"} />
+                      <InputLable text={listlegveg=="pl_PL"?"اسم":"Name"} fs={"12px"} />
                       <TextField
                         className={"Input_field"}
                         name="name"
@@ -341,12 +342,12 @@ const EnhancedTable = (props) => {
                   </Grid>
                 </Grid>
                 <div className={styles.cesalbtncss}>
-                  <Button_ handleClick={handleClose} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
+                  <Button_ handleClick={handleClose} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
                   {/* <Button type="submit">Add</Button> */}
                   <Button_
                     type={"submit"}
                     // handleClick=s{() => formik.handleSubmit()}
-                    text={listlegveg=="pl_PL"?"Dodać":"Add"}
+                    text={listlegveg=="pl_PL"?"يضيف":"Add"}
                   />
                 </div>
               </Box>
@@ -362,13 +363,13 @@ const EnhancedTable = (props) => {
         onClose={handleCloseEdit}
         key={1}
       >
-        <DialogTitle className={styles.addtitalaja}>{listlegveg=="pl_PL"?"Edytuj kategorię":"Edit Category"}</DialogTitle>
+        <DialogTitle className={styles.addtitalaja}>{listlegveg=="pl_PL"?"تحرير الفئة":"Edit Category"}</DialogTitle>
         <form onSubmit={formik.handleSubmit}>
           <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
             <Grid container justifyContent={"space-between"}>
               <Grid item xs={12} sm={12} lg={12} xl={12} md={12}>
                 <Box className={"Input_box"}>
-                  <InputLable text={listlegveg=="pl_PL"?"Nazwa":"Name"} fs={"12px"} />
+                  <InputLable text={listlegveg=="pl_PL"?"اسم":"Name"} fs={"12px"} />
                   <TextField
                     className={"Input_field"}
                     name="name"
@@ -385,8 +386,8 @@ const EnhancedTable = (props) => {
               </Grid>
             </Grid>
             <div className={styles.cesalbtncss}>
-              <Button_ handleClick={handleCloseEdit} text={listlegveg=="pl_PL"?"Anulować":"Cancel"} />
-              <Button_ type={"submit"} text={listlegveg=="pl_PL"?"Edytować":"Edit"} />
+              <Button_ handleClick={handleCloseEdit} text={listlegveg=="pl_PL"?"يلغي":"Cancel"} />
+              <Button_ type={"submit"} text={listlegveg=="pl_PL"?"يحرر":"Edit"} />
             </div>
           </Box>
         </form>
@@ -410,14 +411,14 @@ const EnhancedTable = (props) => {
                     <TableHead>
                       <TableRow>
                         <TableCell className={styles.addnmejdhd}>
-                          {listlegveg=="pl_PL"?"Nazwa":"Name"}
+                          {listlegveg=="pl_PL"?"اسم":"Name"}
                         </TableCell>
                         <TableCell
                           style={{
                             textAlign: "right",
                           }}
                         >
-                          {listlegveg=="pl_PL"?"działania":"Actions"}
+                          {listlegveg=="pl_PL"?"أجراءات":"Actions"}
                         </TableCell>
                       </TableRow>
                     </TableHead>

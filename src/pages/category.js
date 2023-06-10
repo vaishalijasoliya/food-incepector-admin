@@ -13,7 +13,7 @@ const Category = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title: listlegveg == 'pl_PL' ? "Kategoria" : "Category",
+    title: listlegveg == 'pl_PL' ? "فئة" : "Category",
     // desc: "Morning James, Welcome to Clever Gifts Dashboard ",
   };
   return (
