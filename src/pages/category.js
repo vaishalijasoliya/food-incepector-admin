@@ -1,13 +1,11 @@
-import Nevbar from "../component/user/newbarlist";
-import Header from "../component/user/header";
+import React, { useState, useEffect } from 'react';
 import Paymenttable from "../component/Payments/paymentslist";
 import styles from "../styles/user/index.module.css";
 import Grid from "@mui/material/Grid";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
 import { MainLayout } from "../Layout/Pages_layout/mainLayout";
-import React from "react";
-const index = (props) => {
+const Category = (props) => {
   const [listlegveg, setLegvg] = React.useState('')
 
   React.useEffect(() => {
@@ -15,7 +13,7 @@ const index = (props) => {
     setLegvg(listtebal);
   }, []);
   const data = {
-    title: listlegveg=='pl_PL'?"Kategoria":"Category",
+    title: listlegveg == 'pl_PL' ? "Kategoria" : "Category",
     // desc: "Morning James, Welcome to Clever Gifts Dashboard ",
   };
   return (
@@ -38,13 +36,4 @@ const index = (props) => {
     </>
   );
 };
-// export default index;
-const mapStateToProps = (state) => ({
-  profile: state.user.profile,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(index);
+export default Category;

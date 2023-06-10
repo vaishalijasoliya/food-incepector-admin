@@ -1,11 +1,11 @@
+import React, { useState, useEffect } from 'react';
 import Nevbar from "../component/user/newbarlist";
 import Header from "../component/user/header";
 import Grid from "@mui/material/Grid";
 import { Types } from "../constants/actionTypes";
 import { connect } from "react-redux";
 import Audit_qus_page from "../component/Audit/all_qus_list";
-import React from "react";
-const index = (props) => {
+const All_qus_list = (props) => {
   const [listlegveg, setLegvg] = React.useState('')
 
   React.useEffect(() => {
@@ -30,13 +30,13 @@ const index = (props) => {
     </>
   );
 };
-// export default index;
-const mapStateToProps = (state) => ({
-  profile: state.user.profile,
-});
+export default All_qus_list;
+// const mapStateToProps = (state) => ({
+//   profile: state.user.profile,
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   save_user_data: (data) => dispatch({ type: Types.LOGIN, payload: data }),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(index);
+// export default connect(mapStateToProps, mapDispatchToProps)(index);
