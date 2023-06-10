@@ -34,6 +34,7 @@ const Signin = (props) => {
     props.props.loaderRef(false);
     if (!!data) {
       if (data.status == true && data.data.role == 'admin') {
+        localStorage.setItem('language', 'en_US')
         props.save_user_data({ user: data });
         router.push("/dashboard");
         toast.success("Logged In Succesfully");
