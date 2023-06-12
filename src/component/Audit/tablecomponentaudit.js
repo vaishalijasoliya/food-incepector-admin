@@ -64,7 +64,7 @@ export const TableComponent = ({
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
           ).map((item, index) => {
-            console.log(item.user.user_name, "item__");
+            console.log(item.audit_selfi, "item__");
 
             return (
               <TableRow
