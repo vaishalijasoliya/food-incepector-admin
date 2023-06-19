@@ -23,7 +23,6 @@ import {
   createTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import * as Yup from "yup";
 import { Input_error } from "../Utils/string";
 import { TabPanel, a11yProps } from "../Tabs/tabs";
@@ -33,6 +32,7 @@ import ApiEndpoint from "../../config/ApiEndpoint";
 import { toast } from "react-toastify";
 import { Error_msg } from "../Utils/message";
 import { Loading } from "../../Layout/Loader";
+import Style from "./subadmin.module.css";
 
 const Subadmin = (prop) => {
   const { props, profile } = prop;
@@ -54,6 +54,8 @@ const Subadmin = (prop) => {
   const [imageId, setImageId] = React.useState("");
   const [userProfileImage, setUserProfileImage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [adminEmail, setAdminEmail] = React.useState("");
+  const [optionEmail, setOptionEmail] = React.useState("");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -67,7 +69,7 @@ const Subadmin = (prop) => {
     }
   };
 
-  console.log("auditorDetails___________", auditorDetails);
+  console.log("auditorDetails___________", adminEmail);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -313,7 +315,6 @@ const Subadmin = (prop) => {
 
     handleClose_delete();
   };
-
   const uploadItem = async (e) => {
     var filename = e.target.files[0];
     var formData = new FormData();
@@ -352,6 +353,56 @@ const Subadmin = (prop) => {
       }
     }
   };
+
+  const getSettingEmail = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    };
+    setIsLoading(true);
+    var data = await ApiServices.GetApiCall(ApiEndpoint.SETTING_EMAIL, headers);
+    // props.loaderRef(false);
+    setIsLoading(false);
+    if (data) {
+      if (data.status) {
+        setAdminEmail(data.data[0].options_value);
+        setOptionEmail(data.data[0].options);
+      }
+    }
+  };
+
+  const onUpdateSettingEmail = async () => {
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    };
+    var body = {
+      options_value: adminEmail,
+      options: optionEmail,
+    };
+    setIsLoading(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.UPDATE_EMAIL,
+      JSON.stringify(body),
+      headers
+    );
+    setIsLoading(false);
+    if (data) {
+      if (data.status) {
+        toast.success(data.message);
+        getSettingEmail();
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error("Something went wrong!");
+    }
+  };
+
+  React.useEffect(() => {
+    getSettingEmail();
+  }, []);
+
   React.useEffect(() => {
     if (profile && profile.token) {
       getAuditorList();
@@ -493,7 +544,9 @@ const Subadmin = (prop) => {
             open={openTWO}
             onClose={handleCloseTWO}
           >
-            <DialogTitle className={styles.addadmintitle}>Edit Admin</DialogTitle>
+            <DialogTitle className={styles.addadmintitle}>
+              Edit Admin
+            </DialogTitle>
             <form onSubmit={formikEdit.handleSubmit}>
               <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
                 <Grid container justifyContent={"space-between"}>
@@ -577,6 +630,29 @@ const Subadmin = (prop) => {
             </Box>
           </Dialog>
         </Grid>
+      </Grid>
+      <Grid
+        container
+        display={"flex"}
+        justifyContent={"space-between"}
+        className={styles.hadpeg}
+        style={{ marginTop: "0px" }}
+        alignItems={"flex-end"}
+      >
+        <Box className={"Input_box"} style={{ width: "80%" }}>
+          <InputLable text={"Admin email"} fs={"12px"} />
+          <TextField
+            className={Style.adminEmail_}
+            value={adminEmail}
+            onChange={(event) => {
+              setAdminEmail(event.target.value);
+            }}
+          />
+        </Box>
+
+        <Button className={Style.sendButton} onClick={onUpdateSettingEmail}>
+          Send
+        </Button>
       </Grid>
       <Grid container>
         <Grid item xs={12} md={12}>

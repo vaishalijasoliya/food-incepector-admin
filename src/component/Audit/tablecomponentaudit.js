@@ -20,7 +20,7 @@ export const TableComponent = ({
   Header,
   handleClickOpenTWO,
   handleOpen_delete,
-  tokenObj
+  tokenObj,
 }) => {
   // const onButtonClick = (url,id) => {
   //   console.log(url ,id, 'usrrrr')
@@ -42,7 +42,6 @@ export const TableComponent = ({
   const quspage = (item) => {
     console.log(item, "item__");
     router.push({ pathname: "/all_qus_list", query: { id: item } });
-
   };
 
   return (
@@ -75,25 +74,20 @@ export const TableComponent = ({
                   className={Style.table_cell}
                   onClick={() => {
                     quspage(item.id);
-
                   }}
                 >
                   {item.location_name}
                 </TableCell>
-                <TableCell
-                  className={Style.table_cell}>
-                  {moment(item.audit_start).format("DD/MM/YYYY h:mm A")}
+                <TableCell className={Style.table_cell}>
+                  {item.audit_start}
                 </TableCell>
-                <TableCell
-                  className={Style.table_cell}>
+                <TableCell className={Style.table_cell}>
                   {item.audit_time}
                 </TableCell>
-                <TableCell
-                  className={Style.table_cell}>
+                <TableCell className={Style.table_cell}>
                   <Typography> {item.gps_location}</Typography>
                 </TableCell>
-                <TableCell
-                  className={Style.table_cell}>
+                <TableCell className={Style.table_cell}>
                   {item.user.name}
                 </TableCell>
                 <TableCell className={Style.table_cell}>
@@ -103,23 +97,32 @@ export const TableComponent = ({
                   className={Style.table_cell}
                   onClick={() => {
                     quspage(item.id);
-                  }} >
-                  {moment(item.createdAt).format("DD/MM/YYYY h:mm A")}
+                  }}
+                >
+                  {item.createdAt}
+                  {/* {moment(item.createdAt).format("DD/MM/YYYY h:mm A")} */}
                 </TableCell>
                 <TableCell
                   className={Style.table_cell}
                   onClick={() => {
                     quspage(item.id);
-                  }}>
-                  {item.audit_score >= 4.5 ?
-                    `${item.audit_score}/5  (${item.audit_score*100/5}%) (Very Good)`
-                    : item.audit_score < 4.5 && item.audit_score > 3.9 ?
-                    `${item.audit_score}/5 (${item.audit_score*100/5}%) (Good)`
-                      : item.audit_score < 4 && item.audit_score > 3.4 ?
-                      `${item.audit_score}/5 (${item.audit_score*100/5}%) (Average)`
-                       : `${item.audit_score}/5  (${item.audit_score*100/5}%) (Below Average)`
-                  }
-
+                  }}
+                >
+                  {item.audit_score >= 4.5
+                    ? `${item.audit_score}/5  (${
+                        (item.audit_score * 100) / 5
+                      }%) (Very Good)`
+                    : item.audit_score < 4.5 && item.audit_score > 3.9
+                    ? `${item.audit_score}/5 (${
+                        (item.audit_score * 100) / 5
+                      }%) (Good)`
+                    : item.audit_score < 4 && item.audit_score > 3.4
+                    ? `${item.audit_score}/5 (${
+                        (item.audit_score * 100) / 5
+                      }%) (Average)`
+                    : `${item.audit_score}/5  (${
+                        (item.audit_score * 100) / 5
+                      }%) (Below Average)`}
                 </TableCell>
                 {/* <TableCell
                   className={Style.table_cell}
@@ -128,7 +131,14 @@ export const TableComponent = ({
                   }}>{item.location_name}</TableCell> */}
                 <TableCell>
                   {/* <button  className={Style.table_cell}> */}
-                  <a target="_blank" rel="noopener noreferrer" href={item.pdfUrl} download><DownloadIcon /></a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={item.pdfUrl}
+                    download
+                  >
+                    <DownloadIcon />
+                  </a>
                   {/* <DownloadIcon /> */}
                   {/* </button> */}
                 </TableCell>

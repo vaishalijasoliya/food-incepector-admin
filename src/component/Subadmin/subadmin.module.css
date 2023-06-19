@@ -8,7 +8,7 @@
   display: flex;
   column-gap: 10px;
 }
-.last_td:hover{
+.last_td:hover {
   cursor: pointer;
 }
 .icon_btn {
@@ -18,50 +18,73 @@
 .table_row {
   border-bottom: 1px solid rgba(224, 224, 224, 1);
 }
-.table_row:hover{
+.table_row:hover {
   cursor: pointer;
 }
-.table_cell:hover{
+.table_cell:hover {
   cursor: pointer;
 }
-.img1{
+.img1 {
   height: 300px;
 }
-.img1:hover{
+.img1:hover {
   cursor: pointer;
 }
-.dialog{
+.dialog {
   width: calc(100% - 0px);
   margin: 0 auto;
   background-color: none;
   box-shadow: none;
 }
 
-#imageMagnifyer{
+#imageMagnifyer {
   width: 500px;
   height: 500px;
 }
-.magnifyer{
+.magnifyer {
   width: 200px;
   height: 200px;
 }
-.imgmodifyer{
+.imgmodifyer {
   width: 393px;
   text-align: center;
   margin: 0 auto;
   background-color: transparent;
 }
-.App{
+.App {
   justify-content: center;
 }
-.imagepopup_size{
+.imagepopup_size {
   width: 525px;
-  height:600px;
+  height: 600px;
   max-width: 600px;
 }
-.lightbox_img{
+.lightbox_img {
   max-height: 65vw;
 }
-.table_main_container{
+.table_main_container {
   margin-top: 16px;
+}
+
+.adminEmail_ {
+  padding: 0px !important;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.adminEmail_ div {
+  padding: 0px;
+}
+.adminEmail_ input {
+  padding: 5px 10px;
+}
+
+.sendButton {
+  background-color: #ae802c !important;
+  color: white !important;
+  text-transform: capitalize !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  line-height: 1.643 !important;
 }
