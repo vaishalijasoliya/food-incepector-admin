@@ -588,7 +588,14 @@
 .dialog_box {
   padding: 20px;
 }
-
+.butt_sjjshhsgs{
+  border: 1px solid #000 !important;
+  color: #000 !important;
+  font-family: Poppins-400 !important;
+text-transform: capitalize;
+margin-right: 20px !important;
+height: 56px;
+}
 .dialog {
   justify-content: center;
   background-color: rgb(0 0 0 / 69%);
@@ -609,6 +616,7 @@
   border-radius: 5px;
   padding: 7px;
   border: 1px solid;
+  margin-right: 20px;
 }
 
 

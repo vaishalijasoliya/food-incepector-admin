@@ -5,13 +5,18 @@ import styles from "../styles/user/index.module.css";
 import Grid from "@mui/material/Grid";
 import { connect } from "react-redux";
 import { Types } from "/src/constants/actionTypes";
-
+import React from "react";
 const Dashdata = (props) => {
   console.log(props, "Home");
+  const [listlegveg, setLegvg] = React.useState('')
 
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   const data = {
-    title: "Dashboard",
-    desc: "Morning James, Welcome to Clever Gifts Dashboard ",
+    title: listlegveg=='pl_PL'?'لوحة القيادة':"Dashboard",
+    // desc: istlegveg=='pl_PL'?'Panel':"Morning James, Welcome to Clever Gifts Dashboard ",
   };
 
   return (

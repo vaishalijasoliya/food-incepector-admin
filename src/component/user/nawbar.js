@@ -20,6 +20,12 @@ const Home = (props) => {
   const router = useRouter();
   const [com, setCom] = React.useState(false);
   const [active, setActive] = useState("");
+  const [listlegveg, setLegvg] = React.useState('')
+
+  React.useEffect(() => {
+    const listtebal = localStorage.getItem("language")
+    setLegvg(listtebal);
+  }, []);
   var handleClickOpenCom = (myprops) => {
     setCom(true);
     // console.log(advertiseMent, startDate, endDate, image, 'hello data')
@@ -42,7 +48,10 @@ const Home = (props) => {
         router.push("./dashboard"), setActive("dashboard");
       }}
     >
-      <span>Dashboard</span>
+      <span>
+      {listlegveg=='pl_PL'?'لوحة القيادة':'Dashboard'}
+      
+      </span>
     </Button>,
     <Button
       onClick={() => {
@@ -53,7 +62,9 @@ const Home = (props) => {
       key={2}
       className={currentPath == "/inspectorList" ? styles.active : ""}
     >
-      <span>Auditors list </span>
+      <span>
+      {listlegveg=='pl_PL'?'قائمة المراجعين':'Auditors list'}
+      </span>
     </Button>,
     <Button
       onClick={() => {
@@ -65,7 +76,9 @@ const Home = (props) => {
       variant="outlined"
       id={styles.butgri}
     >
-      <span>Category</span>
+      <span>
+      {listlegveg=='pl_PL'?'فئة':'Category'}
+      </span>
     </Button>,
     <Button
       onClick={() => {
@@ -76,7 +89,9 @@ const Home = (props) => {
       variant="outlined"
       id={styles.butgri}
     >
-      <span>Questions</span>
+      <span>
+      {listlegveg=='pl_PL'?'أسئلة':'Questions'}
+      </span>
     </Button>,
     <Button
       onClick={() => {
@@ -88,7 +103,9 @@ const Home = (props) => {
       variant="outlined"
       id={styles.butgri}
     >
-      <span>Locations</span>
+      <span>
+      {listlegveg=='pl_PL'?'المواقع':'Locations'}
+      </span>
     </Button>,
 
     <Button
@@ -101,7 +118,9 @@ const Home = (props) => {
       variant="outlined"
       id={styles.butgri}
     >
-      <span>Audit list</span>
+      <span>
+      {listlegveg=='pl_PL'?'قائمة المراجعة':'Audit list'}
+      </span>
     </Button>,
     <Button
       onClick={() => {
@@ -113,7 +132,10 @@ const Home = (props) => {
       variant="outlined"
       id={styles.butgri}
     >
-      <span>Setting</span>
+      <span>
+      {listlegveg=='pl_PL'?'جلسة':'Setting'}
+
+      </span>
     </Button>,
 
     <Button
@@ -124,7 +146,9 @@ const Home = (props) => {
       onClick={handleClickOpenCom}
     >
       {/* <CameraFrontIcon className={styles.iconside} /> */}
-      <span> Logout </span>
+      <span>
+      {listlegveg=='pl_PL'?'تسجيل خروج':'Logout'}
+        </span>
     </Button>,
   ];
 
@@ -162,15 +186,19 @@ const Home = (props) => {
                 <div>
                   <DialogContent className={styles.popupcasdfntenar}>
                     <div className={styles.lgtextout}>
-                      <Typography>Logout</Typography>
+                      <Typography>
+                      {listlegveg=='pl_PL'?'تسجيل خروج':'Logout'}
+                      </Typography>
                     </div>
                     <div className={styles.areypulisfg}>
-                      <Typography>Are you sure you want to logout</Typography>
+                      <Typography>
+                      {listlegveg=='pl_PL'?'هل أنت متأكد أنك تريد تسجيل الخروج':'Are you sure you want to logout'}
+                      </Typography>
                     </div>
                     <div className={styles.btn2yesno}>
-                      <Button_ text={"No"} handleClick={handleCloseCom} />
+                      <Button_ text={listlegveg=='pl_PL'?'لا':'No'} handleClick={handleCloseCom} />
                       <Button_
-                        text={"Yes"}
+                        text={listlegveg=='pl_PL'?'نعم':'Yes'}
                         handleClick={() => {
                           removeData({ logout: logout });
                           // var profile = "";

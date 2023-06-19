@@ -32,15 +32,28 @@ const Usercount = (props) => {
   const [userRender, setUserRender] = React.useState(true);
   const [locationCount, setLocationCount] = React.useState(0);
   const [auditorCount, setAuditorCount] = React.useState(0);
-
+  const [datascore, setDatascore] = React.useState([]);
+  const [therdata, setTherdata] = React.useState('')
   const { activeSupportId, setActiveSupportId, setActiveSupportObject } =
     useContext(SupportContext);
+    const [listlegveg, setLegvg] = React.useState('')
 
+    React.useEffect(() => {
+      const listtebal = localStorage.getItem("language")
+      setLegvg(listtebal);
+    }, []);
   const handleClick = (id = string, data = object) => {
     viewSupportMsg(key);
     setUserData(data);
   };
 
+  // const languages = {
+  //   en: require('./translations/translations/en.json'),
+  //   pl_PL: require('./translations/translations/pl_PL.json')
+  // };
+  fetch('/pl_PL.json').then((response) => response.json()).then(json => {
+    console.log(json, 'adadjjdd')
+  })
   const getdashgetdata = async () => {
     console.log("headers");
     var headers = {
@@ -58,21 +71,23 @@ const Usercount = (props) => {
     // console.log(data.data, "data____");
 
     props.props.loaderRef(false);
-
+    console.log(data, 'datadata')
     if (data) {
       if (!!data.status && data.status == true) {
         setCategorySearch(data.data);
         setAuditorCount(data.data.locationCount);
         setLocationCount(data.data.auditorCount);
         setCategoryList(data.data.latestAudit);
+        setTherdata(data.data.score48)
+        setDatascore(data.data.cateScore)
       }
     }
     setUserRender(false);
   };
   const Header = [
-    { id: 1, name: "Location Name" },
-    { id: 2, name: "Auditor" },
-    { id: 3, name: "Date Time " },
+    { id: 1, name: listlegveg=='pl_PL'?"اسم الموقع":"Location Name" },
+    { id: 2, name: listlegveg=='pl_PL'?"مدقق حسابات":"Auditor" },
+    { id: 3, name: listlegveg=='pl_PL'?"تاريخ الوقت":"Date Time " },
   ];
 
   const theme = createTheme({
@@ -113,7 +128,7 @@ const Usercount = (props) => {
       name: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required."),
+      name: Yup.string().required(listlegveg=='pl_PL'?"مطلوب اسم.":"Name is required."),
     }),
     onSubmit: (values) => {
       if (open == true) {
@@ -137,20 +152,9 @@ const Usercount = (props) => {
                 <img src="./image/3 User.svg" />
               </div>
               <p className={style.signnum}>{locationCount} </p>
-              <p className={style.signtxt}>Number Of Locations</p>
+              <p className={style.signtxt}>{listlegveg=='pl_PL'?"عدد من المواقع":"Number Of Locations"}</p>
             </Box>
-            {/* <Box
-              sx={{ width: "153px", color: "red" }}
-              className={style.signuserbox}
-            >
-              <LinearProgress
-                variant="determinate"
-                value={80}
-                height="8"
-                className={style.signuser}
-                id={style.linegrf}
-              />
-            </Box> */}
+
           </Box>
         </Grid>
         <Grid item xs={12} md={4} className={style.topgrid}>
@@ -162,14 +166,88 @@ const Usercount = (props) => {
                 </div>
               </Box>
               <p className={style.signnum}> {auditorCount} </p>
-              <p className={style.signtxt}>Number Of Auditors</p>
+              <p className={style.signtxt}>{listlegveg=='pl_PL'?"عدد المراجعين":"Number Of Auditors"}</p>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={4} className={style.topgrid}>
+          <Box className={style.singdiv2}>
+            <Box>
+              <Box>
+                <div className={style.myprofile}>
+                  <img src="./image/myprofile.svg" />
+                </div>
+              </Box>
+              <p className={style.signnum}> {therdata} </p>
+              <p className={style.signtxt}>{listlegveg=='pl_PL'?"المجموع النهائي":"Overall Score"} </p>
             </Box>
           </Box>
         </Grid>
       </Grid>
-
       <Grid container className={Style.table_main_container}>
-        <p className={style.table_title}>Latest Audit</p>
+        <p className={style.table_title}>{listlegveg=='pl_PL'?"يسجل حسب الفئة":"Score by category"}</p>
+        <Grid container>
+          <Grid item xs={12} md={12}>
+            <div>
+              <Box sx={{ width: "100%" }}>
+                <Paper
+                  sx={{ width: "100%", mb: 2 }}
+                  className={styles.maentebal2}
+                >
+                  <TableContainer>
+                    <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                      <TableHead>
+                        <TableRow className={Style.TableRow}>
+
+                          <TableCell
+                            className={Style.table_cell}
+                          >
+                            {listlegveg=='pl_PL'?"فئة":"Category"}
+                          </TableCell>
+                          <TableCell
+                            className={Style.table_cell}
+                          >
+                           {listlegveg=='pl_PL'?"نتيجة":"score"}
+                            
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {datascore.map((item, index) => {
+                          console.log(item, "item__");
+
+                          return (
+                            <TableRow
+                              // className={currentPath == "./dashboard" ? Style.active : ""}
+                              key={index}
+                            // onClick={() => {
+                            //   router.push({
+                            //     pathname: "/all_qus_list",
+                            //     query: { id: item.id },
+                            //   });
+                            // }}
+                            >
+                              <TableCell className={Style.table_cell}>
+                                {item.category}
+                              </TableCell>
+                              <TableCell className={Style.table_cell}>
+                                {item.score}
+                              </TableCell>
+
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              </Box>
+            </div>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid container className={Style.table_main_container}>
+        <p className={style.table_title}> {listlegveg=='pl_PL'?"أحدث تدقيق":"Latest Audit"}</p>
         <Grid container>
           <Grid item xs={12} md={12}>
             <div>

@@ -33,11 +33,18 @@ const Signin = (props) => {
     );
     props.props.loaderRef(false);
     if (!!data) {
-      if (data.status == true) {
+      if (data.status == true && data.data.role == 'admin') {
+        localStorage.setItem('language', 'en_US')
         props.save_user_data({ user: data });
-        toast.success("Logged In Succesfully");
         router.push("/dashboard");
-      } else {
+        toast.success("Logged In Succesfully");
+      }
+      // else if (data.status == true) {
+      //   props.save_user_data({ user: data });
+      //   toast.success("Logged In Succesfully");
+      //   // router.push("/dashboard");
+      // } 
+      else {
         // setErrorShow(true)
         toast.error(data.message);
       }
