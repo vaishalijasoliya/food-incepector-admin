@@ -93,15 +93,14 @@ export const TableComponent = ({
                 <TableCell className={Style.table_cell}>
                   <img src={item.audit_selfi} width={99} height={99} />
                 </TableCell>
-                <TableCell
+                {/* <TableCell
                   className={Style.table_cell}
                   onClick={() => {
                     quspage(item.id);
                   }}
                 >
                   {item.createdAt}
-                  {/* {moment(item.createdAt).format("DD/MM/YYYY h:mm A")} */}
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   className={Style.table_cell}
                   onClick={() => {
