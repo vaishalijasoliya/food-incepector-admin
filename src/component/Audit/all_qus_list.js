@@ -214,7 +214,7 @@ const AUDIT_VIEW_PAGE = (props) => {
               <Grid md={6}>
                 <Typography>{listlegveg=="pl_PL"?"موقع:":"Location:"} {details.auditLocation.name}</Typography>
                 <Typography>
-                {listlegveg=="pl_PL"?"مجموع النقاط:":"Total Score:"} {details.audit_score_data}
+                {listlegveg=="pl_PL"?"مجموع النقاط:":"Total Score:"} {details.audit_score}
                 </Typography>
                 <Typography>
                 {listlegveg=="pl_PL"?"بداية التدقيق:":"Audit Start:"}   {moment(details.audit_start).format("DD/MM/YYYY h:mm A")}
