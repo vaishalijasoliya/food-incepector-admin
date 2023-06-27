@@ -24,10 +24,10 @@ const AUDIT_VIEW_PAGE = (props) => {
   const [dataList, setDatalist] = React.useState([]);
   const [details, setDetails] = React.useState("");
   const [statatics, setStatatics] = React.useState("");
-  const [listlegveg, setLegvg] = React.useState('')
+  const [listlegveg, setLegvg] = React.useState("");
 
   React.useEffect(() => {
-    const listtebal = localStorage.getItem("language")
+    const listtebal = localStorage.getItem("language");
     setLegvg(listtebal);
   }, []);
   // const loaderRef = {
@@ -116,11 +116,11 @@ const AUDIT_VIEW_PAGE = (props) => {
   };
 
   const Header = [
-    { name:listlegveg=="pl_PL"? "فئة":"Category" },
-    { name: listlegveg=="pl_PL"?"أسئلة":"Questions" },
-    { name: listlegveg=="pl_PL"?"الصور":"Images" },
-    { name: listlegveg=="pl_PL"?"امتثال":"Compliance" },
-    { name: listlegveg=="pl_PL"?"ملاحظة":"Observation" },
+    { name: listlegveg == "pl_PL" ? "فئة" : "Category" },
+    { name: listlegveg == "pl_PL" ? "أسئلة" : "Questions" },
+    { name: listlegveg == "pl_PL" ? "الصور" : "Images" },
+    { name: listlegveg == "pl_PL" ? "امتثال" : "Compliance" },
+    { name: listlegveg == "pl_PL" ? "ملاحظة" : "Observation" },
   ];
 
   const onSearch = (e) => {
@@ -186,10 +186,17 @@ const AUDIT_VIEW_PAGE = (props) => {
   };
 
   console.log(details, "is_________details");
-  function convertUTCToTimezone(utcDt, utcDtFormat = null, timezone =  'Asia/Riyadh') {
-    console.log('called');
-    return moment.utc(utcDt, utcDtFormat).tz(timezone).format('DD/MM/YYYY hh:mm A');
-}
+  function convertUTCToTimezone(
+    utcDt,
+    utcDtFormat = null,
+    timezone = "Asia/Riyadh"
+  ) {
+    console.log("called");
+    return moment
+      .utc(utcDt, utcDtFormat)
+      .tz(timezone)
+      .format("DD/MM/YYYY hh:mm A");
+  }
   return (
     <Grid container>
       <Grid container display={"flex"} className={styles.hadpeg}>
@@ -212,53 +219,78 @@ const AUDIT_VIEW_PAGE = (props) => {
           <Grid md={12}>
             <Grid container className={styles.top_box_}>
               <Grid md={6}>
-                <Typography>{listlegveg=="pl_PL"?"موقع:":"Location:"} {details.auditLocation.name}</Typography>
                 <Typography>
-                {listlegveg=="pl_PL"?"مجموع النقاط:":"Total Score:"} {details.audit_score}
+                  {listlegveg == "pl_PL" ? "موقع:" : "Location:"}{" "}
+                  {details.auditLocation.name}
                 </Typography>
                 <Typography>
-                {listlegveg=="pl_PL"?"بداية التدقيق:":"Audit Start:"}   {moment(details.audit_start).format("DD/MM/YYYY h:mm A")}
+                  {listlegveg == "pl_PL" ? "مجموع النقاط:" : "Total Score:"}{" "}
+                  {details.audit_score}%
                 </Typography>
                 <Typography>
-                {listlegveg=="pl_PL"?"نهاية التدقيق:":"Audit End:"}{moment(details.audit_end).format("DD/MM/YYYY h:mm A")}
+                  {listlegveg == "pl_PL" ? "بداية التدقيق:" : "Audit Start:"}{" "}
+                  {moment(details.audit_start).format("DD/MM/YYYY h:mm A")}
+                </Typography>
+                <Typography>
+                  {listlegveg == "pl_PL" ? "نهاية التدقيق:" : "Audit End:"}
+                  {moment(details.audit_end).format("DD/MM/YYYY h:mm A")}
                 </Typography>
               </Grid>
               <Grid md={6}>
                 <Typography>
-                {listlegveg=="pl_PL"?"التاريخ الوقت:":"Date Time:"}
+                  {listlegveg == "pl_PL" ? "التاريخ الوقت:" : "Date Time:"}
                   {/* {moment.utc(details.createdAt,null).tz('Asia/Riyadh').format('DD/MM/YYYY hh:mm A')} */}
                   {/* {convertUTCToTimezone(details.createdAt)} */}
                   {`${moment(details.createdAt).format("DD/MM/YYYY")} 
                   ${moment(details.createdAt).format("LT")}`}
                 </Typography>
-                <Typography>{listlegveg=="pl_PL"?"درجة:":"Grade:"} {statatics.grade}</Typography>
-                <Typography>{listlegveg=="pl_PL"?"وقت المراجعة:":"Audit Time:"} {statatics.audit_time}</Typography>
-                <Typography>{listlegveg=="pl_PL"?"موقع GPS:":"Gps Location:"} {statatics.gps_location}</Typography>
-              </Grid>
-              <Grid md={4}>
                 <Typography>
-                {listlegveg=="pl_PL"?"متوافق:":"Compliant:"}{statatics.compliantCount}
+                  {listlegveg == "pl_PL" ? "درجة:" : "Grade:"} {statatics.grade}
                 </Typography>
                 <Typography>
-                {listlegveg=="pl_PL"?"N / C فرعي:":"N/C Minor:"}{statatics.minorCount}
+                  {listlegveg == "pl_PL" ? "وقت المراجعة:" : "Audit Time:"}{" "}
+                  {statatics.audit_time}
                 </Typography>
-              </Grid>
-              <Grid md={4}>
-                <Typography>{listlegveg=="pl_PL"?"غير متاح:":"N/A:"}{statatics.naCount}</Typography>
                 <Typography>
-                {listlegveg=="pl_PL"?"N / C رئيسي:":"N/C Major:"}{statatics.majorCount}
+                  {listlegveg == "pl_PL" ? "موقع GPS:" : "Gps Location:"}{" "}
+                  {statatics.gps_location}
                 </Typography>
               </Grid>
               <Grid md={4}>
                 <Typography>
-                {listlegveg=="pl_PL"?"ملائم:":"Applicable:"}{statatics.applicableCount}
+                  {listlegveg == "pl_PL" ? "متوافق:" : "Compliant:"}
+                  {statatics.compliantCount}
                 </Typography>
                 <Typography>
-                {listlegveg=="pl_PL"?"غير حرج:":"N/C Critical:"}{statatics.criticalCount}
+                  {listlegveg == "pl_PL" ? "N / C فرعي:" : "N/C Minor:"}
+                  {statatics.minorCount}
                 </Typography>
               </Grid>
               <Grid md={4}>
-                <Typography>{listlegveg=="pl_PL"?"مدقق حسابات:":"Auditor:"} {details.auditUser.name}</Typography>
+                <Typography>
+                  {listlegveg == "pl_PL" ? "غير متاح:" : "N/A:"}
+                  {statatics.naCount}
+                </Typography>
+                <Typography>
+                  {listlegveg == "pl_PL" ? "N / C رئيسي:" : "N/C Major:"}
+                  {statatics.majorCount}
+                </Typography>
+              </Grid>
+              <Grid md={4}>
+                <Typography>
+                  {listlegveg == "pl_PL" ? "ملائم:" : "Applicable:"}
+                  {statatics.applicableCount}
+                </Typography>
+                <Typography>
+                  {listlegveg == "pl_PL" ? "غير حرج:" : "N/C Critical:"}
+                  {statatics.criticalCount}
+                </Typography>
+              </Grid>
+              <Grid md={4}>
+                <Typography>
+                  {listlegveg == "pl_PL" ? "مدقق حسابات:" : "Auditor:"}{" "}
+                  {details.auditUser.name}
+                </Typography>
               </Grid>
               <Grid md={4}>
                 <Box className={styles.image_box_top}>
