@@ -67,6 +67,7 @@ export const TableComponent = ({
 
             const finalRating =
               (item.audit_score_data * 100) / item.audit_score_total;
+
             console.log(
               item.audit_score_data / item.audit_score_total,
               "is____new__Check__item",
@@ -133,22 +134,7 @@ export const TableComponent = ({
                   //   quspage(item.id);
                   // }}
                 >
-                  {giveGrade(finalRating)}
-                  {/* {item.audit_score >= 4.5
-                    ? `${item.audit_score}/5  (${
-                        (item.audit_score * 100) / 5
-                      }%) (Very Good)`
-                    : item.audit_score < 4.5 && item.audit_score > 3.9
-                    ? `${item.audit_score}/5 (${
-                        (item.audit_score * 100) / 5
-                      }%) (Good)`
-                    : item.audit_score < 4 && item.audit_score > 3.4
-                    ? `${item.audit_score}/5 (${
-                        (item.audit_score * 100) / 5
-                      }%) (Average)`
-                    : `${item.audit_score}/5  (${
-                        (item.audit_score * 100) / 5
-                      }%) (Below Average)`} */}
+                  {`${item.audit_score_data}/${item.audit_score_total}  (${item.audit_score}%) (${item.audit_grade})`}
                 </TableCell>
                 {/* <TableCell
                   className={Style.table_cell}
