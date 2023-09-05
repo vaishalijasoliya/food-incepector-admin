@@ -29,6 +29,9 @@ import ApiServices from "../../config/ApiServices";
 import ApiEndpoint from "../../config/ApiEndpoint";
 import moment from "moment";
 import DatePickerll from "react-datepicker";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Button_ } from "../../Layout/buttons";
+import { toast } from "react-toastify";
 
 const Audit_page = (props) => {
   const [page, setPage] = React.useState(0);
@@ -61,6 +64,7 @@ const Audit_page = (props) => {
   const fm = moment(sm).add(1, "M").format("YYYY-MM-DD HH:mm:ss");
   const [endDate, setEndDate] = React.useState();
   const [listlegveg, setLegvg] = React.useState("");
+  const [auditorDetails, setAuditorDetails] = React.useState("");
 
   React.useEffect(() => {
     const listtebal = localStorage.getItem("language");
@@ -163,6 +167,40 @@ const Audit_page = (props) => {
       }
     }
   };
+
+  const onDelete = async () => {
+    console.log(auditorDetails.id , 'auditorDetails')
+    var headers = {
+      "Content-Type": "application/json",
+      "x-access-token": props.props.profile.token,
+    };
+    var body = {
+      id_audit: auditorDetails.id,
+    };
+
+    props.props.loaderRef(true);
+    var data = await ApiServices.PostApiCall(
+      ApiEndpoint.AUDIT_DELETE,
+      JSON.stringify(body),
+      headers
+    );
+    props.props.loaderRef(false);
+
+    if (data) {
+      if (data.status) {
+        toast.success(data.message);
+        setAuditorDetails("");
+        getAuditList();
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error(Error_msg.NOT_RES);
+    }
+
+     handleClose_delete();
+  };
+
   React.useEffect(() => {
     console.log(age, "ageage");
     var pendingarr = [];
@@ -226,6 +264,7 @@ const Audit_page = (props) => {
     { id: 7, name: listlegveg == "pl_PL" ? "نتيجة" : "Score" },
     // { id: 8, name: "Review by" },
     { id: 8, name: listlegveg == "pl_PL" ? "بي دي إف" : "PDF " },
+    { id: 9, name: listlegveg=='pl_PL'?"فعل":"action" }
   ];
 
   const handleChangePage = (event = unknown, newPage = number) => {
@@ -429,7 +468,27 @@ const Audit_page = (props) => {
           </FormControl>
         </Grid>
       </Grid>
-
+      <Dialog
+            fullWidth={true}
+            maxWidth={"sm"}
+            open={deleteOpen}
+            onClose={handleClose_delete}
+          >
+            <DialogTitle className={styles.addtitalaja}>
+            {listlegveg=='pl_PL'?"حذف المدقق":
+              "Delete Audit"}
+            </DialogTitle>
+            <Box className={styles.dialog_box} style={{ paddingTop: 0 }}>
+              <Typography>
+              {listlegveg=='pl_PL'?"هل أنت متأكد أنك تريد حذف المفتش":
+                "Are you sure you want to delete Audit?"}
+              </Typography>
+              <div className={styles.cesalbtncss}>
+                <Button_ handleClick={handleClose_delete} text={listlegveg=='pl_PL'?"يلغي":"Cancel"} />
+                <Button_ handleClick={onDelete} text={listlegveg=='pl_PL'?"يمسح":"Delete"} />{" "}
+              </div>
+            </Box>
+          </Dialog>
       <Grid container>
         <Grid item xs={12} md={12}>
           <div>
@@ -450,6 +509,7 @@ const Audit_page = (props) => {
                   handleOpen_delete={handleOpen_delete}
                   data={dataList_two}
                   Header={Header}
+                  setAuditorDetails={setAuditorDetails}
                   // tokenObj={tokenObj}
                 />
                 <TablePagination

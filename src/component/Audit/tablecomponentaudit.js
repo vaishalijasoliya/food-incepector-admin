@@ -6,12 +6,14 @@ import {
   TableHead,
   TableRow,
   Typography,
+  IconButton
 } from "@mui/material";
 import React from "react";
 import Style from "../Auditor/auditor.module.css";
 import moment from "moment";
 import DownloadIcon from "@mui/icons-material/Download";
 import { useRouter } from "next/router";
+import { DeleteIcon_ } from "../Utils/icons";
 
 export const TableComponent = ({
   data,
@@ -20,6 +22,7 @@ export const TableComponent = ({
   Header,
   handleClickOpenTWO,
   handleOpen_delete,
+  setAuditorDetails,
   tokenObj,
 }) => {
   // const onButtonClick = (url,id) => {
@@ -130,9 +133,9 @@ export const TableComponent = ({
                 </TableCell> */}
                 <TableCell
                   className={Style.table_cell}
-                  // onClick={() => {
-                  //   quspage(item.id);
-                  // }}
+                // onClick={() => {
+                //   quspage(item.id);
+                // }}
                 >
                   {`${item.audit_score_data}/${item.audit_score_total}  (${item.audit_score}%) (${item.audit_grade})`}
                 </TableCell>
@@ -153,6 +156,17 @@ export const TableComponent = ({
                   </a>
                   {/* <DownloadIcon /> */}
                   {/* </button> */}
+                </TableCell>
+                <TableCell>
+                  <IconButton
+                    className={Style.icon_btn}
+                    onClick={() => {
+                      handleOpen_delete();
+                      setAuditorDetails(item);
+                    }}
+                  >
+                    <DeleteIcon_ height={15} width={15} />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             );
