@@ -258,13 +258,13 @@ const Auditor_page = (props) => {
       id_auditor: id_user,
     };
 
-    props.props.loaderRef(true);
+    // props.props.loaderRef(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.VIEW_AUDITOR,
       JSON.stringify(body),
       headers
     );
-    props.props.loaderRef(false);
+    // props.props.loaderRef(false);
 
     if (data) {
       if (data.status) {
