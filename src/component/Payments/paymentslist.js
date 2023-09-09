@@ -76,13 +76,11 @@ const EnhancedTable = (props) => {
       id_category: id_user,
     };
 
-    props.props.loaderRef(true);
     var data = await ApiServices.PostApiCall(
       ApiEndpoint.VIEW_CATEGORY,
       JSON.stringify(body),
       headers
     );
-    props.props.loaderRef(false);
 
     if (data) {
       if (data.status) {
