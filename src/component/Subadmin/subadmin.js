@@ -184,14 +184,14 @@ const Subadmin = (prop) => {
     if (data) {
       if (data.status) {
         const Arr = [];
-        for (let index = 0; index < data.data.length; index++) {
-          const element = data.data[index];
-          if (element.id !== profile.data.id) {
-            Arr.push(element);
-          }
-        }
-        setDataSearch(Arr);
-        setDatalist(Arr);
+        // for (let index = 0; index < data.data.length; index++) {
+        //   const element = data.data[index];
+        //   // if (element.id !== profile.data.id) {
+        //     Arr.push(element);
+        //   }
+        // }
+        setDataSearch(data.data);
+        setDatalist(data.data);
       }
     }
   };
